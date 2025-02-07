@@ -6,7 +6,7 @@ RM			= rm -rf
 
 BUILD_DIR	= build
 VPATH		= src
-SRCS		= main.c lexer.c expander.c
+SRCS		= main.c lexer.c expander.c parser.c execute.c
 OBJS		= $(addprefix $(BUILD_DIR)/,$(SRCS:.c=.o))
 
 all: $(NAME)
