@@ -6,40 +6,42 @@
 #include <stdlib.h>
 #include "minishell.h"
 
-// Pipeline zincirinde bulunan komut sayısını hesaplar.
-int count_commands(t_ast *ast) {
-    int count = 0;
-    while (ast) {
-        if (ast->cmd != NULL)
-            count++;
-        ast = ast->right;
-    }
+// AST ağacında, cmd alanı dolu düğümlerin sayısını in-order dolaşarak sayar.
+int count_inorder(t_ast *node) {
+    if (!node)
+        return 0;
+    int count = count_inorder(node->left);
+    if (node->cmd)
+        count++;
+    count += count_inorder(node->right);
     return count;
 }
 
-t_ast **collect_commands(t_ast *ast, int cmd_count) {
+// AST ağacında, in-order dolaşım yaparak cmd alanı dolu düğümleri array'e ekler.
+void collect_commands_inorder(t_ast *node, t_ast **array, int *index) {
+    if (!node)
+        return;
+    collect_commands_inorder(node->left, array, index);
+    if (node->cmd)
+        array[(*index)++] = node;
+    collect_commands_inorder(node->right, array, index);
+}
+
+void execute_pipeline_chain(t_ast *ast) {
+    // In-order dolaşarak geçerli komut düğümlerinin sayısını alalım.
+    int cmd_count = count_inorder(ast);
+    if (cmd_count == 0)
+        return;
+    
+    // Komut düğümlerini in-order dolaşım ile toplayalım.
     t_ast **commands = malloc(sizeof(t_ast *) * cmd_count);
     if (!commands) {
         perror("malloc");
         exit(1);
     }
     int index = 0;
-    while (ast) {
-        if (ast->cmd != NULL)
-            commands[index++] = ast;
-        ast = ast->right;
-    }
-    return commands;
-}
-
-void execute_pipeline_chain(t_ast *ast) {
-    int cmd_count = count_commands(ast);
-    if (cmd_count == 0)
-        return;
-
-    // Komut düğümlerini diziye topluyoruz.
-    t_ast **commands = collect_commands(ast, cmd_count);
-
+    collect_commands_inorder(ast, commands, &index);
+    
     // Pipeline için (cmd_count - 1) adet pipe gerekir.
     int num_pipes = cmd_count - 1;
     int pipefds[2 * num_pipes];
@@ -49,30 +51,30 @@ void execute_pipeline_chain(t_ast *ast) {
             exit(1);
         }
     }
-
-    // Her komut için fork yapıyoruz.
+    
+    // Her komut için fork yapalım.
     for (int i = 0; i < cmd_count; i++) {
         pid_t pid = fork();
-        if (pid == 0) {
-            // Eğer ilk komut değilse, önceki pipe'ın okuma ucunu STDIN'e yönlendir.
+        if (pid == 0) {  // Çocuk süreç
+            // İlk komut değilse, önceki pipe'ın okuma ucunu STDIN'e yönlendir.
             if (i != 0) {
                 if (dup2(pipefds[(i - 1) * 2], STDIN_FILENO) < 0) {
                     perror("dup2 input");
                     exit(1);
                 }
             }
-            // Eğer son komut değilse, mevcut pipe'ın yazma ucunu STDOUT'a yönlendir.
+            // Son komut değilse, mevcut pipe'ın yazma ucunu STDOUT'a yönlendir.
             if (i != cmd_count - 1) {
                 if (dup2(pipefds[i * 2 + 1], STDOUT_FILENO) < 0) {
                     perror("dup2 output");
                     exit(1);
                 }
             }
-            // Tüm pipe tanımlayıcılarını kapatıyoruz.
+            // Tüm pipe dosya tanımlayıcılarını kapatalım.
             for (int j = 0; j < 2 * num_pipes; j++) {
                 close(pipefds[j]);
             }
-            // Redirection varsa (bu komuta ait) uyguluyoruz.
+            // Redirection varsa (bu komuta ait) uygulayalım.
             t_ast *cmd = commands[i];
             if (cmd->redirect_in) {
                 int fd_in = open(cmd->redirect_in, O_RDONLY);
@@ -96,7 +98,7 @@ void execute_pipeline_chain(t_ast *ast) {
                 dup2(fd_out, STDOUT_FILENO);
                 close(fd_out);
             }
-            // Komutu çalıştırıyoruz.
+            // Komutu çalıştır.
             execvp(cmd->args[0], cmd->args);
             perror("execvp failed");
             exit(1);
@@ -105,11 +107,12 @@ void execute_pipeline_chain(t_ast *ast) {
             exit(1);
         }
     }
+    
     // Parent: Tüm pipe dosya tanımlayıcılarını kapat.
     for (int j = 0; j < 2 * num_pipes; j++) {
         close(pipefds[j]);
     }
-    // Tüm çocuk süreçlerin tamamlanmasını bekle.
+    // Tüm çocuk süreçlerin tamamlanmasını bekleyelim.
     for (int i = 0; i < cmd_count; i++) {
         wait(NULL);
     }
@@ -154,10 +157,11 @@ void execute_command(t_ast *ast) {
 }
 
 void run_ast(t_ast *ast) {
-    // Eğer sağa bağlı (pipeline zinciri) birden fazla komut varsa:
-    if (ast && ast->right) {
+    // Eğer pipeline zincirinde birden fazla komut varsa:
+    if (ast && (ast->left || ast->right)) {
         execute_pipeline_chain(ast);
     } else if (ast) {
         execute_command(ast);
     }
 }
+

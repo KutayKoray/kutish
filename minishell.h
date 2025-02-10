@@ -36,7 +36,7 @@ t_ast				*parse_tokens(t_token *tokens);
 t_token				*lexer(const char *input);
 void				print_tokens(t_token *token);
 void				expand_variables(t_token *tokens);
-void				print_ast(t_ast *node);
+void				print_ast(t_ast *node, int depth);
 t_ast				*parse_tokens(t_token *tokens);
 void				run_ast(t_ast *ast);
 

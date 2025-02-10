@@ -13,7 +13,7 @@ int main(void) {
 
     printf("\nAST:\n");
     t_ast *root = parse_tokens(tokens);
-    print_ast(root);
+    print_ast(root, 0);
 
     printf("\nRunning AST...\n");
     run_ast(root);
