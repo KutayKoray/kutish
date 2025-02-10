@@ -50,15 +50,17 @@ t_ast *parse_tokens(t_token *tokens) {
             arg_index = 0;
         }
         else if (current->type == TOKEN_REDIRECT_OUT) {
-            // Çıkış yönlendirmesi; mevcut komut düğümüne ekle
             if (current_cmd && current->next) {
                 current_cmd->redirect_out = strdup(current->next->value);
-                // Eğer token değeri ">>" ise append'i 1 yapın; aksi halde 0.
-                if (strcmp(current->value, ">>") == 0)
-                    current_cmd->append = 1;
-                else
-                    current_cmd->append = 0;
-                current = current->next; // Dosya adını atla
+                current_cmd->append = 0;  // ">" olduğunda append 0
+                current = current->next;
+            }
+        }
+        else if (current->type == TOKEN_REDIRECT_APPEND) {  // ">>" için ayrı case
+            if (current_cmd && current->next) {
+                current_cmd->redirect_out = strdup(current->next->value);
+                current_cmd->append = 1;  // ">>" olduğunda append 1
+                current = current->next;
             }
         }
         else if (current->type == TOKEN_REDIRECT_IN) {

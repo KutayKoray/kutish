@@ -5,8 +5,10 @@ typedef enum
 {
 	TOKEN_WORD,
 	TOKEN_PIPE,
-	TOKEN_REDIRECT_IN,
-	TOKEN_REDIRECT_OUT,
+	TOKEN_REDIRECT_IN,      // '<'
+	TOKEN_REDIRECT_OUT,     // '>'
+	TOKEN_REDIRECT_APPEND,  // '>>'
+	TOKEN_HEREDOC,          // '<<'
 	TOKEN_AND,
 	TOKEN_OR,
 	TOKEN_DQUOTE,
@@ -14,6 +16,7 @@ typedef enum
 	TOKEN_DOLLAR,
 	TOKEN_EOF
 }					t_token_type;
+
 
 typedef struct s_token
 {

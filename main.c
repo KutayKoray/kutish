@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 int main(void) {
-    char *input = "ls -l | grep txt | wc -l > output.txt";
+    char *input = "ls -l | grep txt | wc -l >> output.txt";
     t_token *tokens = lexer(input);
     print_tokens(tokens);
 
