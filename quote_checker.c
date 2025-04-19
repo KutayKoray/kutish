@@ -2,10 +2,13 @@
 
 int	quote_checker(const char *input)
 {
-	int i = 0;
-	int single_quote = 0;
-	int double_quote = 0;
+	int	i;
+	int	single_quote;
+	int	double_quote;
 
+	i = 0;
+	single_quote = 0;
+	double_quote = 0;
 	while (input[i])
 	{
 		if (input[i] == '\'' && double_quote == 0)
@@ -22,35 +25,26 @@ int	quote_checker(const char *input)
 	return (1);
 }
 
-char *quote_trimmer(const char *input)
+void	trim_token_quotes(t_token *tokens)
 {
-	char	*result;
-	size_t	i = 0;
-	int		in_double_quote = 0;
+	t_token	*tmp;
+	char	*trimmed;
+	size_t	len;
 
-	if (!input)
-		return (NULL);
-	result = calloc(1, 1);
-	if (!result)
-		return (NULL);
-
-	while (input[i])
+	tmp = tokens;
+	while (tmp)
 	{
-		if (input[i] == '"' && !in_double_quote)
+		if (tmp->type == T_WORD)
 		{
-			in_double_quote = 1;
-			i++;
+			len = ft_strlen(tmp->value);
+			if ((tmp->value[0] == '"' && tmp->value[len - 1] == '"')
+				|| (tmp->value[0] == '\'' && tmp->value[len - 1] == '\''))
+			{
+				trimmed = ft_substr(tmp->value, 1, len - 2);
+				free(tmp->value);
+				tmp->value = trimmed;
+			}
 		}
-		else if (input[i] == '"' && in_double_quote)
-		{
-			in_double_quote = 0;
-			i++;
-		}
-		else
-		{
-			result = strappend_char(result, input[i]);
-			i++;
-		}
+		tmp = tmp->next;
 	}
-	return (result);
 }

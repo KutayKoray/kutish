@@ -4,8 +4,9 @@
 
 int	main(void)
 {
-	char	*input;
-	char	*expanded_input;
+	char		*input;
+	t_token		*tokens;
+	t_token		*tmp;
 
 	init_signals();
 
@@ -20,13 +21,51 @@ int	main(void)
 		if (*input)
 			add_history(input);
 
-		expanded_input = expand_input(input);
+		if (!quote_checker(input))
+		{
+			free(input);
+			continue;
+		}
 
-		printf("Expanded input: %s\n", expanded_input);
-		printf("%d\n", quote_checker(expanded_input));
-		printf("Trimmed input: %s\n", quote_trimmer(expanded_input));
+		tokens = tokenize(input);
 
-		free(expanded_input);
+		printf("--------------------------------\n");
+		printf("Tokenizing...\n");
+		tmp = tokens;
+		while (tmp)
+		{
+			printf("Token: %-10s | Type: %d | Joined: %d\n", tmp->value, tmp->type, tmp->joined);
+			tmp = tmp->next;
+		}
+		printf("--------------------------------\n");
+
+		expand_token_list(tokens);
+
+		trim_token_quotes(tokens);
+
+		printf("--------------------------------\n");
+		printf("Cleaned...\n");
+		tmp = tokens;
+		while (tmp)
+		{
+			printf("Token: %-10s | Type: %d | Joined: %d\n", tmp->value, tmp->type, tmp->joined);
+			tmp = tmp->next;
+		}
+		printf("--------------------------------\n");
+
+		merge_joined_tokens(&tokens);
+		
+		printf("--------------------------------\n");
+		printf("Merged Tokens...\n");
+		tmp = tokens;
+		while (tmp)
+		{
+			printf("Token: |%s| Type: %d | Joined: %d\n", tmp->value, tmp->type, tmp->joined);
+			tmp = tmp->next;
+		}
+		printf("--------------------------------\n");
+
+		free_token_list(tokens);
 		free(input);
 	}
 	return (0);
