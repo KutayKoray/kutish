@@ -1,38 +1,33 @@
-#include "./ft_printf/ft_printf.h"
-#include "libft/libft.h"
 #include "minishell.h"
-#include <readline/history.h>
-#include <readline/readline.h>
-#include <stdio.h>
-#include <stdlib.h>
+
+#define PROMPT "minishell$ "
 
 int	main(void)
 {
 	char	*input;
-	t_token	*tokens;
-	t_token	*next;
+	char	*expanded_input;
+
+	init_signals();
 
 	while (1)
 	{
-		input = readline("kutaykoray> ");
+		input = readline(PROMPT);
 		if (!input)
-			break ;
+		{
+			printf("exit\n");
+			break;
+		}
 		if (*input)
 			add_history(input);
-		tokens = NULL;
-		ft_tokenize(input, &tokens);
-		ft_print_tokens(tokens);
-		ft_printf("------------------------------\n");
-		tokens = expander(tokens);
-		ft_print_tokens(tokens);
+
+		expanded_input = expand_input(input);
+
+		printf("Expanded input: %s\n", expanded_input);
+		printf("%d\n", quote_checker(expanded_input));
+		printf("Trimmed input: %s\n", quote_trimmer(expanded_input));
+
+		free(expanded_input);
 		free(input);
-		while (tokens)
-		{
-			next = tokens->next;
-			free(tokens->value);
-			free(tokens);
-			tokens = next;
-		}
 	}
 	return (0);
 }

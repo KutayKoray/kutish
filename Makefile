@@ -1,46 +1,47 @@
-NAME		= minishell
+# Makefile
 
-CFLAGS		= -Wall -Wextra -Werror
-LDLIBS		= -lreadline
-RM			= rm -rf
+NAME = minishell
 
-PRINTF_DIR	= ft_printf
-PRINTF_LIB	= $(PRINTF_DIR)/ft_printf.a
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror -I/opt/homebrew/opt/readline/include \
+		 -Ilibft -Ift_printf
+LDFLAGS = -L/opt/homebrew/opt/readline/lib libft/libft.a ft_printf/ft_printf.a
+RLFLAGS = -lreadline -lcurses
 
-LIBFT_DIR	= libft
-LIBFT_LIB	= $(LIBFT_DIR)/libft.a
+SRCS = main.c signals.c expander.c helper.c quote_checker.c
+OBJS = $(SRCS:.c=.o)
 
-BUILD_DIR	= build
-VPATH		= src
-SRCS		= main.c tokenizer.c utils.c expander.c
-OBJS		= $(addprefix $(BUILD_DIR)/,$(SRCS:.c=.o))
+HEADER = minishell.h
 
-all: $(PRINTF_LIB) $(LIBFT_LIB) $(NAME)
+LIBFT_DIR = libft
+FT_PRINTF_DIR = ft_printf
+
+LIBFT = $(LIBFT_DIR)/libft.a
+FT_PRINTF = $(FT_PRINTF_DIR)/ft_printf.a
+
+all: $(LIBFT) $(FT_PRINTF) $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LDLIBS) $(PRINTF_LIB) $(LIBFT_LIB)
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $(NAME) $(OBJS) $(RLFLAGS)
 
-$(PRINTF_LIB):
-	make -C $(PRINTF_DIR)
-
-$(LIBFT_LIB):
-	make -C $(LIBFT_DIR)
-
-$(BUILD_DIR):
-	mkdir -p $@
-
-$(BUILD_DIR)/%.o: %.c | $(BUILD_DIR)
+%.o: %.c $(HEADER)
 	$(CC) $(CFLAGS) -c $< -o $@
 
+$(LIBFT):
+	make -C $(LIBFT_DIR)
+
+$(FT_PRINTF):
+	make -C $(FT_PRINTF_DIR)
+
 clean:
-	$(RM) $(BUILD_DIR)
-	make -C $(PRINTF_DIR) clean
-	make -C $(LIBFT_DIR) clean
+	rm -f $(OBJS)
+	make clean -C $(LIBFT_DIR)
+	make clean -C $(FT_PRINTF_DIR)
 
 fclean: clean
-	$(RM) $(NAME)
-	make -C $(PRINTF_DIR) fclean
-	make -C $(LIBFT_DIR) fclean
+	rm -f $(NAME)
+	make fclean -C $(LIBFT_DIR)
+	make fclean -C $(FT_PRINTF_DIR)
 
 re: fclean all
 

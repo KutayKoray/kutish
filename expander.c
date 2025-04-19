@@ -1,81 +1,74 @@
-#include "libft/libft.h"
 #include "minishell.h"
 #include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+#include "libft/libft.h"
 
-static char	*append_char(char *result, char c)
+int g_exit_status = 0;
+
+static char	*get_env_value(const char *key)
 {
-	char	temp[2];
-
-	temp[0] = c;
-	temp[1] = '\0';
-	return (ft_strjoin_free(result, temp, 1));
+	if (!key || !*key)
+		return (NULL);
+	return (getenv(key));
 }
 
-static char	*expand_variable(const char *str)
+static char *expand_variable(const char *str, size_t *i)
 {
-	char	*result;
-	size_t	i;
-	char	*env_value;
+	size_t start = ++(*i);
+	char *var, *value;
 
-	if (!str || !ft_strchr(str, '$'))
-		return (ft_strdup(str));
-	result = ft_strdup("");
-	i = 0;
-	while (str[i])
+	if (str[start] == '?') // $? için
 	{
-		if (str[i] == '$' && str[i + 1])
+		(*i)++;
+		return ft_itoa(g_exit_status);
+	}
+	if (!str[start] || !(ft_isalpha(str[start]) || str[start] == '_'))
+		return strdup("$"); // sadece $ yazılmışsa veya geçersizse
+
+	size_t len = 0;
+	while (str[*i] && (ft_isalnum(str[*i]) || str[*i] == '_'))
+		(*i)++, len++;
+
+	var = strndup(str + start, len);
+	value = get_env_value(var);
+	free(var);
+	return value ? strdup(value) : strdup("");
+}
+
+char *expand_input(const char *input)
+{
+	char *result = calloc(1, 1);
+	size_t i = 0;
+	int in_single_quote = 0;
+	int in_double_quote = 0;
+
+	while (input[i])
+	{
+		if (input[i] == '\'' && !in_double_quote)
 		{
-			env_value = handle_variable(str, &i);
-			if (env_value)
-				result = ft_strjoin_free(result, env_value, 1);
+			in_single_quote = !in_single_quote;
+			result = strappend_char(result, input[i++]);
+		}
+		else if (input[i] == '"' && !in_single_quote)
+		{
+			in_double_quote = !in_double_quote;
+			result = strappend_char(result, input[i++]);
+		}
+		else if (input[i] == '$')
+		{
+			if (in_single_quote)
+				result = strappend_char(result, input[i++]); // Tek tırnak içindeyse $ olduğu gibi yazılır
+			else
+			{
+				char *expanded = expand_variable(input, &i);
+				result = strappend_str(result, expanded);
+				free(expanded);
+			}
 		}
 		else
-			result = append_char(result, str[i++]);
+			result = strappend_char(result, input[i++]);
 	}
-	return (result);
+	return result;
 }
 
-static void	handle_double_quotes(t_token *current)
-{
-	char	*trimmed;
-	char	*expanded;
-
-	trimmed = ft_strtrim(current->value, "\"");
-	expanded = expand_variable(trimmed);
-	free(trimmed);
-	free(current->value);
-	current->value = ft_strjoin("\"", expanded);
-	current->value = ft_strjoin_free(current->value, "\"", 1);
-	free(expanded);
-}
-
-static void	handle_word_token(t_token *current)
-{
-	char	*expanded;
-
-	if (current->value[0] == '\'' && current->value[ft_strlen(current->value)
-			- 1] == '\'')
-		return ;
-	if (current->value[0] == '"' && ft_strchr(current->value, '$'))
-		handle_double_quotes(current);
-	else
-	{
-		expanded = expand_variable(current->value);
-		free(current->value);
-		current->value = expanded;
-	}
-}
-
-t_token	*expander(t_token *tokens)
-{
-	t_token	*current;
-
-	current = tokens;
-	while (current)
-	{
-		if (current->value && current->type == TOKEN_WORD)
-			handle_word_token(current);
-		current = current->next;
-	}
-	return (tokens);
-}
