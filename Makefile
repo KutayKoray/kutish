@@ -6,7 +6,16 @@ CFLAGS = -Wall -Wextra -Werror -I/opt/homebrew/opt/readline/include \
 LDFLAGS = -L/opt/homebrew/opt/readline/lib libft/libft.a ft_printf/ft_printf.a
 RLFLAGS = -lreadline -lcurses
 
-SRCS = main.c signals.c expander.c helper.c quote_checker.c tokenizer.c merge_tokens.c
+SRCS = 	main.c \
+		signals.c \
+		expander.c \
+		helper.c \
+		quote_checker.c \
+		tokenizer.c \
+		merge_tokens.c \
+		parser.c \
+		split_expanded_tokens.c \
+		
 OBJS = $(SRCS:.c=.o)
 
 HEADER = minishell.h

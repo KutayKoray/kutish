@@ -41,10 +41,8 @@ int	main(void)
 
 		expand_token_list(tokens);
 
-		trim_token_quotes(tokens);
-
 		printf("--------------------------------\n");
-		printf("Cleaned...\n");
+		printf("Expanded...\n");
 		tmp = tokens;
 		while (tmp)
 		{
@@ -53,6 +51,30 @@ int	main(void)
 		}
 		printf("--------------------------------\n");
 
+		trim_token_quotes(tokens);
+
+		printf("--------------------------------\n");
+		printf("Trimmed...\n");
+		tmp = tokens;
+		while (tmp)
+		{
+			printf("Token: %-10s | Type: %d | Joined: %d\n", tmp->value, tmp->type, tmp->joined);
+			tmp = tmp->next;
+		}
+		printf("--------------------------------\n");
+
+		split_expanded_tokens(&tokens);
+
+		printf("--------------------------------\n");
+		printf("Splitted...\n");
+		tmp = tokens;
+		while (tmp)
+		{
+			printf("Token: %-10s | Type: %d | Joined: %d\n", tmp->value, tmp->type, tmp->joined);
+			tmp = tmp->next;
+		}
+		printf("--------------------------------\n");
+		
 		merge_joined_tokens(&tokens);
 		
 		printf("--------------------------------\n");
@@ -63,6 +85,12 @@ int	main(void)
 			printf("Token: |%s| Type: %d | Joined: %d\n", tmp->value, tmp->type, tmp->joined);
 			tmp = tmp->next;
 		}
+		printf("--------------------------------\n");
+
+		t_cmd	*cmds = parse_tokens(tokens);
+
+		printf("--------------------------------\n");
+		print_cmd_list(cmds);		
 		printf("--------------------------------\n");
 
 		free_token_list(tokens);

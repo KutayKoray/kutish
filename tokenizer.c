@@ -27,13 +27,9 @@ static t_token_type	get_operator_type(const char *s)
 	return (T_WORD);
 }
 
-static void	add_token(t_token **head, char *value, t_token_type type,
-		int joined)
+static void	add_token(t_token **head, char *value, t_token_type type, int joined)
 {
-	t_token	*new;
-	t_token	*cur;
-
-	new = malloc(sizeof(t_token));
+	t_token *new = malloc(sizeof(t_token));
 	if (!new)
 		return ;
 	new->value = value;
@@ -44,7 +40,7 @@ static void	add_token(t_token **head, char *value, t_token_type type,
 		*head = new;
 	else
 	{
-		cur = *head;
+		t_token *cur = *head;
 		while (cur->next)
 			cur = cur->next;
 		cur->next = new;
@@ -53,9 +49,7 @@ static void	add_token(t_token **head, char *value, t_token_type type,
 
 static int	read_quoted(const char *str, int start, char quote)
 {
-	int	i;
-
-	i = start + 1;
+	int i = start + 1;
 	while (str[i] && str[i] != quote)
 		i++;
 	if (str[i] == quote)
@@ -65,17 +59,13 @@ static int	read_quoted(const char *str, int start, char quote)
 
 static int	read_plain(const char *str, int start)
 {
-	int	i;
-
-	i = start;
-	while (str[i] && str[i] != '\'' && str[i] != '"' && str[i] != ' '
-		&& !is_operator_char(str[i]))
+	int i = start;
+	while (str[i] && str[i] != '\'' && str[i] != '"' && str[i] != ' ' && !is_operator_char(str[i]))
 		i++;
 	return (i);
 }
 
-static void	tokenize_segment(t_token **head, const char *str, int start,
-		int end, int joined)
+static void	tokenize_segment(t_token **head, const char *str, int start, int end, int joined)
 {
 	if (start < end)
 		add_token(head, strndup(&str[start], end - start), T_WORD, joined);
@@ -83,15 +73,10 @@ static void	tokenize_segment(t_token **head, const char *str, int start,
 
 t_token	*tokenize(const char *input)
 {
-	t_token	*list;
-	int		i;
-	int		prev_was_space;
-	int		len;
-	int		start;
+	t_token	*list = NULL;
+	int		i = 0;
+	int		prev_was_space = 1;
 
-	list = NULL;
-	i = 0;
-	prev_was_space = 1;
 	while (input[i])
 	{
 		if (input[i] == ' ')
@@ -101,9 +86,8 @@ t_token	*tokenize(const char *input)
 		}
 		else if (is_operator_char(input[i]))
 		{
-			len = operator_length(&input[i]);
-			add_token(&list, strndup(&input[i], len),
-				get_operator_type(&input[i]), 0);
+			int len = operator_length(&input[i]);
+			add_token(&list, strndup(&input[i], len), get_operator_type(&input[i]), 0);
 			i += len;
 			prev_was_space = 1;
 		}
@@ -111,7 +95,7 @@ t_token	*tokenize(const char *input)
 		{
 			while (input[i] && input[i] != ' ' && !is_operator_char(input[i]))
 			{
-				start = i;
+				int start = i;
 				if (input[i] == '\'' || input[i] == '"')
 					i = read_quoted(input, i, input[i]);
 				else
@@ -126,7 +110,7 @@ t_token	*tokenize(const char *input)
 
 void	free_token_list(t_token *tokens)
 {
-	t_token	*tmp;
+	t_token *tmp;
 
 	while (tokens)
 	{
