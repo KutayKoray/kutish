@@ -35,7 +35,7 @@ FT_PRINTF = $(FT_PRINTF_DIR)/ft_printf.a
 all: $(LIBFT) $(FT_PRINTF) $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $(NAME) $(OBJS) $(RLFLAGS)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LDFLAGS) $(RLFLAGS)
 
 %.o: %.c $(HEADER)
 	$(CC) $(CFLAGS) -c $< -o $@
