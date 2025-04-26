@@ -1,40 +1,72 @@
 #include "minishell.h"
 
-static void	ft_free_strarray(char **arr)
+static t_token	*create_token_list_from_split(char **parts)
 {
-	int	i;
+	t_token	*new_tokens;
+	t_token	*last;
+	t_token	*t;
+	int		i;
 
+	new_tokens = NULL;
+	last = NULL;
 	i = 0;
-	if (!arr)
-		return ;
-	while (arr[i])
-		free(arr[i++]);
-	free(arr);
+	while (parts[i])
+	{
+		t = create_token(parts[i], T_WORD, 0);
+		if (!new_tokens)
+			new_tokens = t;
+		else
+			last->next = t;
+		last = t;
+		i++;
+	}
+	return (new_tokens);
 }
 
-static t_token	*create_token(const char *value, t_token_type type, int joined)
+static void	replace_current_with_split(t_token **head, t_token *cur,
+		t_token *prev, t_token *new_tokens)
 {
-	t_token	*new;
+	t_token	*last;
 
-	new = malloc(sizeof(t_token));
-	if (!new)
-		return (NULL);
-	new->value = ft_strdup(value);
-	new->type = type;
-	new->joined = joined;
-	new->next = NULL;
-	return (new);
+	last = new_tokens;
+	while (last && last->next)
+		last = last->next;
+	if (prev)
+		prev->next = new_tokens;
+	else
+		*head = new_tokens;
+	last->next = cur->next;
+	free(cur->value);
+	free(cur);
+}
+
+static void	process_token_if_split_needed(t_token **head, t_token **cur,
+		t_token **prev)
+{
+	t_token	*new_tokens;
+	char	**parts;
+
+	parts = ft_split((*cur)->value, ' ');
+	if (!parts)
+		return ;
+	new_tokens = create_token_list_from_split(parts);
+	replace_current_with_split(head, *cur, *prev, new_tokens);
+	ft_free_strarray(parts);
+	*cur = new_tokens;
+}
+
+static void	advance_cursor_after_split(t_token **cur)
+{
+	while (*cur && (*cur)->next)
+		*cur = (*cur)->next;
+	if (*cur)
+		*cur = (*cur)->next;
 }
 
 void	split_expanded_tokens(t_token **head)
 {
 	t_token	*cur;
 	t_token	*prev;
-	t_token	*new_tokens;
-	t_token	*last;
-	t_token	*t;
-	char	**parts;
-	int		i;
 
 	cur = *head;
 	prev = NULL;
@@ -42,31 +74,8 @@ void	split_expanded_tokens(t_token **head)
 	{
 		if (cur->type == T_WORD && ft_strchr(cur->value, ' '))
 		{
-			parts = ft_split(cur->value, ' ');
-			if (!parts)
-				return ;
-			new_tokens = NULL;
-			last = NULL;
-			i = 0;
-			while (parts[i])
-			{
-				t = create_token(parts[i], T_WORD, 0);
-				if (!new_tokens)
-					new_tokens = t;
-				else
-					last->next = t;
-				last = t;
-				i++;
-			}
-			free(cur->value);
-			free(cur);
-			if (prev)
-				prev->next = new_tokens;
-			else
-				*head = new_tokens;
-			last->next = cur->next;
-			cur = last->next;
-			ft_free_strarray(parts);
+			process_token_if_split_needed(head, &cur, &prev);
+			advance_cursor_after_split(&cur);
 		}
 		else
 		{

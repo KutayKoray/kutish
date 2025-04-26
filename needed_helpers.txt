@@ -1,1 +1,1 @@
-strndup
+ft_strndup

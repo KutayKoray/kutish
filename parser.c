@@ -1,20 +1,28 @@
 #include "minishell.h"
 
-static t_cmd	*create_cmd(void)
+static void	add_outfile(char ***outfiles, char *value)
 {
-	t_cmd	*cmd;
+	int		len;
+	int		i;
+	char	**new;
 
-	cmd = malloc(sizeof(t_cmd));
-	if (!cmd)
-		return (NULL);
-	cmd->argv = NULL;
-	cmd->infile = NULL;
-	cmd->outfile = NULL;
-	cmd->heredoc_eof = NULL;
-	cmd->append = 0;
-	cmd->is_heredoc = 0;
-	cmd->next = NULL;
-	return (cmd);
+	len = 0;
+	i = 0;
+	if (*outfiles)
+		while ((*outfiles)[len])
+			len++;
+	new = malloc(sizeof(char *) * (len + 2));
+	if (!new)
+		return ;
+	while (i < len)
+	{
+		new[i] = (*outfiles)[i];
+		i++;
+	}
+	new[len] = ft_strdup(value);
+	new[len + 1] = NULL;
+	free(*outfiles);
+	*outfiles = new;
 }
 
 static void	add_arg(char ***argv, char *value)
@@ -45,60 +53,69 @@ static void	add_arg(char ***argv, char *value)
 	*argv = new;
 }
 
+static void	handle_word_and_redir(t_token **tokens, t_cmd *cur)
+{
+	if ((*tokens)->type == T_WORD)
+		add_arg(&cur->argv, (*tokens)->value);
+	else if ((*tokens)->type == T_REDIN && (*tokens)->next)
+	{
+		cur->infile = ft_strdup((*tokens)->next->value);
+		*tokens = (*tokens)->next;
+	}
+	else if ((*tokens)->type == T_REDOUT && (*tokens)->next)
+	{
+		add_outfile(&cur->outfiles, (*tokens)->next->value);
+		cur->append = 0;
+		*tokens = (*tokens)->next;
+	}
+	else if ((*tokens)->type == T_APPEND && (*tokens)->next)
+	{
+		add_outfile(&cur->outfiles, (*tokens)->next->value);
+		cur->append = 1;
+		*tokens = (*tokens)->next;
+	}
+}
+
+static t_cmd	*handle_heredoc_and_pipe(t_token **tokens, t_cmd *cur)
+{
+	if ((*tokens)->type == T_HEREDOC && (*tokens)->next)
+	{
+		cur->heredoc_eof = ft_strdup((*tokens)->next->value);
+		cur->is_heredoc = 1;
+		*tokens = (*tokens)->next;
+	}
+	else if ((*tokens)->type == T_PIPE)
+	{
+		cur->next = create_cmd();
+		cur = cur->next;
+	}
+	return (cur);
+}
+
 t_cmd	*parse_tokens(t_token *tokens)
 {
-	t_cmd	*head = NULL;
-	t_cmd	*cur = create_cmd();
+	t_cmd	*head;
+	t_cmd	*cur;
 
+	cur = create_cmd();
 	if (!cur)
 		return (NULL);
 	head = cur;
-
 	while (tokens)
 	{
-		if (tokens->type == T_WORD)
-		{
-			add_arg(&cur->argv, tokens->value);
-		}
-		else if (tokens->type == T_REDIN && tokens->next)
-		{
-			cur->infile = ft_strdup(tokens->next->value);
-			tokens = tokens->next;
-		}
-		else if (tokens->type == T_REDOUT && tokens->next)
-		{
-			cur->outfile = ft_strdup(tokens->next->value);
-			cur->append = 0;
-			tokens = tokens->next;
-		}
-		else if (tokens->type == T_APPEND && tokens->next)
-		{
-			cur->outfile = ft_strdup(tokens->next->value);
-			cur->append = 1;
-			tokens = tokens->next;
-		}
-		else if (tokens->type == T_HEREDOC && tokens->next)
-		{
-			cur->heredoc_eof = ft_strdup(tokens->next->value);
-			cur->is_heredoc = 1;
-			tokens = tokens->next;
-		}
-		else if (tokens->type == T_PIPE)
-		{
-			cur->next = create_cmd();
-			cur = cur->next;
-			if (!cur)
-				return (head);
-		}
+		handle_word_and_redir(&tokens, cur);
+		cur = handle_heredoc_and_pipe(&tokens, cur);
 		tokens = tokens->next;
 	}
 	return (head);
 }
 
-void print_cmd_list(t_cmd *cmd)
+void	print_cmd_list(t_cmd *cmd)
 {
-	t_cmd	*tmp = cmd;
+	t_cmd	*tmp;
+	int		j;
 
+	tmp = cmd;
 	printf("--------------------------------\n");
 	while (tmp)
 	{
@@ -110,8 +127,15 @@ void print_cmd_list(t_cmd *cmd)
 		}
 		if (tmp->infile)
 			printf("Infile: %s\n", tmp->infile);
-		if (tmp->outfile)
-			printf("Outfile: %s\n", tmp->outfile);
+		if (tmp->outfiles)
+		{
+			j = 0;
+			while (tmp->outfiles[j])
+			{
+				printf("Outfile[%d]: %s\n", j, tmp->outfiles[j]);
+				j++;
+			}
+		}
 		if (tmp->heredoc_eof)
 			printf("Heredoc EOF: %s\n", tmp->heredoc_eof);
 		if (tmp->append)

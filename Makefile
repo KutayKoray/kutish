@@ -15,7 +15,13 @@ SRCS = 	main.c \
 		merge_tokens.c \
 		parser.c \
 		split_expanded_tokens.c \
+		parser_init.c \
+		expander_utils.c \
+		split_expanded_tokens_utils.c \
+		tokenizer_utils.c \
+		tokenizer_helpers.c \
 		
+
 OBJS = $(SRCS:.c=.o)
 
 HEADER = minishell.h
