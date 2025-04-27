@@ -2,8 +2,8 @@ NAME = minishell
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -I/opt/homebrew/opt/readline/include \
-		 -Ilibft -Ift_printf
-LDFLAGS = -L/opt/homebrew/opt/readline/lib libft/libft.a ft_printf/ft_printf.a
+		 -Ilibft
+LDFLAGS = -L/opt/homebrew/opt/readline/lib libft/libft.a
 RLFLAGS = -lreadline -lcurses
 
 SRCS = 	main.c \
@@ -27,12 +27,10 @@ OBJS = $(SRCS:.c=.o)
 HEADER = minishell.h
 
 LIBFT_DIR = libft
-FT_PRINTF_DIR = ft_printf
 
 LIBFT = $(LIBFT_DIR)/libft.a
-FT_PRINTF = $(FT_PRINTF_DIR)/ft_printf.a
 
-all: $(LIBFT) $(FT_PRINTF) $(NAME)
+all: $(LIBFT) $(NAME)
 
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LDFLAGS) $(RLFLAGS)
@@ -43,18 +41,13 @@ $(NAME): $(OBJS)
 $(LIBFT):
 	make -C $(LIBFT_DIR)
 
-$(FT_PRINTF):
-	make -C $(FT_PRINTF_DIR)
-
 clean:
 	rm -f $(OBJS)
 	make clean -C $(LIBFT_DIR)
-	make clean -C $(FT_PRINTF_DIR)
 
 fclean: clean
 	rm -f $(NAME)
 	make fclean -C $(LIBFT_DIR)
-	make fclean -C $(FT_PRINTF_DIR)
 
 re: fclean all
 
