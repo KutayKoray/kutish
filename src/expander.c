@@ -3,18 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkoray <kkoray@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:32 by kkoray            #+#    #+#             */
-/*   Updated: 2025/04/26 12:32:33 by kkoray           ###   ########.fr       */
+/*   Updated: 2025/04/27 21:23:03 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
 #include "minishell.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 int			g_exit_status = 0;
 
@@ -29,7 +25,7 @@ static char	*expand_variable(const char *str, size_t *i)
 	if (str[start] == '?')
 	{
 		(*i)++;
-		return (ft_itoa(g_exit_status, 10));
+		return (ft_itoa(g_exit_status));
 	}
 	if (!str[start] || !(ft_isalpha(str[start]) || str[start] == '_'))
 		return (ft_strdup("$"));
