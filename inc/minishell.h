@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:46 by kkoray            #+#    #+#             */
-/*   Updated: 2025/04/27 21:25:36 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/04/29 17:44:41 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ void				trim_token_quotes(t_token *tokens);
 void				free_token_list(t_token *tokens);
 void				trim_token_quotes(t_token *tokens);
 void				merge_joined_tokens(t_token **tokens);
-void				print_cmd_list(t_cmd *cmd);
 void				split_expanded_tokens(t_token **head);
 void				ft_free_strarray(char **arr);
 void				add_token(t_token **head, char *value, t_token_type type,
@@ -84,7 +83,6 @@ char				*strappend_str(char *str, const char *suffix);
 char				*get_env_value(const char *key);
 char				*ft_strndup(const char *s, size_t n);
 
-int					ft_isalnum(int c);
 int					quote_checker(const char *input);
 int					read_quoted(const char *str, int start, char quote);
 int					is_operator_char(char c);

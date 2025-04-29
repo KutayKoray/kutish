@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkoray <kkoray@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:52 by kkoray            #+#    #+#             */
-/*   Updated: 2025/04/26 12:32:53 by kkoray           ###   ########.fr       */
+/*   Updated: 2025/04/29 17:44:05 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,45 +120,4 @@ t_cmd	*parse_tokens(t_token *tokens)
 		tokens = tokens->next;
 	}
 	return (head);
-}
-
-void	print_cmd_list(t_cmd *cmd)
-{
-	t_cmd	*tmp;
-	int		j;
-
-	tmp = cmd;
-	printf("--------------------------------\n");
-	while (tmp)
-	{
-		printf("Command:\n");
-		if (tmp->argv)
-		{
-			for (int i = 0; tmp->argv[i]; i++)
-				printf("Arg[%d]: %s\n", i, tmp->argv[i]);
-		}
-		if (tmp->infile)
-			printf("Infile: %s\n", tmp->infile);
-		if (tmp->outfiles)
-		{
-			j = 0;
-			while (tmp->outfiles[j])
-			{
-				printf("Outfile[%d]: %s\n", j, tmp->outfiles[j]);
-				j++;
-			}
-		}
-		if (tmp->heredoc_eof)
-			printf("Heredoc EOF: %s\n", tmp->heredoc_eof);
-		if (tmp->append)
-			printf("Append: %d\n", tmp->append);
-		if (tmp->is_heredoc)
-			printf("Is Heredoc: %d\n", tmp->is_heredoc);
-		if (tmp->next)
-			printf("Next Command:\n");
-		else
-			printf("End of Command List\n");
-		tmp = tmp->next;
-	}
-	printf("--------------------------------\n");
 }
