@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:32 by kkoray            #+#    #+#             */
-/*   Updated: 2025/05/01 01:43:00 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/01 01:44:48 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,7 +184,7 @@ void	expand_cmd_path(t_token **tokens)
 		if (tmp->type == T_WORD && is_first_token)
 		{
 			is_first_token = 0;
-			expanded = find_path(tmp->value);
+			expanded = find_cmd_path(tmp->value);
 			if (!expanded)
 			{
 				tmp = tmp->next;
