@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:52 by kkoray            #+#    #+#             */
-/*   Updated: 2025/04/29 17:44:05 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/04/30 22:33:07 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,4 +120,24 @@ t_cmd	*parse_tokens(t_token *tokens)
 		tokens = tokens->next;
 	}
 	return (head);
+}
+
+void	free_cmd_list(t_cmd *cmds)
+{
+	t_cmd	*tmp;
+
+	while (cmds)
+	{
+		tmp = cmds;
+		cmds = cmds->next;
+		if (tmp->argv)
+			ft_free_strarray(tmp->argv);
+		if (tmp->outfiles)
+			ft_free_strarray(tmp->outfiles);
+		if (tmp->infile)
+			free(tmp->infile);
+		if (tmp->heredoc_eof)
+			free(tmp->heredoc_eof);
+		free(tmp);
+	}
 }

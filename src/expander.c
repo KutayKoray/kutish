@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:32 by kkoray            #+#    #+#             */
-/*   Updated: 2025/04/27 21:23:03 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/04/30 21:41:06 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ char	*expand_input(const char *input)
 {
 	t_expand_ctx	ctx;
 	size_t			i;
+	char			*tmp;
 
 	ctx.result = calloc(1, 1);
 	ctx.in_single_quote = 0;
@@ -83,7 +84,13 @@ char	*expand_input(const char *input)
 		else if (input[i] == '$')
 			handle_dollar(input, &i, &ctx);
 		else
-			ctx.result = strappend_char(ctx.result, input[i++]);
+		{
+			// ctx.result = strappend_char(ctx.result, input[i++]);
+			tmp = strappend_char(ctx.result, input[i]);
+			free(ctx.result);
+			ctx.result = tmp;
+			i++;
+		}
 	}
 	return (ctx.result);
 }
@@ -107,6 +114,64 @@ void	expand_token_list(t_token *tokens)
 			expanded = expand_input(tmp->value);
 			free(tmp->value);
 			tmp->value = expanded;
+		}
+		tmp = tmp->next;
+	}
+}
+
+static char *find_path(char *cmd)
+{
+	char	*path;
+	char	*tmp;
+	char	*env_path;
+	char	**paths;
+	int		i;
+
+	env_path = get_env_value("PATH");
+	if (!env_path)
+		return (NULL);
+	paths = ft_split(env_path, ':');
+	i = 0;
+	while (paths[i])
+	{
+		tmp = strappend_str(paths[i], "/");
+		path = strappend_str(tmp, cmd);
+		free(tmp);
+		if (!access(path, F_OK))
+		{
+			i = -1;
+			break ;
+		}
+		free(path);
+		i++;
+	}
+	ft_free_strarray(paths);
+	if (i != -1)
+		return (NULL);
+	return (path);
+}
+
+void	expand_paths(t_token **tokens)
+{
+	t_token	*tmp;
+	char	*expanded;
+	int		is_cmd;
+
+	is_cmd = 1;
+	tmp = *tokens;
+	while (tmp)
+	{
+		if (tmp->type == T_WORD && is_cmd)
+		{
+			expanded = find_path(tmp->value);
+			if (!expanded)
+			{
+				tmp = tmp->next;
+				continue ;
+			}
+			free(tmp->value);
+			tmp->value = expanded;
+			is_cmd = 0;
 		}
 		tmp = tmp->next;
 	}
