@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:32 by kkoray            #+#    #+#             */
-/*   Updated: 2025/04/30 21:41:06 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/01 01:43:00 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,23 @@ static void	handle_dollar(const char *input, size_t *i, t_expand_ctx *ctx)
 	}
 }
 
+static void	handle_tilde(t_expand_ctx *ctx, size_t *i)
+{
+	char	*home;
+	char	*tmp;
+	
+	home = get_env_value("HOME");
+	if (home && *home)
+		// ctx->result = strappend_str(ctx->result, home);
+		tmp = strappend_str(ctx->result, home);
+	else
+		// ctx->result = strappend_char(ctx->result, '~');
+		tmp = strappend_char(ctx->result, '~');
+	free(ctx->result);
+	ctx->result = tmp;
+	(*i)++;
+}
+
 char	*expand_input(const char *input)
 {
 	t_expand_ctx	ctx;
@@ -83,9 +100,10 @@ char	*expand_input(const char *input)
 			handle_quotes(input, &i, &ctx);
 		else if (input[i] == '$')
 			handle_dollar(input, &i, &ctx);
+		else if (input[i] == '~')
+			handle_tilde(&ctx, &i);
 		else
 		{
-			// ctx.result = strappend_char(ctx.result, input[i++]);
 			tmp = strappend_char(ctx.result, input[i]);
 			free(ctx.result);
 			ctx.result = tmp;
@@ -119,7 +137,7 @@ void	expand_token_list(t_token *tokens)
 	}
 }
 
-static char *find_path(char *cmd)
+static char *find_cmd_path(char *cmd)
 {
 	char	*path;
 	char	*tmp;
@@ -129,6 +147,8 @@ static char *find_path(char *cmd)
 
 	env_path = get_env_value("PATH");
 	if (!env_path)
+		return (NULL);
+	if (ft_strchr(cmd, '/'))
 		return (NULL);
 	paths = ft_split(env_path, ':');
 	i = 0;
@@ -151,18 +171,19 @@ static char *find_path(char *cmd)
 	return (path);
 }
 
-void	expand_paths(t_token **tokens)
+void	expand_cmd_path(t_token **tokens)
 {
 	t_token	*tmp;
 	char	*expanded;
-	int		is_cmd;
+	int		is_first_token;
 
-	is_cmd = 1;
 	tmp = *tokens;
+	is_first_token = 1;
 	while (tmp)
 	{
-		if (tmp->type == T_WORD && is_cmd)
+		if (tmp->type == T_WORD && is_first_token)
 		{
+			is_first_token = 0;
 			expanded = find_path(tmp->value);
 			if (!expanded)
 			{
@@ -171,7 +192,6 @@ void	expand_paths(t_token **tokens)
 			}
 			free(tmp->value);
 			tmp->value = expanded;
-			is_cmd = 0;
 		}
 		tmp = tmp->next;
 	}

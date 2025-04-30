@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:46 by kkoray            #+#    #+#             */
-/*   Updated: 2025/04/30 22:46:58 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/01 01:43:20 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void				free_cmd_list(t_cmd *cmds);
 void				trim_token_quotes(t_token *tokens);
 void				merge_joined_tokens(t_token **tokens);
 void				split_expanded_tokens(t_token **head);
-void				expand_paths(t_token **tokens);
+void				expand_cmd_path(t_token **tokens);
 void				ft_free_strarray(char **arr);
 void				add_token(t_token **head, char *value, t_token_type type,
 						int joined);
