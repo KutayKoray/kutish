@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:32 by kkoray            #+#    #+#             */
-/*   Updated: 2025/05/01 08:45:37 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/01 08:57:39 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static void	handle_tilde(const char *input, size_t *i, t_expand_ctx *ctx)
 {
 	char	*home;
 	char	*tmp;
-	
+
 	home = get_env_value("HOME");
 	if (input[*i + 1] || (*i && input[*i - 1]))
 		tmp = strappend_char(ctx->result, input[*i]);
@@ -130,66 +130,6 @@ void	expand_token_list(t_token *tokens)
 				continue ;
 			}
 			expanded = expand_input(tmp->value);
-			free(tmp->value);
-			tmp->value = expanded;
-		}
-		tmp = tmp->next;
-	}
-}
-
-static char *find_cmd_path(char *cmd)
-{
-	char	*path;
-	char	*tmp;
-	char	*env_path;
-	char	**paths;
-	int		i;
-
-	env_path = get_env_value("PATH");
-	if (!env_path)
-		return (NULL);
-	if (ft_strchr(cmd, '/'))
-		return (NULL);
-	paths = ft_split(env_path, ':');
-	i = 0;
-	while (paths[i])
-	{
-		tmp = strappend_str(paths[i], "/");
-		path = strappend_str(tmp, cmd);
-		free(tmp);
-		if (!access(path, F_OK))
-		{
-			i = -1;
-			break ;
-		}
-		free(path);
-		i++;
-	}
-	ft_free_strarray(paths);
-	if (i != -1)
-		return (NULL);
-	return (path);
-}
-
-void	expand_cmd_path(t_token **tokens)
-{
-	t_token	*tmp;
-	char	*expanded;
-	int		is_first_token;
-
-	tmp = *tokens;
-	is_first_token = 1;
-	while (tmp)
-	{
-		if (tmp->type == T_WORD && is_first_token)
-		{
-			is_first_token = 0;
-			expanded = find_cmd_path(tmp->value);
-			if (!expanded)
-			{
-				tmp = tmp->next;
-				continue ;
-			}
 			free(tmp->value);
 			tmp->value = expanded;
 		}

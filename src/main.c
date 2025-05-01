@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:38 by kkoray            #+#    #+#             */
-/*   Updated: 2025/05/01 01:44:38 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/01 08:57:02 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,9 +116,6 @@ int	main(int argc, char **argv, char **envp)
 		merge_joined_tokens(&tokens);
 		if (debug)
 			debug_print_cmd(tokens, "Merged...");
-		expand_cmd_path(&tokens);
-		if (debug)
-			debug_print_cmd(tokens, "Expanded paths...");
 		cmds = parse_tokens(tokens);
 		if (debug)
 			print_cmd_list(cmds);
