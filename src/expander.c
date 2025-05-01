@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:32 by kkoray            #+#    #+#             */
-/*   Updated: 2025/04/27 21:23:03 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/01 08:57:39 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,28 @@ static void	handle_dollar(const char *input, size_t *i, t_expand_ctx *ctx)
 	}
 }
 
+static void	handle_tilde(const char *input, size_t *i, t_expand_ctx *ctx)
+{
+	char	*home;
+	char	*tmp;
+
+	home = get_env_value("HOME");
+	if (input[*i + 1] || (*i && input[*i - 1]))
+		tmp = strappend_char(ctx->result, input[*i]);
+	else if (home && *home)
+		tmp = strappend_str(ctx->result, home);
+	else
+		tmp = strappend_char(ctx->result, '~');
+	free(ctx->result);
+	ctx->result = tmp;
+	(*i)++;
+}
+
 char	*expand_input(const char *input)
 {
 	t_expand_ctx	ctx;
 	size_t			i;
+	char			*tmp;
 
 	ctx.result = calloc(1, 1);
 	ctx.in_single_quote = 0;
@@ -82,8 +100,15 @@ char	*expand_input(const char *input)
 			handle_quotes(input, &i, &ctx);
 		else if (input[i] == '$')
 			handle_dollar(input, &i, &ctx);
+		else if (input[i] == '~')
+			handle_tilde(input, &i, &ctx);
 		else
-			ctx.result = strappend_char(ctx.result, input[i++]);
+		{
+			tmp = strappend_char(ctx.result, input[i]);
+			free(ctx.result);
+			ctx.result = tmp;
+			i++;
+		}
 	}
 	return (ctx.result);
 }

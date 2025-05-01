@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkoray <kkoray@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:52 by kkoray            #+#    #+#             */
-/*   Updated: 2025/04/26 12:32:53 by kkoray           ###   ########.fr       */
+/*   Updated: 2025/04/30 22:33:07 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,43 +122,22 @@ t_cmd	*parse_tokens(t_token *tokens)
 	return (head);
 }
 
-void	print_cmd_list(t_cmd *cmd)
+void	free_cmd_list(t_cmd *cmds)
 {
 	t_cmd	*tmp;
-	int		j;
 
-	tmp = cmd;
-	printf("--------------------------------\n");
-	while (tmp)
+	while (cmds)
 	{
-		printf("Command:\n");
+		tmp = cmds;
+		cmds = cmds->next;
 		if (tmp->argv)
-		{
-			for (int i = 0; tmp->argv[i]; i++)
-				printf("Arg[%d]: %s\n", i, tmp->argv[i]);
-		}
-		if (tmp->infile)
-			printf("Infile: %s\n", tmp->infile);
+			ft_free_strarray(tmp->argv);
 		if (tmp->outfiles)
-		{
-			j = 0;
-			while (tmp->outfiles[j])
-			{
-				printf("Outfile[%d]: %s\n", j, tmp->outfiles[j]);
-				j++;
-			}
-		}
+			ft_free_strarray(tmp->outfiles);
+		if (tmp->infile)
+			free(tmp->infile);
 		if (tmp->heredoc_eof)
-			printf("Heredoc EOF: %s\n", tmp->heredoc_eof);
-		if (tmp->append)
-			printf("Append: %d\n", tmp->append);
-		if (tmp->is_heredoc)
-			printf("Is Heredoc: %d\n", tmp->is_heredoc);
-		if (tmp->next)
-			printf("Next Command:\n");
-		else
-			printf("End of Command List\n");
-		tmp = tmp->next;
+			free(tmp->heredoc_eof);
+		free(tmp);
 	}
-	printf("--------------------------------\n");
 }
