@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helper.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: kkoray <kkoray@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:34 by kkoray            #+#    #+#             */
-/*   Updated: 2025/04/27 21:23:06 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/01 16:12:10 by kkoray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,4 +94,13 @@ char	*ft_strndup(const char *s, size_t n)
 	}
 	dup[i] = '\0';
 	return (dup);
+}
+
+int ft_strcmp(const char *s1, const char *s2)
+{
+	int i = 0;
+
+	while((s1[i] == s2[i]) && s1[i] && s2[i])
+		i++;
+	return (s1[i]-s2[i]);
 }

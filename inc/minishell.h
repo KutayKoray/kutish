@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: kkoray <kkoray@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:46 by kkoray            #+#    #+#             */
-/*   Updated: 2025/05/01 08:56:58 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/01 16:16:47 by kkoray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ typedef struct s_cmd
 	char			**argv;
 	char			**outfiles;
 	char			*infile;
-	char			*heredoc_eof;
+	char			**heredoc_eof;
+	char			*heredoc_buffer;
 	int				append;
 	int				is_heredoc;
 	struct s_cmd	*next;
@@ -77,12 +78,14 @@ void				split_expanded_tokens(t_token **head);
 void				ft_free_strarray(char **arr);
 void				add_token(t_token **head, char *value, t_token_type type,
 						int joined);
+void				add_heredoc(char ***heredocs, const char *value);
 
 char				*expand_input(const char *input);
 char				*strappend_char(char *str, char c);
 char				*strappend_str(char *str, const char *suffix);
 char				*get_env_value(const char *key);
 char				*ft_strndup(const char *s, size_t n);
+char				*get_heredoc(t_cmd *cmd);
 
 int					quote_checker(const char *input);
 int					read_quoted(const char *str, int start, char quote);
@@ -90,6 +93,7 @@ int					is_operator_char(char c);
 int					read_plain(const char *str, int start);
 int					operator_length(const char *s);
 int					skip_space(const char *input, int i, int *prev_was_space);
+int					ft_strcmp(const char *s1, const char *s2);
 
 t_token				*tokenize(const char *input);
 t_token				*create_token(const char *value, t_token_type type,

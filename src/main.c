@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: kkoray <kkoray@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:38 by kkoray            #+#    #+#             */
-/*   Updated: 2025/05/01 08:57:02 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/01 16:38:48 by kkoray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,18 @@ static void print_cmd_list(t_cmd *cmd)
 				printf("│ Outfile[%d]                    │ %-42s │\n", j, tmp->outfiles[j]);
 		}
 		if (tmp->heredoc_eof)
-			printf("│ Heredoc EOF                   │ %-42s │\n", tmp->heredoc_eof);
+		{
+			int k = 0;
+			while (tmp->heredoc_eof[k])
+			{
+				printf("│ Heredoc[%d]                    │ %-42s │\n", k, tmp->heredoc_eof[k]);
+				k++;
+			}
+		}
 		printf("│ Append                        │ %-42d │\n", tmp->append);
 		printf("│ Is Heredoc                    │ %-42d │\n", tmp->is_heredoc);
+		if (tmp->heredoc_buffer)
+			printf("│ Heredoc Buffer                │ %s │\n", tmp->heredoc_buffer);
 		if (tmp->next)
 		{
 			printf("├───────────────────────────────┼────────────────────────────────────────────┤\n");
@@ -70,6 +79,24 @@ static void debug_print_cmd(t_token *tokens, char *msg)
 		tmp = tmp->next;
 	}
 	printf("╰───────────────────────────────┴───────────┴──────────╯\n");
+}
+
+static void	assign_heredoc_buffers(t_cmd *cmds)
+{
+	t_cmd	*cur;
+	char	*raw;
+
+	cur = cmds;
+	while (cur)
+	{
+		if (cur->is_heredoc)
+		{
+			raw = get_heredoc(cur);
+			cur->heredoc_buffer = expand_input(raw);
+			free(raw);
+		}
+		cur = cur->next;
+	}
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -118,7 +145,10 @@ int	main(int argc, char **argv, char **envp)
 			debug_print_cmd(tokens, "Merged...");
 		cmds = parse_tokens(tokens);
 		if (debug)
-			print_cmd_list(cmds);
+			print_cmd_list(cmds);			
+		assign_heredoc_buffers(cmds);
+		if (debug)
+			print_cmd_list(cmds);			
 
 		free_cmd_list(cmds);
 		free_token_list(tokens);
