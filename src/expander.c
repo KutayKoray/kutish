@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:32 by kkoray            #+#    #+#             */
-/*   Updated: 2025/05/01 01:44:48 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/01 08:45:37 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,17 +67,17 @@ static void	handle_dollar(const char *input, size_t *i, t_expand_ctx *ctx)
 	}
 }
 
-static void	handle_tilde(t_expand_ctx *ctx, size_t *i)
+static void	handle_tilde(const char *input, size_t *i, t_expand_ctx *ctx)
 {
 	char	*home;
 	char	*tmp;
 	
 	home = get_env_value("HOME");
-	if (home && *home)
-		// ctx->result = strappend_str(ctx->result, home);
+	if (input[*i + 1] || (*i && input[*i - 1]))
+		tmp = strappend_char(ctx->result, input[*i]);
+	else if (home && *home)
 		tmp = strappend_str(ctx->result, home);
 	else
-		// ctx->result = strappend_char(ctx->result, '~');
 		tmp = strappend_char(ctx->result, '~');
 	free(ctx->result);
 	ctx->result = tmp;
@@ -101,7 +101,7 @@ char	*expand_input(const char *input)
 		else if (input[i] == '$')
 			handle_dollar(input, &i, &ctx);
 		else if (input[i] == '~')
-			handle_tilde(&ctx, &i);
+			handle_tilde(input, &i, &ctx);
 		else
 		{
 			tmp = strappend_char(ctx.result, input[i]);
