@@ -36,7 +36,7 @@ SRCS		= 	main.c \
 			split_expanded_tokens_utils.c \
 			tokenizer_utils.c \
 			tokenizer_helpers.c \
-			add_heredoc.c
+			heredoc.c
 OBJS		= $(addprefix $(BUILD_DIR)/,$(SRCS:.c=.o))
 
 all: $(LIBFT) $(NAME)

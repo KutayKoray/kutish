@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   split_expanded_tokens.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkoray <kkoray@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:33:06 by kkoray            #+#    #+#             */
-/*   Updated: 2025/04/26 12:33:07 by kkoray           ###   ########.fr       */
+/*   Updated: 2025/05/08 22:58:05 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static t_token	*create_token_list_from_split(char **parts)
+static t_token	*create_token_list_from_split(char **parts, t_token *cur)
 {
 	t_token	*new_tokens;
 	t_token	*last;
@@ -24,7 +24,7 @@ static t_token	*create_token_list_from_split(char **parts)
 	i = 0;
 	while (parts[i])
 	{
-		t = create_token(parts[i], T_WORD, 0);
+		t = create_token(parts[i], T_WORD, 0, cur->trimmed);
 		if (!new_tokens)
 			new_tokens = t;
 		else
@@ -61,7 +61,7 @@ static void	process_token_if_split_needed(t_token **head, t_token **cur,
 	parts = ft_split((*cur)->value, ' ');
 	if (!parts)
 		return ;
-	new_tokens = create_token_list_from_split(parts);
+	new_tokens = create_token_list_from_split(parts, *cur);
 	replace_current_with_split(head, *cur, *prev, new_tokens);
 	ft_free_strarray(parts);
 	*cur = new_tokens;
@@ -86,6 +86,12 @@ void	split_expanded_tokens(t_token **head)
 	{
 		if (cur->type == T_WORD && ft_strchr(cur->value, ' '))
 		{
+			if (prev->type == T_HEREDOC)
+			{
+				prev = cur;
+				cur = cur->next;
+				continue ;
+			}
 			process_token_if_split_needed(head, &cur, &prev);
 			advance_cursor_after_split(&cur);
 		}

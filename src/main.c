@@ -3,16 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkoray <kkoray@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:38 by kkoray            #+#    #+#             */
-/*   Updated: 2025/05/01 16:38:48 by kkoray           ###   ########.fr       */
+/*   Updated: 2025/05/08 23:06:16 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 #define PROMPT "kutish$ "
+
+static char	*prettify_buffer(char *buffer)
+{
+	char	*tmp;
+	int		i;
+
+	tmp = malloc(sizeof(char) * (ft_strlen(buffer) + 1));
+	if (!tmp)
+		return (NULL);
+	i = 0;
+	while (buffer[i])
+	{
+		if (buffer[i] == '\n')
+			tmp[i] = '\\';
+		else
+			tmp[i] = buffer[i];
+		i++;
+	}
+	tmp[i] = '\0';
+	return (tmp);
+}
 
 static void print_cmd_list(t_cmd *cmd)
 {
@@ -50,8 +71,9 @@ static void print_cmd_list(t_cmd *cmd)
 		}
 		printf("│ Append                        │ %-42d │\n", tmp->append);
 		printf("│ Is Heredoc                    │ %-42d │\n", tmp->is_heredoc);
+		printf("│ Heredoc Expand                │ %-42d │\n", tmp->heredoc_expand);
 		if (tmp->heredoc_buffer)
-			printf("│ Heredoc Buffer                │ %s │\n", tmp->heredoc_buffer);
+			printf("│ Heredoc Buffer                │ %-42s │\n", prettify_buffer(tmp->heredoc_buffer));
 		if (tmp->next)
 		{
 			printf("├───────────────────────────────┼────────────────────────────────────────────┤\n");
@@ -70,16 +92,18 @@ static void debug_print_cmd(t_token *tokens, char *msg)
 
 	tmp = tokens;
 	printf("\n%s\n", msg);
-	printf("╭───────────────────────────────┬───────────┬──────────╮\n");
-	printf("│ %-29s │ %-9s │ %-8s │\n", "Token", "Type", "Joined");
-	printf("├───────────────────────────────┼───────────┼──────────┤\n");
+	printf("╭───────────────────────────────┬───────────┬──────────┬───────────╮\n");
+	printf("│ %-29s │ %-9s │ %-8s │ %-9s │\n", "Token", "Type", "Joined", "Trimmed");
+	printf("├───────────────────────────────┼───────────┼──────────┼───────────┤\n");
 	while (tmp)
 	{
-		printf("│ %-29s │ %-9d │ %-8d │\n", tmp->value, tmp->type, tmp->joined);
+		printf("│ %-29s │ %-9d │ %-8d │ %-9d │\n",
+			tmp->value, tmp->type, tmp->joined, tmp->trimmed);
 		tmp = tmp->next;
 	}
-	printf("╰───────────────────────────────┴───────────┴──────────╯\n");
+	printf("╰───────────────────────────────┴───────────┴──────────┴───────────╯\n");
 }
+
 
 static void	assign_heredoc_buffers(t_cmd *cmds)
 {
@@ -92,8 +116,13 @@ static void	assign_heredoc_buffers(t_cmd *cmds)
 		if (cur->is_heredoc)
 		{
 			raw = get_heredoc(cur);
-			cur->heredoc_buffer = expand_input(raw);
-			free(raw);
+			if (!raw)
+				return ;
+			if (cur->heredoc_expand)
+				cur->heredoc_buffer = expand_input(raw);
+			else
+				cur->heredoc_buffer = raw;
+			// free(raw);
 		}
 		cur = cur->next;
 	}
@@ -145,10 +174,10 @@ int	main(int argc, char **argv, char **envp)
 			debug_print_cmd(tokens, "Merged...");
 		cmds = parse_tokens(tokens);
 		if (debug)
-			print_cmd_list(cmds);			
+			print_cmd_list(cmds);
 		assign_heredoc_buffers(cmds);
 		if (debug)
-			print_cmd_list(cmds);			
+			print_cmd_list(cmds);
 
 		free_cmd_list(cmds);
 		free_token_list(tokens);

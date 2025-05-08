@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkoray <kkoray@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:46 by kkoray            #+#    #+#             */
-/*   Updated: 2025/05/01 16:16:47 by kkoray           ###   ########.fr       */
+/*   Updated: 2025/05/08 23:00:11 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_token
 	char			*value;
 	t_token_type	type;
 	int				joined;
+	int				trimmed;
 	struct s_token	*next;
 }					t_token;
 
@@ -62,6 +63,7 @@ typedef struct s_cmd
 	char			*heredoc_buffer;
 	int				append;
 	int				is_heredoc;
+	int				heredoc_expand;
 	struct s_cmd	*next;
 }					t_cmd;
 
@@ -97,7 +99,7 @@ int					ft_strcmp(const char *s1, const char *s2);
 
 t_token				*tokenize(const char *input);
 t_token				*create_token(const char *value, t_token_type type,
-						int joined);
+						int joined, int trimmed);
 
 t_token_type		get_operator_type(const char *s);
 

@@ -35,7 +35,7 @@ static char	*read_heredoc_input(const char *eof)
 	while (1)
 	{
 		line = readline("> ");
-		if (!line || ft_strcmp(line, eof) == 0)
+		if (!line || !ft_strcmp(line, eof))
 		{
 			free(line);
 			break;
@@ -74,6 +74,11 @@ char	*get_heredoc(t_cmd *cmd)
 		discard_heredoc_inputs(cmd->heredoc_eof, count - 1);
 	last_input = read_heredoc_input(cmd->heredoc_eof[count - 1]);
 	last_new_line = ft_strrchr(last_input, '\n');
+	if (!last_new_line)
+	{
+		free(last_input);
+		return (NULL);
+	}
 	*last_new_line = '\0';
 	return (last_input);
 }

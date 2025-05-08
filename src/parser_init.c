@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkoray <kkoray@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:49 by kkoray            #+#    #+#             */
-/*   Updated: 2025/04/26 12:32:50 by kkoray           ###   ########.fr       */
+/*   Updated: 2025/05/08 19:40:49 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_cmd	*create_cmd(void)
 	cmd->heredoc_eof = NULL;
 	cmd->append = 0;
 	cmd->is_heredoc = 0;
+	cmd->heredoc_buffer = NULL;
 	cmd->next = NULL;
 	return (cmd);
 }
