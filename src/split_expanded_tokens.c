@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:33:06 by kkoray            #+#    #+#             */
-/*   Updated: 2025/05/08 22:58:05 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/09 00:52:40 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	split_expanded_tokens(t_token **head)
 	{
 		if (cur->type == T_WORD && ft_strchr(cur->value, ' '))
 		{
-			if (prev->type == T_HEREDOC)
+			if (prev && prev->type == T_HEREDOC)
 			{
 				prev = cur;
 				cur = cur->next;
