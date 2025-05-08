@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:38 by kkoray            #+#    #+#             */
-/*   Updated: 2025/05/08 23:06:16 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/08 23:10:55 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ static void print_cmd_list(t_cmd *cmd)
 		}
 		printf("│ Append                        │ %-42d │\n", tmp->append);
 		printf("│ Is Heredoc                    │ %-42d │\n", tmp->is_heredoc);
-		printf("│ Heredoc Expand                │ %-42d │\n", tmp->heredoc_expand);
+		if (tmp->is_heredoc)
+			printf("│ Heredoc Expand                │ %-42d │\n", tmp->heredoc_expand);
 		if (tmp->heredoc_buffer)
 			printf("│ Heredoc Buffer                │ %-42s │\n", prettify_buffer(tmp->heredoc_buffer));
 		if (tmp->next)
