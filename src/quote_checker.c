@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote_checker.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkoray <kkoray@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:54 by kkoray            #+#    #+#             */
-/*   Updated: 2025/04/26 12:32:55 by kkoray           ###   ########.fr       */
+/*   Updated: 2025/05/08 22:54:33 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	trim_token_quotes(t_token *tokens)
 			if ((tmp->value[0] == '"' && tmp->value[len - 1] == '"')
 				|| (tmp->value[0] == '\'' && tmp->value[len - 1] == '\''))
 			{
+				tmp->trimmed = 1;
 				trimmed = ft_substr(tmp->value, 1, len - 2);
 				free(tmp->value);
 				tmp->value = trimmed;

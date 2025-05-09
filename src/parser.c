@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkoray <kkoray@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:52 by kkoray            #+#    #+#             */
-/*   Updated: 2025/05/01 15:11:13 by kkoray           ###   ########.fr       */
+/*   Updated: 2025/05/08 23:01:30 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ static t_cmd	*handle_heredoc_and_pipe(t_token **tokens, t_cmd *cur)
 	{
 		add_heredoc(&cur->heredoc_eof, (*tokens)->next->value);
 		cur->is_heredoc = 1;
+		cur->heredoc_expand = !(*tokens)->next->trimmed;
 		*tokens = (*tokens)->next;
 	}
 	else if ((*tokens)->type == T_PIPE)
