@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: kkoray <kkoray@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:38 by kkoray            #+#    #+#             */
-/*   Updated: 2025/05/08 23:10:55 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/11 18:00:41 by kkoray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,12 +167,15 @@ int	main(int argc, char **argv, char **envp)
 		trim_token_quotes(tokens);
 		if (debug)
 			debug_print_cmd(tokens, "Trimmed...");
-		split_expanded_tokens(&tokens);
+		handle_echo_token_split(&tokens);
 		if (debug)
-			debug_print_cmd(tokens, "Splitted...");
-		merge_joined_tokens(&tokens);
-		if (debug)
-			debug_print_cmd(tokens, "Merged...");
+			debug_print_cmd(tokens, "Echo Split...");
+		// split_expanded_tokens(&tokens);
+		// if (debug)
+		// 	debug_print_cmd(tokens, "Splitted...");
+		// merge_joined_tokens(&tokens);
+		// if (debug)
+		// 	debug_print_cmd(tokens, "Merged...");
 		cmds = parse_tokens(tokens);
 		if (debug)
 			print_cmd_list(cmds);

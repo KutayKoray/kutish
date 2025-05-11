@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: kkoray <kkoray@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:46 by kkoray            #+#    #+#             */
-/*   Updated: 2025/05/08 23:00:11 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/11 17:59:09 by kkoray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void				ft_free_strarray(char **arr);
 void				add_token(t_token **head, char *value, t_token_type type,
 						int joined);
 void				add_heredoc(char ***heredocs, const char *value);
+void				handle_echo_token_split(t_token **tokens);
 
 char				*expand_input(const char *input);
 char				*strappend_char(char *str, char c);
