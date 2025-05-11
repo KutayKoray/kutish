@@ -6,7 +6,7 @@
 /*   By: kkoray <kkoray@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:38 by kkoray            #+#    #+#             */
-/*   Updated: 2025/05/11 18:00:41 by kkoray           ###   ########.fr       */
+/*   Updated: 2025/05/11 18:51:58 by kkoray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,7 @@ int	main(int argc, char **argv, char **envp)
 		trim_token_quotes(tokens);
 		if (debug)
 			debug_print_cmd(tokens, "Trimmed...");
-		handle_echo_token_split(&tokens);
+		split_first_token_head_tail(&tokens);
 		if (debug)
 			debug_print_cmd(tokens, "Echo Split...");
 		// split_expanded_tokens(&tokens);
