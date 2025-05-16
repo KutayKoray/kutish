@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkoray <kkoray@student.42kocaeli.com.tr    +#+  +:+       +#+        */
+/*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:46 by kkoray            #+#    #+#             */
-/*   Updated: 2025/05/11 18:51:53 by kkoray           ###   ########.fr       */
+/*   Updated: 2025/05/16 12:02:18 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,21 @@ typedef enum e_token_type
 	T_HEREDOC
 }					t_token_type;
 
+typedef struct s_env
+{
+	char			*key;
+	char			*value;
+	struct s_env	*next;
+}					t_env;
+
 typedef struct s_expand_ctx
 {
-	char			*result;
-	int				in_single_quote;
-	int				in_double_quote;
+	char	*result;
+	int		in_single_quote;
+	int		in_double_quote;
+	t_env	*env;
 }	t_expand_ctx;
+
 
 typedef struct s_token
 {
@@ -70,7 +79,7 @@ typedef struct s_cmd
 extern int			g_exit_status;
 
 void				init_signals(void);
-void				expand_token_list(t_token *tokens);
+void				expand_token_list(t_token *tokens, t_env *env);
 void				trim_token_quotes(t_token *tokens);
 void				free_token_list(t_token *tokens);
 void				free_cmd_list(t_cmd *cmds);
@@ -83,10 +92,9 @@ void				add_token(t_token **head, char *value, t_token_type type,
 void				add_heredoc(char ***heredocs, const char *value);
 void				split_first_token_head_tail(t_token **tokens);
 
-char				*expand_input(const char *input);
+char				*expand_input(const char *input, t_env *env);
 char				*strappend_char(char *str, char c);
 char				*strappend_str(char *str, const char *suffix);
-char				*get_env_value(const char *key);
 char				*ft_strndup(const char *s, size_t n);
 char				*get_heredoc(t_cmd *cmd);
 
@@ -107,6 +115,13 @@ t_token_type		get_operator_type(const char *s);
 t_cmd				*parse_tokens(t_token *tokens);
 t_cmd				*create_cmd(void);
 
+t_env				*init_env(char **envp);
+char				*get_env_value(t_env *env, char *key);
 size_t				get_env_key_len(const char *str, size_t *i);
+char				*get_env_value(t_env *env, char *key);
+void				set_env(t_env **env, char *key, char *value);
+void				unset_env(t_env **env, char *key);
+void				free_env(t_env *env);
+void				print_env(t_env *env);
 
 #endif

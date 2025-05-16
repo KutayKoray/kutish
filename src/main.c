@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkoray <kkoray@student.42kocaeli.com.tr    +#+  +:+       +#+        */
+/*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:38 by kkoray            #+#    #+#             */
-/*   Updated: 2025/05/11 18:51:58 by kkoray           ###   ########.fr       */
+/*   Updated: 2025/05/16 12:05:23 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,7 @@ static void debug_print_cmd(t_token *tokens, char *msg)
 	printf("╰───────────────────────────────┴───────────┴──────────┴───────────╯\n");
 }
 
-
-static void	assign_heredoc_buffers(t_cmd *cmds)
+static void	assign_heredoc_buffers(t_cmd *cmds, t_env *env)
 {
 	t_cmd	*cur;
 	char	*raw;
@@ -120,7 +119,7 @@ static void	assign_heredoc_buffers(t_cmd *cmds)
 			if (!raw)
 				return ;
 			if (cur->heredoc_expand)
-				cur->heredoc_buffer = expand_input(raw);
+				cur->heredoc_buffer = expand_input(raw, env);
 			else
 				cur->heredoc_buffer = raw;
 			// free(raw);
@@ -135,13 +134,18 @@ int	main(int argc, char **argv, char **envp)
 	char	*input;
 	t_token	*tokens;
 	t_cmd	*cmds;
+	t_env	*env;
 
 	(void)argc;
-	(void)envp;
-	debug = (argv[1] && !ft_strncmp(argv[1], "-d", 2));
 	init_signals();
+	env = init_env(envp);
+	
+	debug = (argv[1] && !ft_strncmp(argv[1], "-d", 2));
 	if (debug)
+	{
 		printf("you're currently in debug mode, each step will be displayed.\n");
+		// print_env(env);
+	}
 	while (1)
 	{
 		input = readline(PROMPT);
@@ -161,7 +165,7 @@ int	main(int argc, char **argv, char **envp)
 		tokens = tokenize(input);
 		if (debug)
 			debug_print_cmd(tokens, "Tokenizing...");
-		expand_token_list(tokens);
+		expand_token_list(tokens, env);
 		if (debug)
 			debug_print_cmd(tokens, "Expanded...");
 		trim_token_quotes(tokens);
@@ -179,7 +183,7 @@ int	main(int argc, char **argv, char **envp)
 		cmds = parse_tokens(tokens);
 		if (debug)
 			print_cmd_list(cmds);
-		assign_heredoc_buffers(cmds);
+		assign_heredoc_buffers(cmds, env);
 		if (debug)
 			print_cmd_list(cmds);
 
@@ -187,5 +191,6 @@ int	main(int argc, char **argv, char **envp)
 		free_token_list(tokens);
 		free(input);
 	}
+	free_env(env);
 	return (0);
 }
