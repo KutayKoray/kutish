@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:46 by kkoray            #+#    #+#             */
-/*   Updated: 2025/05/16 12:02:18 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/16 12:07:47 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,6 @@ t_cmd				*parse_tokens(t_token *tokens);
 t_cmd				*create_cmd(void);
 
 t_env				*init_env(char **envp);
-char				*get_env_value(t_env *env, char *key);
 size_t				get_env_key_len(const char *str, size_t *i);
 char				*get_env_value(t_env *env, char *key);
 void				set_env(t_env **env, char *key, char *value);
