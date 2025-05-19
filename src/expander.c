@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:32 by kkoray            #+#    #+#             */
-/*   Updated: 2025/05/01 08:57:39 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/16 11:54:07 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int			g_exit_status = 0;
 
-static char	*expand_variable(const char *str, size_t *i)
+static char	*expand_variable(t_expand_ctx *ctx, const char *str, size_t *i)
 {
 	size_t	start;
 	size_t	len;
@@ -31,13 +31,14 @@ static char	*expand_variable(const char *str, size_t *i)
 		return (ft_strdup("$"));
 	len = get_env_key_len(str, i);
 	var = ft_strndup(str + start, len);
-	value = get_env_value(var);
+	value = get_env_value(ctx->env, var);
 	free(var);
 	if (value)
 		return (ft_strdup(value));
 	else
 		return (ft_strdup(""));
 }
+
 
 static void	handle_quotes(const char *input, size_t *i, t_expand_ctx *ctx)
 {
@@ -61,7 +62,7 @@ static void	handle_dollar(const char *input, size_t *i, t_expand_ctx *ctx)
 		ctx->result = strappend_char(ctx->result, input[(*i)++]);
 	else
 	{
-		expanded = expand_variable(input, i);
+		expanded = expand_variable(ctx, input, i);
 		ctx->result = strappend_str(ctx->result, expanded);
 		free(expanded);
 	}
@@ -72,7 +73,7 @@ static void	handle_tilde(const char *input, size_t *i, t_expand_ctx *ctx)
 	char	*home;
 	char	*tmp;
 
-	home = get_env_value("HOME");
+	home = get_env_value(ctx->env, "HOME");
 	if (input[*i + 1] || (*i && input[*i - 1]))
 		tmp = strappend_char(ctx->result, input[*i]);
 	else if (home && *home)
@@ -84,7 +85,7 @@ static void	handle_tilde(const char *input, size_t *i, t_expand_ctx *ctx)
 	(*i)++;
 }
 
-char	*expand_input(const char *input)
+char	*expand_input(const char *input, t_env *env)
 {
 	t_expand_ctx	ctx;
 	size_t			i;
@@ -93,6 +94,7 @@ char	*expand_input(const char *input)
 	ctx.result = calloc(1, 1);
 	ctx.in_single_quote = 0;
 	ctx.in_double_quote = 0;
+	ctx.env = env;
 	i = 0;
 	while (input[i])
 	{
@@ -113,7 +115,7 @@ char	*expand_input(const char *input)
 	return (ctx.result);
 }
 
-void	expand_token_list(t_token *tokens)
+void	expand_token_list(t_token *tokens, t_env *env)
 {
 	t_token	*tmp;
 	char	*expanded;
@@ -123,13 +125,12 @@ void	expand_token_list(t_token *tokens)
 	{
 		if (tmp->type == T_WORD)
 		{
-			if (tmp->value[0] == '\'' && tmp->value[ft_strlen(tmp->value)
-					- 1] == '\'')
+			if (tmp->value[0] == '\'' && tmp->value[ft_strlen(tmp->value) - 1] == '\'')
 			{
 				tmp = tmp->next;
 				continue ;
 			}
-			expanded = expand_input(tmp->value);
+			expanded = expand_input(tmp->value, env);
 			free(tmp->value);
 			tmp->value = expanded;
 		}
