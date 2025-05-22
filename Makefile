@@ -20,8 +20,9 @@ ifeq ($(UNAME_S),Darwin)
 	LDLIBS	+= -lcurses
 endif
 
-VPATH		= src
-SRCS		= main.c 
+VPATH		= src:src/env
+SRCS		= main.c \
+			env.c env_utils.c
 OBJS		= $(addprefix $(BUILD_DIR)/,$(SRCS:.c=.o))
 
 all: $(LIBFT) $(NAME)

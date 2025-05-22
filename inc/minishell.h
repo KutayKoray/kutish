@@ -6,13 +6,13 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 20:04:47 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/22 20:06:22 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/23 02:36:44 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-
+# include "env.h"
 
 #endif
