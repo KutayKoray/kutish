@@ -6,11 +6,14 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 20:04:41 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/23 11:38:50 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/23 16:49:45 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "env.h"
+#include "exec.h"
+#include <stdlib.h>
 
 int	main(int argc, char **argv, char **envp)
 {
