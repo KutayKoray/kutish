@@ -6,11 +6,13 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 20:20:02 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/23 02:36:10 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/23 16:08:19 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
+#include "libft.h"
+#include <stdlib.h>
 
 /**
  * @brief Checks whether a key name is valid for environment use.
@@ -73,25 +75,23 @@ int	append_env_node(t_env **env, char *key, char *value)
 }
 
 /**
- * @brief Frees the entire environment list and its contents.
+ * @brief Counts the number of elements in a t_env linked list.
  *
- * Iterates through the list and frees each node's key, value,
- * and the node itself.
+ * Iterates through the linked list starting from env and counts how many
+ * nodes are present.
  *
- * @param env Pointer to the head of the environment list.
+ * @param env Pointer to the head of the t_env list.
+ * @return size_t Number of nodes in the list. Returns 0 if env is NULL.
  */
-void	free_env_list(t_env *env)
+size_t	env_list_size(t_env *env)
 {
-	t_env	*tmp;
+	size_t	count;
 
+	count = 0;
 	while (env)
 	{
-		tmp = env;
+		count++;
 		env = env->next;
-		if (tmp->key)
-			free(tmp->key);
-		if (tmp->value)
-			free(tmp->value);
-		free(tmp);
 	}
+	return (count);
 }
