@@ -23,7 +23,7 @@ endif
 VPATH		= src:src/env:src/exec
 SRCS		= main.c utils.c \
 			env.c env_utils.c \
-			exec_utils.c
+			exec.c exec_utils.c exec_prep.c exec_redir.c
 OBJS		= $(addprefix $(BUILD_DIR)/,$(SRCS:.c=.o))
 
 all: $(LIBFT) $(NAME)
