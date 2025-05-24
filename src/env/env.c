@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 20:22:44 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/23 16:07:43 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/24 22:31:58 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,28 +146,4 @@ char	*get_env_value(t_env *env, char *key)
 		tmp = tmp->next;
 	}
 	return (NULL);
-}
-
-/**
- * @brief Frees the entire environment list and its contents.
- *
- * Iterates through the list and frees each node's key, value,
- * and the node itself.
- *
- * @param env Pointer to the head of the environment list.
- */
-void	free_env_list(t_env *env)
-{
-	t_env	*tmp;
-
-	while (env)
-	{
-		tmp = env;
-		env = env->next;
-		if (tmp->key)
-			free(tmp->key);
-		if (tmp->value)
-			free(tmp->value);
-		free(tmp);
-	}
 }
