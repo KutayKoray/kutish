@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 00:52:49 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/25 14:29:46 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/25 15:26:04 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	infile_redirects(t_cmd *cmd, int *fd_in)
 	if (cmd->is_heredoc && cmd->heredoc_buffer)
 	{
 		if (!create_pipe(hd_fd))
-			exit(EXIT_GENERIC_ERR);
+			exit(EXECUTION_FAILURE);
 		write(hd_fd[1], cmd->heredoc_buffer, ft_strlen(cmd->heredoc_buffer));
 		close(hd_fd[1]);
 		dup2(hd_fd[0], STDIN_FILENO);
@@ -34,7 +34,7 @@ void	infile_redirects(t_cmd *cmd, int *fd_in)
 	{
 		*fd_in = open(cmd->infile, O_RDONLY);
 		if (*fd_in == -1)
-			exit_with_error(EXIT_GENERIC_ERR, SHELL_NAME, 1);
+			exit_with_error(EXECUTION_FAILURE, SHELL_NAME, 1);
 		dup2(*fd_in, STDIN_FILENO);
 		close(*fd_in);
 	}
@@ -63,7 +63,7 @@ void	outfile_redirects(t_cmd *cmd, int *pipe_fd)
 	{
 		fd = open(cmd->outfiles[i], O_CREAT, 0644);
 		if (fd == -1)
-			exit_with_error(EXIT_GENERIC_ERR, SHELL_NAME, 1);
+			exit_with_error(EXECUTION_FAILURE, SHELL_NAME, 1);
 		close(fd);
 		i++;
 	}
@@ -72,7 +72,7 @@ void	outfile_redirects(t_cmd *cmd, int *pipe_fd)
 	else
 		fd = open(cmd->outfiles[i - 1], O_WRONLY | O_TRUNC);
 	if (fd == -1)
-		exit_with_error(EXIT_GENERIC_ERR, SHELL_NAME, 1);
+		exit_with_error(EXECUTION_FAILURE, SHELL_NAME, 1);
 	dup2(fd, STDOUT_FILENO);
 	close(fd);
 }

@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 11:52:57 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/25 14:29:28 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/25 15:29:41 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@
 
 # define SHELL_NAME "kutish"
 
-# define EXIT_SUCCESS 0
-# define EXIT_GENERIC_ERR 1
-# define EXIT_CANNOT_EXEC 126
-# define EXIT_NO_CMD 127
+# define EXECUTION_SUCCESS 0
+# define EXECUTION_FAILURE 1
+# define EX_NOEXEC 126
+# define EX_NOTFOUND 127
 
 // exec.c
 void	execute_pipeline(t_cmd *cmd, t_env *env);

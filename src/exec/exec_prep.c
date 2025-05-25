@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 11:59:23 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/25 14:29:46 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/25 15:26:04 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*get_cmd_path(char *cmd, t_env *env)
 	{
 		if (!access(cmd, X_OK))
 			return (ft_strdup(cmd));
-		return (exit_with_error(EXIT_GENERIC_ERR, SHELL_NAME, 1), NULL);
+		return (exit_with_error(EXECUTION_FAILURE, SHELL_NAME, 1), NULL);
 	}
 	env_path = get_env_value(env, "PATH");
 	if (!env_path || !*env_path)

@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 14:06:04 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/25 14:29:50 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/25 15:30:28 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	wait_for_pipeline(pid_t last_pid)
 		return ;
 	if (waitpid(last_pid, &status, 0) == -1)
 	{
-		exit_with_error(EXIT_GENERIC_ERR, SHELL_NAME, 0);
+		exit_with_error(EXECUTION_FAILURE, SHELL_NAME, 0);
 		return ;
 	}
 	*exit_status() = WEXITSTATUS(status);
@@ -41,17 +41,17 @@ static void	execute_cmd(t_cmd *cmd, t_env *env)
 
 	cmd_path = get_cmd_path(cmd->argv[0], env);
 	if (!cmd_path)
-		exit_with_error(EXIT_NO_CMD, SHELL_NAME, 1);
+		exit_with_error(EX_NOTFOUND, SHELL_NAME, 1);
 	envp = env2envp(env);
 	if (!envp)
 	{
 		free(cmd_path);
-		exit_with_error(EXIT_GENERIC_ERR, SHELL_NAME, 1);
+		exit_with_error(EXECUTION_FAILURE, SHELL_NAME, 1);
 	}
 	execve(cmd_path, cmd->argv, envp);
 	free(cmd_path);
 	free_str_arr(envp);
-	exit_with_error(EXIT_CANNOT_EXEC, SHELL_NAME, 1);
+	exit_with_error(EX_NOEXEC, SHELL_NAME, 1);
 }
 
 static int	create_process(t_cmd *cmd, t_env *env, int *fd, int *fd_in)
@@ -60,7 +60,7 @@ static int	create_process(t_cmd *cmd, t_env *env, int *fd, int *fd_in)
 
 	pid = fork();
 	if (pid == -1)
-		return (exit_with_error(EXIT_GENERIC_ERR, SHELL_NAME, 0), -1);
+		return (exit_with_error(EXECUTION_FAILURE, SHELL_NAME, 0), -1);
 	else if (pid == 0)
 	{
 		outfile_redirects(cmd, fd);

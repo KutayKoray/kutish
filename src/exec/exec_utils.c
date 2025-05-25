@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 22:36:57 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/25 14:29:46 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/25 15:26:04 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int		*exit_status(void)
 int	create_pipe(int *fd)
 {
 	if (pipe(fd) == -1)
-		return (exit_with_error(EXIT_GENERIC_ERR, SHELL_NAME, 0), 0);
+		return (exit_with_error(EXECUTION_FAILURE, SHELL_NAME, 0), 0);
 	return (1);
 }
 
