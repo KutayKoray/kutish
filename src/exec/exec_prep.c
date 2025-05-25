@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 11:59:23 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/25 17:32:42 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/25 18:24:45 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ static int	is_accessible(char *cmd)
 			return (exit_with_error(EX_NOEXEC, SHELL_NAME, 1), 0);
 		return (1);
 	}
+	return (0);
 }
 
 /**

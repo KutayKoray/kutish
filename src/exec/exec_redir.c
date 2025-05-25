@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 00:52:49 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/25 15:26:04 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/25 18:02:50 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,12 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-void	infile_redirects(t_cmd *cmd, int *fd_in)
+void	infile_redirects(t_cmd *cmd, int *fd_in, int is_single_builtin, int *original_stdin)
 {
 	int	hd_fd[2];
 
+	if (is_single_builtin)
+		*original_stdin = dup(STDIN_FILENO);
 	if (cmd->is_heredoc && cmd->heredoc_buffer)
 	{
 		if (!create_pipe(hd_fd))
@@ -34,7 +36,7 @@ void	infile_redirects(t_cmd *cmd, int *fd_in)
 	{
 		*fd_in = open(cmd->infile, O_RDONLY);
 		if (*fd_in == -1)
-			exit_with_error(EXECUTION_FAILURE, SHELL_NAME, 1);
+			exit_with_error(EXECUTION_FAILURE, SHELL_NAME, !is_single_builtin);
 		dup2(*fd_in, STDIN_FILENO);
 		close(*fd_in);
 	}
@@ -45,12 +47,14 @@ void	infile_redirects(t_cmd *cmd, int *fd_in)
 	}
 }
 
-void	outfile_redirects(t_cmd *cmd, int *pipe_fd)
+void	outfile_redirects(t_cmd *cmd, int *pipe_fd, int is_single_builtin, int *original_stdout)
 {
 	size_t	i;
 	int		fd;
 
-	if (cmd->next)
+	if (is_single_builtin)
+		*original_stdout = dup(STDOUT_FILENO);
+	if (cmd->next && !is_single_builtin)
 	{
 		dup2(pipe_fd[1], STDOUT_FILENO);
 		close(pipe_fd[0]);
@@ -63,7 +67,7 @@ void	outfile_redirects(t_cmd *cmd, int *pipe_fd)
 	{
 		fd = open(cmd->outfiles[i], O_CREAT, 0644);
 		if (fd == -1)
-			exit_with_error(EXECUTION_FAILURE, SHELL_NAME, 1);
+			exit_with_error(EXECUTION_FAILURE, SHELL_NAME, !is_single_builtin);
 		close(fd);
 		i++;
 	}
@@ -72,7 +76,7 @@ void	outfile_redirects(t_cmd *cmd, int *pipe_fd)
 	else
 		fd = open(cmd->outfiles[i - 1], O_WRONLY | O_TRUNC);
 	if (fd == -1)
-		exit_with_error(EXECUTION_FAILURE, SHELL_NAME, 1);
+		exit_with_error(EXECUTION_FAILURE, SHELL_NAME, !is_single_builtin);
 	dup2(fd, STDOUT_FILENO);
 	close(fd);
 }

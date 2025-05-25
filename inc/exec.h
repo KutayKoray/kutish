@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 11:52:57 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/25 15:29:41 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/25 18:02:04 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*get_cmd_path(char *cmd, t_env *env);
 char	**env2envp(t_env *env);
 
 // exec_redir.c
-void	infile_redirects(t_cmd *cmd, int *fd_in);
-void	outfile_redirects(t_cmd *cmd, int *fd);
+void	infile_redirects(t_cmd *cmd, int *fd_in, int is_single_builtin, int *original_stdin);
+void	outfile_redirects(t_cmd *cmd, int *pipe_fd, int is_single_builtin, int *original_stdout);
 
 #endif

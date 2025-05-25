@@ -6,12 +6,13 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 14:06:04 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/25 17:34:01 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/25 18:26:49 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "minishell.h"
+#include "libft.h"
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -56,6 +57,28 @@ static void	execute_cmd(t_cmd *cmd, t_env *env)
 	exit_with_error(EX_NOEXEC, SHELL_NAME, 1);
 }
 
+static void	handle_builtin(t_cmd *cmd, t_env *env)
+{
+	int	original_stdin;
+	int	original_stdout;
+	int	fd_in;
+
+	fd_in = STDIN_FILENO;
+	outfile_redirects(cmd, NULL, 1, &original_stdout);
+	infile_redirects(cmd, &fd_in, 1, &original_stdin);
+
+	(void)env;
+	// builtin < input TODO: dosya olmayinca nanay redirectler icerisindeki error handling hatali.
+	char buf[1024] = {0};
+	read(STDIN_FILENO, buf, 1024);
+	printf("%s", buf);
+
+	dup2(original_stdin, STDIN_FILENO);
+	dup2(original_stdout, STDOUT_FILENO);
+	close(original_stdin);
+	close(original_stdout);
+}
+
 // bash exit with EX_NOEXEC if fork fails, here is the reference:
 // https://github.com/bminor/bash/blob/6794b5478f660256a1023712b5fc169196ed0a22/jobs.c#L2199
 static int	create_process(t_cmd *cmd, t_env *env, int *fd, int *fd_in)
@@ -67,8 +90,8 @@ static int	create_process(t_cmd *cmd, t_env *env, int *fd, int *fd_in)
 		return (exit_with_error(EX_NOEXEC, SHELL_NAME, 0), -1);
 	else if (pid == 0)
 	{
-		outfile_redirects(cmd, fd);
-		infile_redirects(cmd, fd_in);
+		outfile_redirects(cmd, fd, 0, NULL);
+		infile_redirects(cmd, fd_in, 0, NULL);
 		execute_cmd(cmd, env);
 	}
 	return (pid);
@@ -82,6 +105,11 @@ void	execute_pipeline(t_cmd *cmd, t_env *env)
 
 	last_pid = -1;
 	fd_in = STDIN_FILENO;
+	if (!cmd->next && !ft_strncmp(cmd->argv[0], "builtin", 5))
+	{
+		handle_builtin(cmd, env);
+		return ;
+	}
 	while (cmd)
 	{
 		if (cmd->next && !create_pipe(fd))
