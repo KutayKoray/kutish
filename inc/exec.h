@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 11:52:57 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/24 23:32:40 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/25 14:29:28 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include "minishell.h"
 # include "env.h"
+
+# define SHELL_NAME "kutish"
 
 # define EXIT_SUCCESS 0
 # define EXIT_GENERIC_ERR 1
