@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 22:36:57 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/25 15:26:04 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/25 16:11:03 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/wait.h>
 
 /**
  * @brief Returns a pointer to a static exit status variable.
@@ -42,7 +43,7 @@ int	create_pipe(int *fd)
 void	exit_with_error(int status, const char *message, int is_exit) 
 {
 	perror(message);
-	*exit_status() = status;
+	*exit_status() = WEXITSTATUS(status);
 	if (is_exit)
 		exit(status);
 	else

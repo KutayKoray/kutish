@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 14:06:04 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/25 15:32:29 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/25 17:34:01 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ static void	execute_cmd(t_cmd *cmd, t_env *env)
 	char	*cmd_path;
 	char	**envp;
 
+	if (!*cmd->argv)
+		exit(EXECUTION_SUCCESS);
 	cmd_path = get_cmd_path(cmd->argv[0], env);
 	if (!cmd_path)
 		exit_with_error(EX_NOTFOUND, SHELL_NAME, 1);

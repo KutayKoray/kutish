@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 11:59:23 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/25 15:26:04 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/25 17:32:42 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #include "libft.h"
 #include <unistd.h>
 #include <stdlib.h>
+#include <sys/stat.h>
+#include <stdio.h>
 
 static size_t	env_list_size(t_env *env)
 {
@@ -27,6 +29,28 @@ static size_t	env_list_size(t_env *env)
 		env = env->next;
 	}
 	return (count);
+}
+
+static int	is_accessible(char *cmd)
+{
+	struct stat	sb;
+
+	if (stat(cmd, &sb) == 0 && S_ISDIR(sb.st_mode))
+	{
+		ft_putstr_fd(str_arr_join((char *[]){
+			SHELL_NAME, ": ", cmd, ": Is a directory\n", NULL
+		}, ""), STDERR_FILENO);
+		*exit_status() = WEXITSTATUS(EX_NOEXEC);
+		exit(EX_NOEXEC);
+	}
+	else if (ft_strchr(cmd, '/'))
+	{
+		if (access(cmd, F_OK) == -1)
+			return (exit_with_error(EX_NOTFOUND, SHELL_NAME, 1), 0);
+		if (access(cmd, X_OK) == -1)
+			return (exit_with_error(EX_NOEXEC, SHELL_NAME, 1), 0);
+		return (1);
+	}
 }
 
 /**
@@ -48,12 +72,8 @@ char	*get_cmd_path(char *cmd, t_env *env)
 
 	if (!cmd || !*cmd)
 		return (NULL);
-	if (ft_strchr(cmd, '/'))
-	{
-		if (!access(cmd, X_OK))
-			return (ft_strdup(cmd));
-		return (exit_with_error(EXECUTION_FAILURE, SHELL_NAME, 1), NULL);
-	}
+	if (is_accessible(cmd))
+		return (ft_strdup(cmd));
 	env_path = get_env_value(env, "PATH");
 	if (!env_path || !*env_path)
 		return (NULL);
