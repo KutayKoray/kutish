@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 14:06:04 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/25 15:30:28 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/25 15:32:29 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,15 @@ static void	execute_cmd(t_cmd *cmd, t_env *env)
 	exit_with_error(EX_NOEXEC, SHELL_NAME, 1);
 }
 
+// bash exit with EX_NOEXEC if fork fails, here is the reference:
+// https://github.com/bminor/bash/blob/6794b5478f660256a1023712b5fc169196ed0a22/jobs.c#L2199
 static int	create_process(t_cmd *cmd, t_env *env, int *fd, int *fd_in)
 {
 	pid_t	pid;
 
 	pid = fork();
 	if (pid == -1)
-		return (exit_with_error(EXECUTION_FAILURE, SHELL_NAME, 0), -1);
+		return (exit_with_error(EX_NOEXEC, SHELL_NAME, 0), -1);
 	else if (pid == 0)
 	{
 		outfile_redirects(cmd, fd);
