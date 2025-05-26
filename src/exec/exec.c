@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 14:06:04 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/25 18:26:49 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/26 14:25:43 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,14 @@ static void	handle_builtin(t_cmd *cmd, t_env *env)
 	int	fd_in;
 
 	fd_in = STDIN_FILENO;
-	outfile_redirects(cmd, NULL, 1, &original_stdout);
-	infile_redirects(cmd, &fd_in, 1, &original_stdin);
-
-	(void)env;
-	// builtin < input TODO: dosya olmayinca nanay redirectler icerisindeki error handling hatali.
-	char buf[1024] = {0};
-	read(STDIN_FILENO, buf, 1024);
-	printf("%s", buf);
-
+	if (!outfile_redirects(cmd, NULL, 1, &original_stdout))
+		return ;
+	if (!infile_redirects(cmd, &fd_in, 1, &original_stdin))
+		return ;
+	if (!ft_strncmp(cmd->argv[0], "echo", 5))
+		echo(cmd->argv, env);
+	// else if (!ft_strncmp(cmd->argv[0], "cd", 3))
+	// else if ...
 	dup2(original_stdin, STDIN_FILENO);
 	dup2(original_stdout, STDOUT_FILENO);
 	close(original_stdin);
@@ -105,7 +104,7 @@ void	execute_pipeline(t_cmd *cmd, t_env *env)
 
 	last_pid = -1;
 	fd_in = STDIN_FILENO;
-	if (!cmd->next && !ft_strncmp(cmd->argv[0], "builtin", 5))
+	if (!cmd->next && is_builtin(cmd->argv[0]))
 	{
 		handle_builtin(cmd, env);
 		return ;

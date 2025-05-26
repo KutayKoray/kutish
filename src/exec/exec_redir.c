@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 00:52:49 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/25 18:02:50 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/26 11:56:53 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-void	infile_redirects(t_cmd *cmd, int *fd_in, int is_single_builtin, int *original_stdin)
+int	infile_redirects(t_cmd *cmd, int *fd_in, int is_single_builtin, int *original_stdin)
 {
 	int	hd_fd[2];
 
@@ -36,7 +36,7 @@ void	infile_redirects(t_cmd *cmd, int *fd_in, int is_single_builtin, int *origin
 	{
 		*fd_in = open(cmd->infile, O_RDONLY);
 		if (*fd_in == -1)
-			exit_with_error(EXECUTION_FAILURE, SHELL_NAME, !is_single_builtin);
+			return (exit_with_error(EXECUTION_FAILURE, SHELL_NAME, !is_single_builtin), 0);
 		dup2(*fd_in, STDIN_FILENO);
 		close(*fd_in);
 	}
@@ -45,9 +45,10 @@ void	infile_redirects(t_cmd *cmd, int *fd_in, int is_single_builtin, int *origin
 		dup2(*fd_in, STDIN_FILENO);
 		close(*fd_in);
 	}
+	return (1);
 }
 
-void	outfile_redirects(t_cmd *cmd, int *pipe_fd, int is_single_builtin, int *original_stdout)
+int	outfile_redirects(t_cmd *cmd, int *pipe_fd, int is_single_builtin, int *original_stdout)
 {
 	size_t	i;
 	int		fd;
@@ -62,12 +63,12 @@ void	outfile_redirects(t_cmd *cmd, int *pipe_fd, int is_single_builtin, int *ori
 	}
 	i = 0;
 	if (!cmd->outfiles || !*cmd->outfiles)
-		return ;
+		return (1);
 	while (cmd->outfiles[i])
 	{
 		fd = open(cmd->outfiles[i], O_CREAT, 0644);
 		if (fd == -1)
-			exit_with_error(EXECUTION_FAILURE, SHELL_NAME, !is_single_builtin);
+			return (exit_with_error(EXECUTION_FAILURE, SHELL_NAME, !is_single_builtin), 0);
 		close(fd);
 		i++;
 	}
@@ -76,7 +77,8 @@ void	outfile_redirects(t_cmd *cmd, int *pipe_fd, int is_single_builtin, int *ori
 	else
 		fd = open(cmd->outfiles[i - 1], O_WRONLY | O_TRUNC);
 	if (fd == -1)
-		exit_with_error(EXECUTION_FAILURE, SHELL_NAME, !is_single_builtin);
+		return (exit_with_error(EXECUTION_FAILURE, SHELL_NAME, !is_single_builtin), 0);
 	dup2(fd, STDOUT_FILENO);
 	close(fd);
+	return (1);
 }

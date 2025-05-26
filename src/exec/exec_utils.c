@@ -6,11 +6,12 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 22:36:57 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/25 16:11:03 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/26 14:21:53 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+#include "libft.h"
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -43,9 +44,26 @@ int	create_pipe(int *fd)
 void	exit_with_error(int status, const char *message, int is_exit) 
 {
 	perror(message);
-	*exit_status() = WEXITSTATUS(status);
+	*exit_status() = status;
 	if (is_exit)
 		exit(status);
 	else
 		return ;
+}
+
+int	is_builtin(char *cmd)
+{
+	char	*builtins[] = {
+		"cd", "echo", "env", "exit", "export", "pwd", "unset", NULL
+	};
+	size_t	i;
+
+	i = 0;
+	while (builtins[i])
+	{
+		if (!ft_strncmp(cmd, builtins[i], ft_strlen(builtins[i]) + 1))
+			return (1);
+		i++;
+	}
+	return (0);
 }
