@@ -6,11 +6,12 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 14:06:04 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/26 14:25:43 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/26 16:40:19 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+#include "builtin.h"
 #include "minishell.h"
 #include "libft.h"
 #include <unistd.h>
@@ -63,13 +64,14 @@ static void	handle_builtin(t_cmd *cmd, t_env *env)
 	int	original_stdout;
 	int	fd_in;
 
+	(void)env;
 	fd_in = STDIN_FILENO;
 	if (!outfile_redirects(cmd, NULL, 1, &original_stdout))
 		return ;
 	if (!infile_redirects(cmd, &fd_in, 1, &original_stdin))
 		return ;
 	if (!ft_strncmp(cmd->argv[0], "echo", 5))
-		echo(cmd->argv, env);
+		echo(cmd->argv);
 	// else if (!ft_strncmp(cmd->argv[0], "cd", 3))
 	// else if ...
 	dup2(original_stdin, STDIN_FILENO);

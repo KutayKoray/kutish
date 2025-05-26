@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 20:04:41 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/25 18:22:37 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/26 18:21:42 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,14 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
+
 	env = init_env_list(envp);
 	if (!env)
 		return (EXIT_FAILURE);
 
-	cmd.argv = (char *[]){"builtin", "a", NULL};
+	cmd.argv = (char *[]){"echo", "-n", "-z", "-n", "hello world", NULL};
 	cmd.outfiles = NULL;
-	cmd.infile = "input";
+	cmd.infile = NULL;
 	cmd.heredoc_eof = NULL;
 	cmd.heredoc_buffer = NULL;
 	cmd.append = 0;
@@ -39,10 +40,7 @@ int	main(int argc, char **argv, char **envp)
 
 	execute_pipeline(&cmd, env);
 
-	// char *path = get_cmd_path(argv[1], env);
-	// printf("%s.\n", path);
-
 	free_env_list(env);
-	// return (*exit_status());
-	return (0);
+	return (*exit_status());
+	// return (0);
 }
