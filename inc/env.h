@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 20:19:17 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/24 22:32:13 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/27 20:22:22 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,8 @@ char	*get_env_value(t_env *env, char *key);
 int		is_valid_key(char *key);
 int		append_env_node(t_env **env, char *key, char *value);
 void	free_env_list(t_env *env);
+
+// env_init.c
+void	initialize_envs(t_env **env);
 
 #endif

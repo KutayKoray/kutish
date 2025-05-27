@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 20:22:44 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/27 18:23:56 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/27 20:23:16 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_env	*init_env_list(char **envp)
 		if (!eq_pos)
 		{
 			envp++;
-			continue;
+			continue ;
 		}
 		key = ft_substr(*envp, 0, eq_pos - *envp);
 		value = ft_strdup(eq_pos + 1);

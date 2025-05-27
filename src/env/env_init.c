@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell_init.c                                       :+:      :+:    :+:   */
+/*   env_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/27 19:07:15 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/27 19:28:49 by ebabaogl         ###   ########.fr       */
+/*   Created: 2025/05/27 20:21:53 by ebabaogl          #+#    #+#             */
+/*   Updated: 2025/05/27 20:21:57 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,6 @@
 #include "libft.h"
 #include <stdlib.h>
 #include <unistd.h>
-
-// declare -x OLDPWD
-// declare -x PWD="/home/ebabaogl/Projects/kutish"
-// declare -x SHLVL="1"
 
 static int	init_shlvl(t_env **env)
 {

@@ -22,8 +22,8 @@ endif
 
 VPATH		= src:src/env:src/exec:src/builtin:src/utils
 SRCS		= main.c \
-			str_utils.c shell_init.c \
-			env.c env_utils.c \
+			str_utils.c \
+			env.c env_utils.c env_init.c \
 			exec.c exec_utils.c exec_prep.c exec_redir.c \
 			echo.c export.c
 OBJS		= $(addprefix $(BUILD_DIR)/,$(SRCS:.c=.o))
