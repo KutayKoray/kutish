@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 11:35:06 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/27 17:30:06 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/27 18:28:23 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	export_builtin(char **argv, t_env **env)
 			continue;
 		}
 		if (!set_env(env, key, value))
-			return (1);
+			return (free(key), free(value), 1);
 		free(key);
 		free(value);
 		i++;
