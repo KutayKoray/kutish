@@ -6,15 +6,36 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 20:04:41 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/27 17:11:17 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/27 18:00:33 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "env.h"
 #include "exec.h"
+#include "libft.h"
 #include <stdlib.h>
 #include <stdio.h>
+
+void	initialize_envs(t_env **env)
+{
+	char	*shlvl_env;
+	int		shlvl;
+
+	shlvl_env = get_env_value(*env, "SHLVL");
+	if (!shlvl_env)
+		append_env_node(env, "SHLVL", "1");
+	else
+	{
+		shlvl = ft_atoi(shlvl_env);
+		free(shlvl_env);
+		shlvl_env = ft_itoa(shlvl + 1);
+		if (!shlvl_env)
+			return ;
+		set_env(env, "SHLVL", shlvl_env);
+		free(shlvl_env);
+	}
+}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -25,10 +46,9 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 
 	env = init_env_list(envp);
-	if (!env)
-		return (EXIT_FAILURE);
+	initialize_envs(&env);
 
-	cmd.argv = (char *[]){"export", "A", "B=", "%MALAMK=zort", "HELLO=WORLD", NULL};
+	cmd.argv = (char *[]){"export", NULL};
 	cmd.outfiles = NULL;
 	cmd.infile = NULL;
 	cmd.heredoc_eof = NULL;

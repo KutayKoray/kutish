@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 20:22:44 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/27 16:41:54 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/27 17:52:36 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,17 @@ t_env	*init_env_list(char **envp)
 	char	*key;
 	char	*value;
 
-	if (!envp)
-		return (NULL);
 	env = NULL;
+	if (!envp || !*envp)
+		return (NULL);
 	while (*envp)
 	{
 		eq_pos = ft_strchr(*envp, '=');
+		if (!eq_pos)
+		{
+			envp++;
+			continue;
+		}
 		key = ft_substr(*envp, 0, eq_pos - *envp);
 		value = ft_strdup(eq_pos + 1);
 		if (!key || !value || !append_env_node(&env, key, value))
@@ -58,15 +63,15 @@ t_env	*init_env_list(char **envp)
  * @param env Pointer to the environment list pointer.
  * @param key The key to set or update.
  * @param value The new value, or NULL.
- * @return int 1 on success, 0 on error, -1 on invalid input.
+ * @return int 1 on success, 0 on error.
  */
 int	set_env(t_env **env, char *key, char *value)
 {
 	t_env	*tmp;
 	char	*new_value;
 
-	if (!env || !key || !is_valid_key(key))
-		return (-1);
+	if (!env || !key)
+		return (0);
 	tmp = *env;
 	while (tmp)
 	{
