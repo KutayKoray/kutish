@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 20:22:44 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/27 17:52:36 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/27 18:23:56 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int	unset_env(t_env **env, char *key)
 	t_env	*tmp;
 	t_env	*prev;
 
-	if (!env || !*env || !key)
+	if (!env || !key)
 		return (0);
 	tmp = *env;
 	prev = NULL;
