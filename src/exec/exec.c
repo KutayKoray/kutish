@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 14:06:04 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/26 16:40:19 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/27 16:23:43 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,26 +58,29 @@ static void	execute_cmd(t_cmd *cmd, t_env *env)
 	exit_with_error(EX_NOEXEC, SHELL_NAME, 1);
 }
 
-static void	handle_builtin(t_cmd *cmd, t_env *env)
+static void	handle_builtin(t_cmd *cmd, t_env **env)
 {
 	int	original_stdin;
 	int	original_stdout;
 	int	fd_in;
+	int	exit_code;
 
-	(void)env;
 	fd_in = STDIN_FILENO;
 	if (!outfile_redirects(cmd, NULL, 1, &original_stdout))
 		return ;
 	if (!infile_redirects(cmd, &fd_in, 1, &original_stdin))
 		return ;
 	if (!ft_strncmp(cmd->argv[0], "echo", 5))
-		echo(cmd->argv);
+		exit_code = echo_builtin(cmd->argv);
+	else if (!ft_strncmp(cmd->argv[0], "export", 7))
+		exit_code = export_builtin(cmd->argv, env);
 	// else if (!ft_strncmp(cmd->argv[0], "cd", 3))
 	// else if ...
 	dup2(original_stdin, STDIN_FILENO);
 	dup2(original_stdout, STDOUT_FILENO);
 	close(original_stdin);
 	close(original_stdout);
+	*exit_status() = exit_code;
 }
 
 // bash exit with EX_NOEXEC if fork fails, here is the reference:
@@ -98,7 +101,7 @@ static int	create_process(t_cmd *cmd, t_env *env, int *fd, int *fd_in)
 	return (pid);
 }
 
-void	execute_pipeline(t_cmd *cmd, t_env *env)
+void	execute_pipeline(t_cmd *cmd, t_env **env)
 {
 	pid_t	last_pid;
 	int		fd[2];
@@ -115,7 +118,7 @@ void	execute_pipeline(t_cmd *cmd, t_env *env)
 	{
 		if (cmd->next && !create_pipe(fd))
 			break ;
-		last_pid = create_process(cmd, env, fd, &fd_in);
+		last_pid = create_process(cmd, *env, fd, &fd_in);
 		if (last_pid == -1)
 		{
 			if (cmd->next)

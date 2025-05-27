@@ -6,11 +6,12 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 22:36:57 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/26 14:21:53 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/27 17:05:14 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+#include "minishell.h"
 #include "libft.h"
 #include <unistd.h>
 #include <stdio.h>

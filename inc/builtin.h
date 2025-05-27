@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 15:52:58 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/26 16:04:30 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/27 16:23:41 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "env.h"
 
-void	echo(char **argv);
+int	echo_builtin(char **argv);
+int	export_builtin(char **argv, t_env **env);
 
 #endif

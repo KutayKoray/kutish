@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 11:59:23 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/25 18:24:45 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/27 13:51:04 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,16 @@ static size_t	env_list_size(t_env *env)
 static int	is_accessible(char *cmd)
 {
 	struct stat	sb;
+	char		*err_msg;
 
 	if (stat(cmd, &sb) == 0 && S_ISDIR(sb.st_mode))
 	{
-		ft_putstr_fd(str_arr_join((char *[]){
+		err_msg = str_arr_join((char *[]){
 			SHELL_NAME, ": ", cmd, ": Is a directory\n", NULL
-		}, ""), STDERR_FILENO);
+		}, "");
+		if (!err_msg)
+			return (exit_with_error(EXIT_FAILURE, SHELL_NAME, 1), 0);
+		ft_putstr_fd(err_msg, STDERR_FILENO);
 		*exit_status() = WEXITSTATUS(EX_NOEXEC);
 		exit(EX_NOEXEC);
 	}

@@ -24,7 +24,7 @@ VPATH		= src:src/env:src/exec:src/builtin
 SRCS		= main.c utils.c \
 			env.c env_utils.c \
 			exec.c exec_utils.c exec_prep.c exec_redir.c \
-			echo.c
+			echo.c export.c
 OBJS		= $(addprefix $(BUILD_DIR)/,$(SRCS:.c=.o))
 
 all: $(LIBFT) $(NAME)

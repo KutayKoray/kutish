@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 20:22:44 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/24 22:31:58 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/27 16:41:54 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ t_env	*init_env_list(char **envp)
  * @param env Pointer to the environment list pointer.
  * @param key The key to set or update.
  * @param value The new value, or NULL.
- * @return int 1 on success, 0 on error or invalid input.
+ * @return int 1 on success, 0 on error, -1 on invalid input.
  */
 int	set_env(t_env **env, char *key, char *value)
 {
@@ -66,7 +66,7 @@ int	set_env(t_env **env, char *key, char *value)
 	char	*new_value;
 
 	if (!env || !key || !is_valid_key(key))
-		return (0);
+		return (-1);
 	tmp = *env;
 	while (tmp)
 	{

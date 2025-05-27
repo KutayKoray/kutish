@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 15:53:32 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/26 18:22:02 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/27 16:23:18 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	handle_flags(char *arg, int *nl_flag)
 	return (0);
 }
 
-void	echo(char **argv)
+int	echo_builtin(char **argv)
 {
 	size_t	i;
 	int		nl_flag;
@@ -61,4 +61,5 @@ void	echo(char **argv)
 	}
 	if (nl_flag)
 		ft_putstr_fd("\n", STDOUT_FILENO);
+	return (0);
 }
