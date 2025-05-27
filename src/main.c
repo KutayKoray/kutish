@@ -6,36 +6,17 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 20:04:41 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/27 18:00:33 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/27 19:09:52 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "utils.h"
 #include "env.h"
 #include "exec.h"
 #include "libft.h"
 #include <stdlib.h>
 #include <stdio.h>
-
-void	initialize_envs(t_env **env)
-{
-	char	*shlvl_env;
-	int		shlvl;
-
-	shlvl_env = get_env_value(*env, "SHLVL");
-	if (!shlvl_env)
-		append_env_node(env, "SHLVL", "1");
-	else
-	{
-		shlvl = ft_atoi(shlvl_env);
-		free(shlvl_env);
-		shlvl_env = ft_itoa(shlvl + 1);
-		if (!shlvl_env)
-			return ;
-		set_env(env, "SHLVL", shlvl_env);
-		free(shlvl_env);
-	}
-}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -44,7 +25,6 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-
 	env = init_env_list(envp);
 	initialize_envs(&env);
 
@@ -56,7 +36,6 @@ int	main(int argc, char **argv, char **envp)
 	cmd.append = 0;
 	cmd.is_heredoc = 0;
 	cmd.next = NULL;
-
 	execute_pipeline(&cmd, &env);
 
 	free_env_list(env);

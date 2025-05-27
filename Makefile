@@ -20,8 +20,9 @@ ifeq ($(UNAME_S),Darwin)
 	LDLIBS	+= -lcurses
 endif
 
-VPATH		= src:src/env:src/exec:src/builtin
-SRCS		= main.c utils.c \
+VPATH		= src:src/env:src/exec:src/builtin:src/utils
+SRCS		= main.c \
+			str_utils.c shell_init.c \
 			env.c env_utils.c \
 			exec.c exec_utils.c exec_prep.c exec_redir.c \
 			echo.c export.c

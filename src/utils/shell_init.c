@@ -1,30 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   shell_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/22 20:04:47 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/27 19:08:18 by ebabaogl         ###   ########.fr       */
+/*   Created: 2025/05/27 19:07:15 by ebabaogl          #+#    #+#             */
+/*   Updated: 2025/05/27 19:07:28 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "env.h"
+#include "libft.h"
 
-# define SHELL_NAME "kutish"
-
-typedef struct s_cmd
+void	initialize_envs(t_env **env)
 {
-	char			**argv;
-	char			**outfiles;
-	char			*infile;
-	char			**heredoc_eof;
-	char			*heredoc_buffer;
-	int				append;
-	int				is_heredoc;
-	struct s_cmd	*next;
-}					t_cmd;
+	char	*shlvl_env;
+	char	*new_shlvl;
 
-#endif
+	shlvl_env = get_env_value(*env, "SHLVL");
+	if (!shlvl_env)
+		append_env_node(env, "SHLVL", "1");
+	else
+	{
+		new_shlvl = ft_itoa(ft_atoi(shlvl_env) + 1);
+		if (!new_shlvl)
+			return ;
+		set_env(env, "SHLVL", new_shlvl);
+	}
+}
