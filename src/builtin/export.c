@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 11:35:06 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/27 17:02:46 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/27 17:10:18 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int	export_builtin(char **argv, t_env **env)
 	char	*key;
 	char	*value;
 	int		status;
+	int		has_error;
 
 	if (!argv[1])
 	{
@@ -83,6 +84,7 @@ int	export_builtin(char **argv, t_env **env)
 		return (0);
 	}
 	i = 1;
+	has_error = 0;
 	while (argv[i])
 	{
 		if (!parse_key_value(argv[i], &key, &value))
@@ -91,10 +93,13 @@ int	export_builtin(char **argv, t_env **env)
 		if (status == 0)
 			return (1);
 		else if (status == -1)
+		{
+			has_error = 1;
 			print_error(key);
+		}
 		free(key);
 		free(value);
 		i++;
 	}
-	return (0);
+	return (has_error);
 }
