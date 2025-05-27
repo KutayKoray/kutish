@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 11:59:23 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/27 19:08:51 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/27 20:36:09 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ static size_t	env_list_size(t_env *env)
 	return (count);
 }
 
+// "Is a directory" error handling is based on the bash source code, here is the reference:
+// https://github.com/bminor/bash/blob/6794b5478f660256a1023712b5fc169196ed0a22/shell.c#L1665
 static int	is_accessible(char *cmd)
 {
 	struct stat	sb;

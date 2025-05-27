@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 22:36:57 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/27 17:05:14 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/27 20:39:47 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,17 @@ int		*exit_status(void)
 	return (&status);
 }
 
+/**
+ * @brief Creates a pipe and stores file descriptors in the provided array.
+ *
+ * This function attempts to create a pipe using the `pipe` system call.
+ * If successful, it stores the read and write file descriptors in the
+ * provided array. If it fails, it prints an error message and sets the
+ * exit status.
+ *
+ * @param fd Array to store the read and write file descriptors.
+ * @return 1 on success, 0 on failure.
+ */
 int	create_pipe(int *fd)
 {
 	if (pipe(fd) == -1)
@@ -42,6 +53,16 @@ int	create_pipe(int *fd)
 	return (1);
 }
 
+/**
+ * @brief Handles errors by printing a message and optionally exiting.
+ *
+ * This function prints an error message to stderr, sets the exit status,
+ * and either exits the program or returns based on the is_exit flag.
+ *
+ * @param status Exit status to set.
+ * @param message Error message to print.
+ * @param is_exit If true, exits the program; otherwise, just returns.
+ */
 void	exit_with_error(int status, const char *message, int is_exit) 
 {
 	perror(message);
@@ -52,6 +73,16 @@ void	exit_with_error(int status, const char *message, int is_exit)
 		return ;
 }
 
+/**
+ * @brief Checks if the command is a built-in command.
+ *
+ * This function compares the given command against a list of known
+ * built-in commands. If a match is found, it returns 1, indicating
+ * that the command is a built-in. Otherwise, it returns 0.
+ *
+ * @param cmd Command to check.
+ * @return 1 if the command is a built-in, 0 otherwise.
+ */
 int	is_builtin(char *cmd)
 {
 	char	*builtins[] = {
