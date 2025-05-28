@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 15:51:28 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/29 01:34:30 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/29 01:36:57 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	exec_cmd(t_cmd *cmd, t_env *env)
 	char	**envp;
 
 	if (!*cmd->argv)
-		exit(EXECUTION_SUCCESS);
+		exit_with_error(EXECUTION_SUCCESS, NULL, 1);
 	cmd_path = get_cmd_path(cmd, env);
 	if (!cmd_path)
 	{
@@ -35,7 +35,7 @@ static void	exec_cmd(t_cmd *cmd, t_env *env)
 	{
 		free(cmd_path);
 		free_lists(cmd, env);
-		exit_with_error(EXECUTION_FAILURE, SHELL_NAME, 1);
+		exit_with_error(EXECUTION_FAILURE, NULL, 1);
 	}
 	execve(cmd_path, cmd->argv, envp);
 	free(cmd_path);
@@ -74,7 +74,7 @@ static pid_t	create_process(t_cmd *cmd, t_env **env, t_pipe_info *pipe_info)
 		}
 		if (pipe_info->fd_in != STDIN_FILENO)
 			close(pipe_info->fd_in);
-		return (exit_with_error(EX_NOEXEC, SHELL_NAME, 0), -1);
+		return (exit_with_error(EX_NOEXEC, NULL, 0), -1);
 	}
 	else if (pid == 0)
 	{
