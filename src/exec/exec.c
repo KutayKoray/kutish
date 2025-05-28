@@ -6,13 +6,15 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 15:51:28 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/28 18:44:42 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/28 19:59:42 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "utils.h"
 
+// buradan direkt cikis yapma, freeleri unutma
+// get_cmd_path de ayni unutma
 static void	exec_cmd(t_cmd *cmd, t_env *env)
 {
 	char	*cmd_path;
@@ -78,6 +80,16 @@ static pid_t	create_process(t_cmd *cmd, t_env **env, t_pipe_info *pipe_info)
 	return (pid);
 }
 
+/**
+ * @brief Executes a pipeline of commands.
+ *
+ * This function iterates through a linked list of commands, creating pipes
+ * between them and executing each command in a separate process. It handles
+ * built-in commands and manages input/output redirections.
+ *
+ * @param cmd Pointer to the first command in the pipeline.
+ * @param env Pointer to the environment variables.
+ */
 void	execute_pipeline(t_cmd *cmd, t_env **env)
 {
 	t_pipe_info	pipe_info;
@@ -92,7 +104,7 @@ void	execute_pipeline(t_cmd *cmd, t_env **env)
 		if (cmd->next && !create_pipe(pipe_info.pipe_fd))
 			break ;
 		last_pid = create_process(cmd, env, &pipe_info);
-		if (last_pid == -1) // fork fail
+		if (last_pid == -1)
 			break ;
 		if (pipe_info.fd_in != STDIN_FILENO)
 			close(pipe_info.fd_in);

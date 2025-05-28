@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 15:47:52 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/28 18:44:05 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/28 18:49:46 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,17 @@ void	exit_isadir(char *cmd, int is_exit)
 	exit_with_error(EX_NOEXEC, NULL, is_exit);
 }
 
+/**
+ * @brief Exits the program with a specified status and an optional error message.
+ *
+ * This function prints an error message to standard error if provided,
+ * sets the exit status, and then either exits the program or returns
+ * based on the is_exit flag.
+ *
+ * @param status The exit status to set.
+ * @param message An optional error message to print.
+ * @param is_exit A flag indicating whether to exit the program (1) or return (0).
+ */
 void	exit_with_error(int status, const char *message, int is_exit) 
 {
 	if (message)

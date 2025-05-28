@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 16:08:32 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/28 18:44:55 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/28 18:50:36 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,15 @@ int	is_builtin(char *cmd)
 	return (0);
 }
 
+/**
+ * @brief Creates a pipe and initializes the file descriptors.
+ *
+ * This function creates a pipe and stores the file descriptors in the
+ * provided array. If the pipe creation fails, it exits with an error.
+ *
+ * @param fd Pointer to an array of two integers where the pipe file descriptors will be stored.
+ * @return 1 on success, 0 on failure.
+ */
 int	create_pipe(int *fd)
 {
 	if (pipe(fd) == -1)
@@ -46,6 +55,14 @@ int	create_pipe(int *fd)
 	return (1);
 }
 
+/**
+ * @brief Waits for the last process in a pipeline to finish and cleans up.
+ *
+ * This function waits for the last process in a pipeline to complete,
+ * retrieves its exit status, and cleans up any remaining child processes.
+ *
+ * @param last_pid The PID of the last process in the pipeline.
+ */
 void	wait_for_pipeline(pid_t last_pid)
 {
 	int	status;
