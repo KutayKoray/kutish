@@ -6,11 +6,12 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 20:20:02 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/28 14:24:29 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/28 18:46:10 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "env.h"
 
 /**
  * @brief Checks whether a key name is valid for environment use.

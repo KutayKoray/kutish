@@ -6,11 +6,12 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 11:59:23 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/28 14:25:01 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/28 18:46:36 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "exec.h"
+#include "utils.h"
 
 static size_t	env_list_size(t_env *env)
 {
@@ -33,16 +34,7 @@ static int	is_accessible(char *cmd)
 	char		*err_msg;
 
 	if (stat(cmd, &sb) == 0 && S_ISDIR(sb.st_mode))
-	{
-		err_msg = str_arr_join((char *[]){
-			SHELL_NAME, ": ", cmd, ": Is a directory\n", NULL
-		}, "");
-		if (!err_msg)
-			return (exit_with_error(EXIT_FAILURE, SHELL_NAME, 1), 0);
-		ft_putstr_fd(err_msg, STDERR_FILENO);
-		*exit_status() = WEXITSTATUS(EX_NOEXEC);
-		exit(EX_NOEXEC);
-	}
+		exit_isadir(cmd, 1);
 	else if (ft_strchr(cmd, '/'))
 	{
 		if (access(cmd, F_OK) == -1)

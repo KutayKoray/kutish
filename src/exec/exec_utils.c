@@ -5,67 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/24 22:36:57 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/28 14:25:35 by ebabaogl         ###   ########.fr       */
+/*   Created: 2025/05/28 16:08:32 by ebabaogl          #+#    #+#             */
+/*   Updated: 2025/05/28 18:44:55 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-/**
- * @brief Returns a pointer to a static exit status variable.
- *
- * This function provides access to a static integer used to store
- * the last command's exit status. It allows other parts of the
- * program to read or modify the exit status without using a global
- * variable directly.
- *
- * @return Pointer to the static integer representing the exit status.
- */
-int		*exit_status(void)
-{
-	static int	status = 0;
-
-	return (&status);
-}
-
-/**
- * @brief Creates a pipe and stores file descriptors in the provided array.
- *
- * This function attempts to create a pipe using the `pipe` system call.
- * If successful, it stores the read and write file descriptors in the
- * provided array. If it fails, it prints an error message and sets the
- * exit status.
- *
- * @param fd Array to store the read and write file descriptors.
- * @return 1 on success, 0 on failure.
- */
-int	create_pipe(int *fd)
-{
-	if (pipe(fd) == -1)
-		return (exit_with_error(EXECUTION_FAILURE, SHELL_NAME, 0), 0);
-	return (1);
-}
-
-/**
- * @brief Handles errors by printing a message and optionally exiting.
- *
- * This function prints an error message to stderr, sets the exit status,
- * and either exits the program or returns based on the is_exit flag.
- *
- * @param status Exit status to set.
- * @param message Error message to print.
- * @param is_exit If true, exits the program; otherwise, just returns.
- */
-void	exit_with_error(int status, const char *message, int is_exit) 
-{
-	perror(message);
-	*exit_status() = status;
-	if (is_exit)
-		exit(status);
-	else
-		return ;
-}
+#include "exec.h"
 
 /**
  * @brief Checks if the command is a built-in command.
@@ -92,4 +37,27 @@ int	is_builtin(char *cmd)
 		i++;
 	}
 	return (0);
+}
+
+int	create_pipe(int *fd)
+{
+	if (pipe(fd) == -1)
+		return (exit_with_error(EXECUTION_FAILURE, SHELL_NAME, 0), 0);
+	return (1);
+}
+
+void	wait_for_pipeline(pid_t last_pid)
+{
+	int	status;
+
+	if (last_pid == -1)
+		return ;
+	if (waitpid(last_pid, &status, 0) == -1)
+	{
+		exit_with_error(EXECUTION_FAILURE, SHELL_NAME, 0);
+		return ;
+	}
+	*exit_status() = WEXITSTATUS(status);
+	while (wait(NULL) > 0)
+		;
 }

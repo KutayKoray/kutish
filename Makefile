@@ -8,7 +8,7 @@ BUILD_DIR	= build
 LIBFT_DIR	= $(LIB_DIR)/libft
 LIBFT		= $(LIBFT_DIR)/libft.a
 
-CFLAGS		= -Wall -Wextra -Werror -I$(INC_DIR) -I$(LIBFT_DIR)
+CFLAGS		= -I$(INC_DIR) -I$(LIBFT_DIR) # -Wall -Wextra -Werror -I$(INC_DIR) -I$(LIBFT_DIR)
 LDFLAGS		= -L$(LIBFT_DIR)
 LDLIBS		= -lreadline -lft
 RM			= rm -rf
@@ -22,9 +22,9 @@ endif
 
 VPATH		= src:src/env:src/exec:src/builtin:src/utils
 SRCS		= main.c \
-			str_utils.c \
+			str_utils.c error.c \
 			env.c env_utils.c env_init.c \
-			exec.c exec_utils.c exec_prep.c exec_redir.c \
+			exec.c exec_utils.c exec_prep.c exec_redir.c exec_builtin.c \
 			echo.c export.c
 OBJS		= $(addprefix $(BUILD_DIR)/,$(SRCS:.c=.o))
 

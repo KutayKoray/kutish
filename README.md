@@ -6,11 +6,10 @@
 
 ### not completed
 - builtins/* && !builtins/echo.c
-- exec/exec.c
-- exec/exec_utils.c
+- exec/* && !exec/exec_prep.c
 
 ### todo
 - [x] organize the includes
 - implement builtins
 - garbage collector
-- split the exec functions into smaller ones, make it more modular
+- [x] split the exec functions into smaller ones, make it more modular
