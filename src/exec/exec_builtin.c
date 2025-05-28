@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 18:22:26 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/28 18:58:56 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/29 01:46:34 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,6 @@ static int	exec_builtin(t_cmd *cmd, t_env **env)
 	return (exit_code);
 }
 
-/**
- * Handles the execution of built-in commands.
- * If the command is a built-in and has no next command, it executes it.
- * It also handles input/output redirection for the built-in command.
- *
- * @param cmd The command to execute.
- * @param env The environment variables.
- * @param pipe_info The pipe information for redirection.
- * @return 0 on success, or a status code indicating failure.
- */
 int	handle_builtin(t_cmd *cmd, t_env **env, t_pipe_info *pipe_info)
 {
 	int	status;

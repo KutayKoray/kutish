@@ -6,23 +6,12 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 16:52:50 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/29 01:25:05 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/29 01:46:06 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-/**
- * @brief Redirects the output for a command.
- *
- * This function handles output redirection for a command, either to a file
- * or appending to an existing file. It sets up the necessary file descriptors
- * and duplicates them to standard output.
- *
- * @param cmd The command structure containing output redirection information.
- * @param pipe_info The pipe information structure containing file descriptors.
- * @return 1 on success, 0 on failure.
- */
 int	outfile_redirection(t_cmd *cmd, t_pipe_info *pipe_info)
 {
 	size_t	i;
@@ -50,17 +39,6 @@ int	outfile_redirection(t_cmd *cmd, t_pipe_info *pipe_info)
 	return (1);
 }
 
-/**
- * @brief Redirects the input for a command.
- *
- * This function handles input redirection for a command, either from a
- * heredoc buffer or an input file. It sets up the necessary file descriptors
- * and duplicates them to standard input.
- *
- * @param cmd The command structure containing input redirection information.
- * @param pipe_info The pipe information structure containing file descriptors.
- * @return 1 on success, 0 on failure.
- */
 int	infile_redirection(t_cmd *cmd, t_pipe_info *pipe_info)
 {
 	int	hd_fd[2];

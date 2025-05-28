@@ -6,22 +6,13 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 20:20:02 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/28 18:46:10 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/29 01:46:52 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "env.h"
 
-/**
- * @brief Checks whether a key name is valid for environment use.
- *
- * A valid key must start with a letter or underscore, and contain
- * only alphanumeric characters or underscores.
- *
- * @param key The key to validate.
- * @return int 1 if valid, 0 if invalid.
- */
 int	is_valid_key(char *key)
 {
 	if (!key || !*key || ft_isdigit(*key))
@@ -35,19 +26,6 @@ int	is_valid_key(char *key)
 	return (1);
 }
 
-/**
- * @brief Adds a new environment node at the beginning of the list.
- *
- * Allocates a new t_env node, duplicates the key and value strings,
- * and inserts the new node at the head of the linked list.
- * If memory allocation fails at any point, cleans up and returns failure.
- *
- * @param env Pointer to the head pointer of the environment linked list.
- * @param key The key string to duplicate and store in the new node.
- * @param value The value string to duplicate and store in the new node
- * (can be NULL).
- * @return int Returns 1 on success, 0 on failure.
- */
 int	append_env_node(t_env **env, char *key, char *value)
 {
 	t_env	*new;
@@ -73,14 +51,6 @@ int	append_env_node(t_env **env, char *key, char *value)
 	return (1);
 }
 
-/**
- * @brief Frees the entire environment list and its contents.
- *
- * Iterates through the list and frees each node's key, value,
- * and the node itself.
- *
- * @param env Pointer to the head of the environment list.
- */
 void	free_env_list(t_env *env)
 {
 	t_env	*tmp;

@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 15:51:28 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/29 01:36:57 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/29 01:45:34 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,6 @@ static int	set_redirections(t_cmd *cmd, t_pipe_info *pipe_info)
 	return (1);
 }
 
-// bash kkill pipeline with EX_NOEXEC exit code if fork fails, here is the reference:
-// https://github.com/bminor/bash/blob/6794b5478f660256a1023712b5fc169196ed0a22/jobs.c#L2199
 static pid_t	create_process(t_cmd *cmd, t_env **env, t_pipe_info *pipe_info)
 {
 	pid_t	pid;
@@ -88,16 +86,6 @@ static pid_t	create_process(t_cmd *cmd, t_env **env, t_pipe_info *pipe_info)
 	return (pid);
 }
 
-/**
- * @brief Executes a pipeline of commands.
- *
- * This function iterates through a linked list of commands, creating pipes
- * between them and executing each command in a separate process. It handles
- * built-in commands and manages input/output redirections.
- *
- * @param cmd Pointer to the first command in the pipeline.
- * @param env Pointer to the environment variables.
- */
 void	execute_pipeline(t_cmd *cmd, t_env **env)
 {
 	t_pipe_info	pipe_info;

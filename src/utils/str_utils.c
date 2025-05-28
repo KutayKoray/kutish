@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 18:50:17 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/28 14:25:45 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/29 01:45:26 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,6 @@ char	*str_arr_join(char **arr, char *sep)
 	return (res);
 }
 
-/**
- * @brief Frees a NULL-terminated array of strings.
- *
- * Iterates through the given array of strings, freeing each string,
- * and finally frees the array pointer itself. If the array is NULL,
- * the function does nothing.
- *
- * @param arr A NULL-terminated array of dynamically allocated strings.
- */
 void	free_str_arr(char **arr)
 {
 	size_t	i;
