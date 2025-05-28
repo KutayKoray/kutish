@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 16:52:50 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/28 18:51:41 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/29 01:25:05 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	infile_redirection(t_cmd *cmd, t_pipe_info *pipe_info)
 	if (cmd->is_heredoc && cmd->heredoc_buffer)
 	{
 		if (!create_pipe(hd_fd))
-			return (0); // exit with EXECUTION_FAILURE
+			return (0);
 		write(hd_fd[1], cmd->heredoc_buffer, ft_strlen(cmd->heredoc_buffer));
 		close(hd_fd[1]);
 		dup2(hd_fd[0], STDIN_FILENO);

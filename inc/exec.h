@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 11:52:57 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/28 19:59:54 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/29 01:32:31 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,10 @@ void	execute_pipeline(t_cmd *cmd, t_env **env);
 int		create_pipe(int *fd);
 int		is_builtin(char *cmd);
 void	wait_for_pipeline(pid_t last_pid);
+void	free_lists(t_cmd *cmd, t_env *env);
 
 // exec_prep.c
-char	*get_cmd_path(char *cmd, t_env *env);
+char	*get_cmd_path(t_cmd *cmd, t_env *env);
 char	**env2envp(t_env *env);
 
 // exec_redir.c
@@ -53,8 +54,5 @@ int		handle_builtin(t_cmd *cmd, t_env **env, t_pipe_info *pipe_info);
 // utils/error.c
 int		*exit_status(void);
 void	exit_with_error(int status, const char *message, int is_exit);
-
-void	exit_isadir(char *cmd, int is_exit);
-void	exit_nocmd(char *cmd, int is_exit);
 
 #endif

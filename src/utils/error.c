@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 15:47:52 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/28 18:49:46 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/29 01:34:13 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,22 +27,6 @@ int		*exit_status(void)
 	static int	status = 0;
 
 	return (&status);
-}
-
-void	exit_nocmd(char *cmd, int is_exit)
-{
-	ft_putstr_fd(cmd, 2);
-	ft_putstr_fd(": command not found\n", 2);
-	exit_with_error(EX_NOEXEC, NULL, is_exit);
-}
-
-void	exit_isadir(char *cmd, int is_exit)
-{
-	ft_putstr_fd(SHELL_NAME, 2);
-	ft_putstr_fd(": ", 2);
-	ft_putstr_fd(cmd, 2);
-	ft_putstr_fd(": Is a directory\n", 2);
-	exit_with_error(EX_NOEXEC, NULL, is_exit);
 }
 
 /**

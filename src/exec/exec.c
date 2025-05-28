@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 15:51:28 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/28 19:59:42 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/29 01:34:30 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,25 @@ static void	exec_cmd(t_cmd *cmd, t_env *env)
 
 	if (!*cmd->argv)
 		exit(EXECUTION_SUCCESS);
-	cmd_path = get_cmd_path(cmd->argv[0], env);
+	cmd_path = get_cmd_path(cmd, env);
 	if (!cmd_path)
-		exit_nocmd(cmd->argv[0], 1);
+	{
+		ft_putstr_fd(cmd->argv[0], 2);
+		ft_putstr_fd(": command not found\n", 2);
+		free_lists(cmd, env);
+		exit_with_error(EX_NOTFOUND, NULL, 1);
+	}
 	envp = env2envp(env);
 	if (!envp)
 	{
 		free(cmd_path);
+		free_lists(cmd, env);
 		exit_with_error(EXECUTION_FAILURE, SHELL_NAME, 1);
 	}
 	execve(cmd_path, cmd->argv, envp);
 	free(cmd_path);
 	free_str_arr(envp);
+	free_lists(cmd, env);
 	exit_with_error(EX_NOEXEC, SHELL_NAME, 1);
 }
 
@@ -45,11 +52,9 @@ static int	set_redirections(t_cmd *cmd, t_pipe_info *pipe_info)
 		close(pipe_info->pipe_fd[0]);
 		close(pipe_info->pipe_fd[1]);
 	}
-	if (!outfile_redirection(cmd, pipe_info) || !infile_redirection(cmd, pipe_info))
-	{
-		// free structs
+	if (!outfile_redirection(cmd, pipe_info)
+		|| !infile_redirection(cmd, pipe_info))
 		return (0);
-	}
 	return (1);
 }
 
@@ -74,7 +79,10 @@ static pid_t	create_process(t_cmd *cmd, t_env **env, t_pipe_info *pipe_info)
 	else if (pid == 0)
 	{
 		if (!set_redirections(cmd, pipe_info))
-			exit_with_error(EXECUTION_FAILURE, SHELL_NAME, 1);
+		{
+			free_lists(cmd, *env);
+			exit_with_error(EXECUTION_FAILURE, NULL, 1);
+		}
 		exec_cmd(cmd, *env);
 	}
 	return (pid);
