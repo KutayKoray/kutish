@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 15:53:32 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/28 14:24:16 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/28 14:44:12 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,21 @@ static int	handle_flags(char *arg, int *nl_flag)
 	return (0);
 }
 
+/**
+ * @brief Outputs the arguments to standard output, handling the -n flag.
+ * If the -n flag is present, it does not output a newline at the end.
+ * 
+ * @example
+ * * echo 42        -> 42
+ * * echo -n 42     -> 42 (without newline)
+ * * echo -n -n 42  -> 42 (without newline)
+ * * echo -n -z 42  -> -z 42 (without newline) (-z is not a valid flag)
+ * * echo -z -n 42  -> -z -n 42 (-z is not a valid flag)
+ * * echo -nnnn 42 -> 42 (without newline)
+ * 
+ * @param argv The array of arguments passed to the echo command.
+ * @return int Returns 0 on success.
+ */
 int	echo_builtin(char **argv)
 {
 	size_t	i;
