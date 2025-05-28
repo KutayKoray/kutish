@@ -6,16 +6,11 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 00:52:49 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/26 11:56:53 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/28 14:25:29 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exec.h"
 #include "minishell.h"
-#include "libft.h"
-#include <stdlib.h>
-#include <unistd.h>
-#include <fcntl.h>
 
 int	infile_redirects(t_cmd *cmd, int *fd_in, int is_single_builtin, int *original_stdin)
 {

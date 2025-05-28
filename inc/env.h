@@ -6,14 +6,14 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 20:19:17 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/27 20:22:22 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/28 14:23:06 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ENV_H
 # define ENV_H
 
-# include <stddef.h>
+# include "minishell.h"
 
 typedef struct s_env
 {

@@ -6,14 +6,11 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 15:53:32 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/27 16:23:18 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/28 14:24:16 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "env.h"
-#include "exec.h"
-#include "libft.h"
-#include <unistd.h>
+#include "minishell.h"
 
 static int	handle_flags(char *arg, int *nl_flag)
 {

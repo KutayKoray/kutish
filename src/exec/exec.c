@@ -6,20 +6,11 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 14:06:04 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/27 19:09:24 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/28 14:25:33 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exec.h"
-#include "utils.h"
-#include "builtin.h"
 #include "minishell.h"
-#include "libft.h"
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <sys/wait.h>
-#include <sys/types.h>
 
 static void	wait_for_pipeline(pid_t last_pid)
 {

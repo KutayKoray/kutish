@@ -6,17 +6,11 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 22:36:57 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/27 20:39:47 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/28 14:25:35 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exec.h"
 #include "minishell.h"
-#include "libft.h"
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/wait.h>
 
 /**
  * @brief Returns a pointer to a static exit status variable.

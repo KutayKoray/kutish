@@ -6,13 +6,11 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 20:22:44 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/27 20:23:16 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/28 14:24:34 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "env.h"
-#include "libft.h"
-#include <stdlib.h>
+#include "minishell.h"
 
 /**
  * @brief Initializes the environment list from the envp array.

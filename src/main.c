@@ -6,17 +6,11 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 20:04:41 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/27 19:34:00 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/28 14:25:49 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "utils.h"
-#include "env.h"
-#include "exec.h"
-#include "libft.h"
-#include <stdlib.h>
-#include <stdio.h>
 
 int	main(int argc, char **argv, char **envp)
 {

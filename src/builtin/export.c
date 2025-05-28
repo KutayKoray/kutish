@@ -6,16 +6,11 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 11:35:06 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/27 19:51:30 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/28 14:24:22 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "env.h"
 #include "minishell.h"
-#include "libft.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
 
 // export 			-> print envs
 // export A			-> A=NULL

@@ -6,14 +6,11 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 20:21:53 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/27 20:21:57 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/28 14:24:26 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "env.h"
-#include "libft.h"
-#include <stdlib.h>
-#include <unistd.h>
+#include "minishell.h"
 
 static int	init_shlvl(t_env **env)
 {

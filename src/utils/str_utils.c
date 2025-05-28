@@ -6,12 +6,11 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 18:50:17 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/27 18:50:17 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/28 14:25:45 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <stdlib.h>
+#include "minishell.h"
 
 /**
  * @brief Joins an array of strings with a separator into a single string.

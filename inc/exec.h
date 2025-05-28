@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 11:52:57 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/27 15:54:22 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/28 14:22:53 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,6 @@
 # define EXEC_H
 
 # include "minishell.h"
-# include "env.h"
-
-# define EXECUTION_SUCCESS 0
-# define EXECUTION_FAILURE 1
-# define EX_NOEXEC 126
-# define EX_NOTFOUND 127
 
 // exec.c
 void	execute_pipeline(t_cmd *cmd, t_env **env);

@@ -1,21 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin.h                                          :+:      :+:    :+:   */
+/*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/26 15:52:58 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/28 14:23:10 by ebabaogl         ###   ########.fr       */
+/*   Created: 2025/05/28 14:19:58 by ebabaogl          #+#    #+#             */
+/*   Updated: 2025/05/28 14:22:58 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTIN_H
-# define BUILTIN_H
+#ifndef PARSER_H
+# define PARSER_H
 
 # include "minishell.h"
 
-int	echo_builtin(char **argv);
-int	export_builtin(char **argv, t_env **env);
+typedef struct s_cmd
+{
+	char			**argv;
+	char			**outfiles;
+	char			*infile;
+	char			**heredoc_eof;
+	char			*heredoc_buffer;
+	int				append;
+	int				is_heredoc;
+	struct s_cmd	*next;
+}					t_cmd;
 
 #endif
