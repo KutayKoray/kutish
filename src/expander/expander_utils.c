@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expander_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: kkoray <kkoray@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:29 by kkoray            #+#    #+#             */
-/*   Updated: 2025/05/16 11:38:48 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/29 19:14:03 by kkoray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "expander.h"
 
 size_t	get_env_key_len(const char *str, size_t *i)
 {

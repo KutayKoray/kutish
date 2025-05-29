@@ -55,6 +55,6 @@ dkms.conf
 .vscode/
 .idea/
 
-# kutish specific
+# Project specific
 build/
 minishell

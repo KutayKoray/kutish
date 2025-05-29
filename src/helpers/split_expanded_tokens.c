@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   split_expanded_tokens.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: kkoray <kkoray@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:33:06 by kkoray            #+#    #+#             */
-/*   Updated: 2025/05/09 00:52:40 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/29 19:50:03 by kkoray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "helpers.h"
 
-static t_token	*create_token_list_from_split(char **parts, t_token *cur)
+t_token	*create_token_list_from_split(char **parts, t_token *cur)
 {
 	t_token	*new_tokens;
 	t_token	*last;
@@ -63,7 +63,7 @@ static void	process_token_if_split_needed(t_token **head, t_token **cur,
 		return ;
 	new_tokens = create_token_list_from_split(parts, *cur);
 	replace_current_with_split(head, *cur, *prev, new_tokens);
-	ft_free_strarray(parts);
+	free_str_arr(parts);
 	*cur = new_tokens;
 }
 

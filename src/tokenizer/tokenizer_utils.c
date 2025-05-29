@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: kkoray <kkoray@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:33:11 by kkoray            #+#    #+#             */
-/*   Updated: 2025/05/08 22:55:03 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/29 19:35:15 by kkoray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "tokenizer.h"
 
 t_token_type	get_operator_type(const char *s)
 {

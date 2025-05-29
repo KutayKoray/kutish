@@ -3,26 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   split_expanded_tokens_utils.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: kkoray <kkoray@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:33:03 by kkoray            #+#    #+#             */
-/*   Updated: 2025/05/08 22:51:30 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/29 19:13:15 by kkoray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-void	ft_free_strarray(char **arr)
-{
-	int	i;
-
-	i = 0;
-	if (!arr)
-		return ;
-	while (arr[i])
-		free(arr[i++]);
-	free(arr);
-}
+#include "helpers.h"
 
 t_token	*create_token(const char *value, t_token_type type, int joined, int trimmed)
 {
