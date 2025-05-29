@@ -1,31 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kkoray <kkoray@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/22 20:04:47 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/29 19:19:09 by kkoray           ###   ########.fr       */
+/*   Created: 2025/05/27 19:07:43 by ebabaogl          #+#    #+#             */
+/*   Updated: 2025/05/29 20:08:41 by kkoray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef UTILS_H
+# define UTILS_H
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <fcntl.h>
-# include <sys/wait.h>
-# include <sys/stat.h>
-# include <sys/types.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include "libft.h"
-
-# define SHELL_NAME "kutish"
-#define PROMPT "kutish$ "
-
+// str_utils.c
+char	*str_arr_join(char **arr, char *sep);
+void	free_str_arr(char **arr);
+int     ft_strcmp(const char *s1, const char *s2);
+char	*ft_strndup(const char *s, size_t n);
 
 #endif

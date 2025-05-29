@@ -1,34 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/26 12:33:01 by kkoray            #+#    #+#             */
-/*   Updated: 2025/04/27 21:23:16 by ebabaogl         ###   ########.fr       */
+/*   Created: 2025/05/26 15:52:58 by ebabaogl          #+#    #+#             */
+/*   Updated: 2025/05/28 18:39:37 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef BUILTIN_H
+# define BUILTIN_H
 
-void	handle_sigint(int sig)
-{
-	(void)sig;
-	write(STDOUT_FILENO, "\n", 1);
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
-}
+# include "env.h"
 
-void	handle_sigquit(int sig)
-{
-	(void)sig;
-}
+int	echo_builtin(char **argv);
+int	export_builtin(char **argv, t_env **env);
 
-void	init_signals(void)
-{
-	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, handle_sigquit);
-	signal(SIGTSTP, SIG_IGN);
-}
+#endif

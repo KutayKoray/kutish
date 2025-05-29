@@ -6,11 +6,11 @@
 /*   By: kkoray <kkoray@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:43 by kkoray            #+#    #+#             */
-/*   Updated: 2025/04/26 12:32:44 by kkoray           ###   ########.fr       */
+/*   Updated: 2025/05/29 19:46:34 by kkoray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "helpers.h"
 
 void	merge_joined_tokens(t_token **tokens)
 {
@@ -24,7 +24,7 @@ void	merge_joined_tokens(t_token **tokens)
 		next = cur->next;
 		while (next && next->type == T_WORD && next->joined == 1)
 		{
-			merged = strappend_str(ft_strdup(cur->value), next->value);
+			merged = ft_strjoin(ft_strdup(cur->value), next->value);
 			free(cur->value);
 			cur->value = merged;
 			cur->next = next->next;

@@ -8,12 +8,11 @@ BUILD_DIR	= build
 LIBFT_DIR	= $(LIB_DIR)/libft
 LIBFT		= $(LIBFT_DIR)/libft.a
 
-CFLAGS		= -Wall -Wextra -Werror -I$(INC_DIR) -I$(LIBFT_DIR)
+CFLAGS		= -I$(INC_DIR) -I$(LIBFT_DIR) # -Wall -Wextra -Werror -I$(INC_DIR) -I$(LIBFT_DIR)
 LDFLAGS		= -L$(LIBFT_DIR)
 LDLIBS		= -lreadline -lft
 RM			= rm -rf
 
-# kutaycim special
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Darwin)
 	CFLAGS	+= -I/opt/homebrew/opt/readline/include
@@ -21,24 +20,16 @@ ifeq ($(UNAME_S),Darwin)
 	LDLIBS	+= -lcurses
 endif
 
-VPATH		= src
-SRCS		= 	main.c \
-			signals.c \
-			expander.c \
-			helper.c \
-			quote_checker.c \
-			tokenizer.c \
-			merge_tokens.c \
-			parser.c \
-			split_expanded_tokens.c \
-			parser_init.c \
-			expander_utils.c \
-			split_expanded_tokens_utils.c \
-			tokenizer_utils.c \
-			tokenizer_helpers.c \
-			heredoc.c \
-			split_first_token.c \
-			env.c
+VPATH		= src:src/env:src/exec:src/builtin:src/utils:src/helpers:src/parser:src/tokenizer:src/expander
+SRCS		= main.c \
+			str_utils.c exit_utils.c \
+			env.c env_utils.c env_init.c \
+			exec.c exec_utils.c exec_prep.c exec_redir.c exec_builtin.c \
+			echo.c export.c \
+			expander_utils.c expander.c \
+			debug_funcs.c quote_checker.c split_expanded_tokens_utils.c merge_tokens.c  split_expanded_tokens.c  split_first_token.c \
+			heredoc.c  parser.c  parser_init.c \
+			tokenizer.c  tokenizer_helpers.c  tokenizer_utils.c
 OBJS		= $(addprefix $(BUILD_DIR)/,$(SRCS:.c=.o))
 
 all: $(LIBFT) $(NAME)

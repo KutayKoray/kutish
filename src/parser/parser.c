@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: kkoray <kkoray@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:52 by kkoray            #+#    #+#             */
-/*   Updated: 2025/05/08 23:01:30 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/29 19:48:48 by kkoray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "parser.h"
 
 static void	add_outfile(char ***outfiles, char *value)
 {
@@ -132,9 +132,9 @@ void	free_cmd_list(t_cmd *cmds)
 		tmp = cmds;
 		cmds = cmds->next;
 		if (tmp->argv)
-			ft_free_strarray(tmp->argv);
+			free_str_arr(tmp->argv);
 		if (tmp->outfiles)
-			ft_free_strarray(tmp->outfiles);
+			free_str_arr(tmp->outfiles);
 		if (tmp->infile)
 			free(tmp->infile);
 		if (tmp->heredoc_eof)

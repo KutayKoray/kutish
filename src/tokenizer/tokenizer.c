@@ -6,11 +6,11 @@
 /*   By: kkoray <kkoray@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:33:14 by kkoray            #+#    #+#             */
-/*   Updated: 2025/04/26 12:33:15 by kkoray           ###   ########.fr       */
+/*   Updated: 2025/05/29 19:22:56 by kkoray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "tokenizer.h"
 
 static void	tokenize_segment(t_token_ctx *ctx, const char *str, int start,
 		int end)

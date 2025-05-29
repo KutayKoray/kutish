@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "parser.h"
 
 void	add_heredoc(char ***heredoc_eof, const char *value)
 {
@@ -41,7 +41,7 @@ static char	*read_heredoc_input(const char *eof)
 			break;
 		}
 		tmp = ft_strjoin(line, "\n");
-		buffer = strappend_str(buffer, tmp);
+		buffer = ft_strjoin(buffer, tmp);
 		free(tmp);
 		free(line);
 	}
@@ -81,4 +81,27 @@ char	*get_heredoc(t_cmd *cmd)
 	}
 	*last_new_line = '\0';
 	return (last_input);
+}
+
+void	assign_heredoc_buffers(t_cmd *cmds, t_env *env)
+{
+	t_cmd	*cur;
+	char	*raw;
+
+	cur = cmds;
+	while (cur)
+	{
+		if (cur->is_heredoc)
+		{
+			raw = get_heredoc(cur);
+			if (!raw)
+				return ;
+			if (cur->heredoc_expand)
+				cur->heredoc_buffer = expand_input(raw, env);
+			else
+				cur->heredoc_buffer = raw;
+			// free(raw);
+		}
+		cur = cur->next;
+	}
 }
