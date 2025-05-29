@@ -1,22 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.h                                            :+:      :+:    :+:   */
+/*   parser_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kkoray <kkoray@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/27 19:07:43 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/29 20:08:41 by kkoray           ###   ########.fr       */
+/*   Created: 2025/04/26 12:32:49 by kkoray            #+#    #+#             */
+/*   Updated: 2025/05/29 19:15:06 by kkoray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
+#include "parser.h"
 
-// str_utils.c
-char	*str_arr_join(char **arr, char *sep);
-void	free_str_arr(char **arr);
-int     ft_strcmp(const char *s1, const char *s2);
-char	*ft_strndup(const char *s, size_t n);
+t_cmd	*create_cmd(void)
+{
+	t_cmd	*cmd;
 
-#endif
+	cmd = malloc(sizeof(t_cmd));
+	if (!cmd)
+		return (NULL);
+	cmd->argv = NULL;
+	cmd->infile = NULL;
+	cmd->outfiles = NULL;
+	cmd->heredoc_eof = NULL;
+	cmd->append = 0;
+	cmd->is_heredoc = 0;
+	cmd->heredoc_buffer = NULL;
+	cmd->next = NULL;
+	return (cmd);
+}

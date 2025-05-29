@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: kkoray <kkoray@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 18:50:17 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/29 01:45:26 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/29 20:08:34 by kkoray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,31 @@ void	free_str_arr(char **arr)
 		i++;
 	}
 	free(arr);
+}
+
+int ft_strcmp(const char *s1, const char *s2)
+{
+	int i = 0;
+
+	while((s1[i] == s2[i]) && s1[i] && s2[i])
+		i++;
+	return (s1[i]-s2[i]);
+}
+
+char	*ft_strndup(const char *s, size_t n)
+{
+	char	*dup;
+	size_t	i;
+
+	dup = (char *)malloc(sizeof(char) * (n + 1));
+	if (!dup)
+		return (NULL);
+	i = 0;
+	while (i < n && s[i])
+	{
+		dup[i] = s[i];
+		i++;
+	}
+	dup[i] = '\0';
+	return (dup);
 }

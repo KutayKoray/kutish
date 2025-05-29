@@ -1,22 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.h                                            :+:      :+:    :+:   */
+/*   split_expanded_tokens_utils.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kkoray <kkoray@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/27 19:07:43 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/29 20:08:41 by kkoray           ###   ########.fr       */
+/*   Created: 2025/04/26 12:33:03 by kkoray            #+#    #+#             */
+/*   Updated: 2025/05/29 19:13:15 by kkoray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
+#include "helpers.h"
 
-// str_utils.c
-char	*str_arr_join(char **arr, char *sep);
-void	free_str_arr(char **arr);
-int     ft_strcmp(const char *s1, const char *s2);
-char	*ft_strndup(const char *s, size_t n);
+t_token	*create_token(const char *value, t_token_type type, int joined, int trimmed)
+{
+	t_token	*new;
 
-#endif
+	new = malloc(sizeof(t_token));
+	if (!new)
+		return (NULL);
+	new->value = ft_strdup(value);
+	new->type = type;
+	new->joined = joined;
+	new->trimmed = trimmed;
+	new->next = NULL;
+	return (new);
+}

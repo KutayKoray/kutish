@@ -1,22 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.h                                            :+:      :+:    :+:   */
+/*   expander_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kkoray <kkoray@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/27 19:07:43 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/29 20:08:41 by kkoray           ###   ########.fr       */
+/*   Created: 2025/04/26 12:32:29 by kkoray            #+#    #+#             */
+/*   Updated: 2025/05/29 19:14:03 by kkoray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
+#include "expander.h"
 
-// str_utils.c
-char	*str_arr_join(char **arr, char *sep);
-void	free_str_arr(char **arr);
-int     ft_strcmp(const char *s1, const char *s2);
-char	*ft_strndup(const char *s, size_t n);
+size_t	get_env_key_len(const char *str, size_t *i)
+{
+	size_t	len;
 
-#endif
+	len = 0;
+	while (str[*i] && (ft_isalnum(str[*i]) || str[*i] == '_'))
+	{
+		(*i)++;
+		len++;
+	}
+	return (len);
+}
