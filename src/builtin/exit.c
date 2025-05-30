@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 15:21:05 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/30 18:19:52 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/30 23:14:03 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,22 @@ static int	ft_isnum(char *str)
 	size_t	i;
 
 	i = 0;
+	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
+		i++;
 	if (str[i] == '+' || str[i] == '-')
 		i++;
-	if (!str[i])
+	if (!str[i] || str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
 		return (0);
 	while (str[i])
 	{
 		if (!ft_isdigit(str[i]))
-			return (0);
+		{
+			while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
+				i++;
+			if (str[i])
+				return (0);
+			return (1);
+		}
 		i++;
 	}
 	return (1);
@@ -100,9 +108,7 @@ int	exit_builtin(t_cmd *cmd, t_env *env)
 		exit_with_error(*exit_status(), NULL, 1);
 	}
 	status = ft_atol(cmd->argv[1], &exit_code);
-	// printf("status: %d\n", status);
-	// printf("exit_code: %ld\n", exit_code);
-	if (!ft_isnum(cmd->argv[1]) || status == -1) // space atinca isnum dogru alamiyor arg'dan fakat atol sayiyi dogru alabiliyor spaceler ile isnum improve lazm
+	if (!ft_isnum(cmd->argv[1]) || status == -1)
 		print_error_sytnax(cmd, env);
 	if (cmd->argv[2] || status == -1)
 		return (print_error_many_arg(), 1);
