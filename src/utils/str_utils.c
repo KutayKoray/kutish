@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 18:50:17 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/30 14:56:29 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/30 16:18:01 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,18 +49,6 @@ char	*str_arr_join(char **arr, char *sep)
 		i++;
 	}
 	return (res);
-}
-
-size_t	str_arr_size(char **arr)
-{
-	size_t	i;
-
-	if (!arr)
-		return (0);
-	i = 0;
-	while (arr[i])
-		i++;
-	return (i);
 }
 
 void	free_str_arr(char **arr)

@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 18:22:26 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/30 15:02:40 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/30 17:48:21 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ static int	exec_builtin(t_cmd *cmd, t_env **env)
 		exit_code = env_builtin(*env);
 	else if (!ft_strncmp(cmd->argv[0], "cd", 3))
 		exit_code = cd_builtin(cmd->argv, env);
+	else if (!ft_strncmp(cmd->argv[0], "exit", 5))
+		exit_code = exit_builtin(cmd, *env);
 	return (exit_code);
 }
 
@@ -39,7 +41,6 @@ void	handle_builtin(t_cmd *cmd, t_env **env)
 	if (!is_builtin(cmd->argv[0]))
 		return ;
 	status = exec_builtin(cmd, env);
-	*exit_status() = status;
 	free_lists(cmd, *env);
 	exit_with_error(status, NULL, 1);
 }
@@ -57,7 +58,7 @@ int	handle_single_builtin(t_cmd *cmd, t_env **env, t_pipe_info *pipe_info)
 	status = outfile_redirection(cmd, pipe_info)
 		& infile_redirection(cmd, pipe_info);
 	exit_code = exec_builtin(cmd, env);
-	*exit_status() = exit_code;
+	exit_with_error(exit_code, NULL, 0);
 	dup2(pipe_info->original_stdin, STDIN_FILENO);
 	dup2(pipe_info->original_stdout, STDOUT_FILENO);
 	close(pipe_info->original_stdin);

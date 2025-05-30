@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 16:08:32 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/30 13:28:53 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/30 17:33:30 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ void	wait_for_pipeline(pid_t last_pid)
 		return ;
 	waitpid(last_pid, &status, 0);
 	if (WIFEXITED(status))
-		*exit_status() = WEXITSTATUS(status);
+		exit_with_error(WEXITSTATUS(status), NULL, 0);
 	else
-		*exit_status() = WTERMSIG(status) + 128;
+		exit_with_error(WTERMSIG(status) + 128, NULL, 0);
 	while (wait(NULL) > 0)
 		;
 }

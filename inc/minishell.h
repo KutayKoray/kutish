@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkoray <kkoray@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 20:04:47 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/29 19:19:09 by kkoray           ###   ########.fr       */
+/*   Updated: 2025/05/30 16:26:47 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <sys/types.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <limits.h>
 # include "libft.h"
 
 # define SHELL_NAME "kutish"

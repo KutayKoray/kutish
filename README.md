@@ -6,5 +6,6 @@
 - ""test""          -> "test"
 - ''test''          -> "test"
 - A="test"          -> "A=test"
+- "A "B C""         -> "A B" "C"
 
 - handle only space or tabs
