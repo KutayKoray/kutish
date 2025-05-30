@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 15:52:58 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/30 14:23:07 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/30 15:02:57 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define BUILTIN_H
 
 # include "minishell.h"
+# include "utils.h"
 # include "env.h"
 
 int	echo_builtin(char **argv);
@@ -21,5 +22,6 @@ int	export_builtin(char **argv, t_env **env);
 int	unset_builtin(char **argv, t_env **env);
 int	pwd_builtin(void);
 int	env_builtin(t_env *env);
+int	cd_builtin(char **argv, t_env **env);
 
 #endif

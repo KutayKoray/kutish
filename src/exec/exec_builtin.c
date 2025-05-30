@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 18:22:26 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/30 14:23:12 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/30 15:02:40 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ static int	exec_builtin(t_cmd *cmd, t_env **env)
 		exit_code = pwd_builtin();
 	else if (!ft_strncmp(cmd->argv[0], "env", 4))
 		exit_code = env_builtin(*env);
+	else if (!ft_strncmp(cmd->argv[0], "cd", 3))
+		exit_code = cd_builtin(cmd->argv, env);
 	return (exit_code);
 }
 

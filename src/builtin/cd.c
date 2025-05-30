@@ -1,0 +1,71 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/30 14:37:42 by ebabaogl          #+#    #+#             */
+/*   Updated: 2025/05/30 15:13:44 by ebabaogl         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "builtin.h"
+
+static void	print_env_error(char *var)
+{
+	ft_putstr_fd(SHELL_NAME, STDERR_FILENO);
+	ft_putstr_fd(": cd: ", STDERR_FILENO);
+	ft_putstr_fd(var, STDERR_FILENO);
+	ft_putstr_fd(": not set\n", STDERR_FILENO);
+}
+
+static void print_chdir_error(char *path)
+{
+	ft_putstr_fd(SHELL_NAME, STDERR_FILENO);
+	ft_putstr_fd(": cd: ", STDERR_FILENO);
+	ft_putstr_fd(path, STDERR_FILENO);
+	ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
+}
+
+static void	update_env_vars(t_env **env)
+{
+	char	*oldpwd;
+	char	*pwd;
+
+	oldpwd = get_env_value(*env, "PWD");
+	if (oldpwd)
+		set_env(env, "OLDPWD", oldpwd);
+	pwd = getcwd(NULL, 0);
+	if (pwd)
+		set_env(env, "PWD", pwd);
+}
+
+int	cd_builtin(char **argv, t_env **env)
+{
+	char	*path;
+
+	if (str_arr_size(argv) > 2)
+	{
+		ft_putstr_fd(SHELL_NAME, STDERR_FILENO);
+		ft_putstr_fd(": cd: too many arguments\n", STDERR_FILENO);
+		return (1);
+	}
+	if (!argv[1])
+	{
+		path = get_env_value(*env, "HOME");
+		if (!path)
+			return (print_env_error("HOME"), 1);
+	}
+	else if (!ft_strncmp(argv[1], "-", 2))
+	{
+		path = get_env_value(*env, "OLDPWD");
+		if (!path)
+			return (print_env_error("OLDPWD"), 1);
+	}
+	else
+		path = argv[1];
+	if (chdir(path) == -1)
+		return (print_chdir_error(path), 1);
+	return (update_env_vars(env), 0);
+}

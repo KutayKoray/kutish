@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:58:06 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/30 14:02:00 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/30 15:13:16 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	pwd_builtin(void)
 
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
-		return (1);
+		return (perror("pwd"), 1);
 	ft_putstr_fd(cwd, STDOUT_FILENO);
 	free(cwd);
 	ft_putstr_fd("\n", STDOUT_FILENO);
