@@ -8,3 +8,5 @@
 - A="test"          -> "A=test"
 
 - handle only space or tabs
+
+""merhaba""

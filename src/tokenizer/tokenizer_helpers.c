@@ -6,9 +6,11 @@
 /*   By: kkoray <kkoray@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:33:08 by kkoray            #+#    #+#             */
-/*   Updated: 2025/04/26 12:33:09 by kkoray           ###   ########.fr       */
+/*   Updated: 2025/05/30 14:11:54 by kkoray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "tokenizer.h"
 
 int	operator_length(const char *s)
 {
@@ -32,16 +34,16 @@ int	is_operator_char(char c)
 	return (c == '>' || c == '<' || c == '|');
 }
 
-int	read_quoted(const char *str, int start, char quote)
+int read_quoted(const char *str, int start, char quote)
 {
-	int	i;
-
-	i = start + 1;
-	while (str[i] && str[i] != quote)
-		i++;
-	if (str[i] == quote)
-		i++;
-	return (i);
+	int end;
+	
+	end = ft_strlen(str) - 1;
+	while (end > start && str[end] != quote)
+		end--;
+	if (end <= start)
+		return start + 1;
+	return end + 1; 
 }
 
 int	read_plain(const char *str, int start)

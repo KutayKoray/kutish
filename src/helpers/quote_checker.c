@@ -6,7 +6,7 @@
 /*   By: kkoray <kkoray@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:54 by kkoray            #+#    #+#             */
-/*   Updated: 2025/05/29 19:13:38 by kkoray           ###   ########.fr       */
+/*   Updated: 2025/05/30 14:10:58 by kkoray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,32 @@ int	quote_checker(const char *input)
 	return (1);
 }
 
+char	*remove_inner_matching_quotes(const char *str, char quote)
+{
+	int		i = 0;
+	int		j = 0;
+	size_t	len = ft_strlen(str);
+	char	*result = malloc(len + 1);
+
+	if (!result)
+		return (NULL);
+	while (str[i])
+	{
+		if (str[i] != quote)
+			result[j++] = str[i];
+		i++;
+	}
+	result[j] = '\0';
+	return (result);
+}
+
 void	trim_token_quotes(t_token *tokens)
 {
 	t_token	*tmp;
 	char	*trimmed;
+	char	*cleaned;
 	size_t	len;
+	char	quote;
 
 	tmp = tokens;
 	while (tmp)
@@ -49,15 +70,25 @@ void	trim_token_quotes(t_token *tokens)
 		if (tmp->type == T_WORD)
 		{
 			len = ft_strlen(tmp->value);
-			if ((tmp->value[0] == '"' && tmp->value[len - 1] == '"')
-				|| (tmp->value[0] == '\'' && tmp->value[len - 1] == '\''))
+			if (len >= 2 && ((tmp->value[0] == '"' && tmp->value[len - 1] == '"')
+				|| (tmp->value[0] == '\'' && tmp->value[len - 1] == '\'')))
 			{
+				quote = tmp->value[0];
 				tmp->trimmed = 1;
 				trimmed = ft_substr(tmp->value, 1, len - 2);
+				if (!trimmed)
+				{
+					tmp = tmp->next;
+					continue;
+				}
+				cleaned = remove_inner_matching_quotes(trimmed, quote);
+				free(trimmed);
 				free(tmp->value);
-				tmp->value = trimmed;
+				tmp->value = cleaned;
 			}
 		}
 		tmp = tmp->next;
 	}
 }
+
+
