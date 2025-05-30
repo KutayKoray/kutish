@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 15:51:28 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/29 01:45:34 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/30 11:07:14 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ static void	exec_cmd(t_cmd *cmd, t_env *env)
 	char	*cmd_path;
 	char	**envp;
 
-	if (!*cmd->argv)
-		exit_with_error(EXECUTION_SUCCESS, NULL, 1);
 	cmd_path = get_cmd_path(cmd, env);
 	if (!cmd_path)
 	{

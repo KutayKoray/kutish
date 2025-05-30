@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkoray <kkoray@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 20:04:41 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/29 19:28:39 by kkoray           ###   ########.fr       */
+/*   Updated: 2025/05/30 11:09:24 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,7 @@ int	main(int argc, char **argv, char **envp)
 
 	debug = (argv[1] && !ft_strncmp(argv[1], "-d", 2));
 	if (debug)
-	{
 		printf("you're currently in debug mode, each step will be displayed.\n");
-		// print_env(env);
-	}
 	while (1)
 	{
 		input = readline(PROMPT);
@@ -77,13 +74,12 @@ int	main(int argc, char **argv, char **envp)
 		assign_heredoc_buffers(cmds, env);
 		if (debug)
 			print_cmd_list(cmds);
-
+		if (cmds->argv)
+			execute_pipeline(cmds, &env);
 		free_cmd_list(cmds);
 		free_token_list(tokens);
 		free(input);
 	}
-
-	execute_pipeline(cmd, &env);
-	free_lists(cmd, env);
+	free_env_list(env);
 	return (0);
 }

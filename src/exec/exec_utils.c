@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 16:08:32 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/29 01:45:43 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/30 11:07:59 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,26 +48,6 @@ void	wait_for_pipeline(pid_t last_pid)
 
 void	free_lists(t_cmd *cmd, t_env *env)
 {
-	t_cmd	*tmp_cmd;
-	t_env	*tmp_env;
-
-	while (env)
-	{
-		tmp_env = env;
-		env = env->next;
-		free(tmp_env->key);
-		free(tmp_env->value);
-		free(tmp_env);
-	}
-	while (cmd)
-	{
-		tmp_cmd = cmd;
-		cmd = cmd->next;
-		free_str_arr(tmp_cmd->argv);
-		free_str_arr(tmp_cmd->outfiles);
-		free(tmp_cmd->infile);
-		free_str_arr(tmp_cmd->heredoc_eof);
-		free(tmp_cmd->heredoc_buffer);
-		free(tmp_cmd);
-	}
+	free_env_list(env);
+	free_cmd_list(cmd);
 }
