@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 14:37:42 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/30 15:13:44 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/30 15:18:12 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,6 @@ static void	print_env_error(char *var)
 	ft_putstr_fd(": cd: ", STDERR_FILENO);
 	ft_putstr_fd(var, STDERR_FILENO);
 	ft_putstr_fd(": not set\n", STDERR_FILENO);
-}
-
-static void print_chdir_error(char *path)
-{
-	ft_putstr_fd(SHELL_NAME, STDERR_FILENO);
-	ft_putstr_fd(": cd: ", STDERR_FILENO);
-	ft_putstr_fd(path, STDERR_FILENO);
-	ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
 }
 
 static void	update_env_vars(t_env **env)
@@ -66,6 +58,6 @@ int	cd_builtin(char **argv, t_env **env)
 	else
 		path = argv[1];
 	if (chdir(path) == -1)
-		return (print_chdir_error(path), 1);
+		return (perror(path), 1);
 	return (update_env_vars(env), 0);
 }
