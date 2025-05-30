@@ -6,18 +6,19 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 15:21:05 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/30 17:51:10 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/30 18:19:52 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-static void	print_error_sytnax(char *arg)
+static void	print_error_sytnax(t_cmd *cmd, t_env *env)
 {
 	ft_putstr_fd(SHELL_NAME, STDERR_FILENO);
 	ft_putstr_fd(": exit: ", STDERR_FILENO);
-	ft_putstr_fd(arg, STDERR_FILENO);
+	ft_putstr_fd(cmd->argv[1], STDERR_FILENO);
 	ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
+	free_lists(cmd, env);
 	exit_with_error(2, NULL, 1);
 }
 
@@ -64,8 +65,13 @@ static int	ft_atol(const char *str, long *out)
 	{
 		if (result > (LONG_MAX - (str[i] - '0')) / 10)
 			return (-1);
-		result = result * 10 + (str[i++] - '0');
+		result = result * 10 + (str[i] - '0');
+		i++;
 	}
+	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
+		i++;
+	if (str[i])
+		return (-1);
 	*out = result * sign;
 	return (0);
 }
@@ -76,7 +82,7 @@ static int	ft_atol(const char *str, long *out)
 // exit       -> exit with last exit code
 // exit 11    -> exit with code 11
 // exit 11 a  -> X
-// exit 11 11 -> X
+// exit 11 11 -> X!ft_isnum(cmd->argv[1])
 // exit a     -> Y
 // exit a 11  -> Y
 // exit a a   -> Y
@@ -94,11 +100,10 @@ int	exit_builtin(t_cmd *cmd, t_env *env)
 		exit_with_error(*exit_status(), NULL, 1);
 	}
 	status = ft_atol(cmd->argv[1], &exit_code);
-	if (!ft_isnum(cmd->argv[1]) || status == -1)
-	{
-		free_lists(cmd, env);
-		print_error_sytnax(cmd->argv[1]);
-	}
+	// printf("status: %d\n", status);
+	// printf("exit_code: %ld\n", exit_code);
+	if (!ft_isnum(cmd->argv[1]) || status == -1) // space atinca isnum dogru alamiyor arg'dan fakat atol sayiyi dogru alabiliyor spaceler ile isnum improve lazm
+		print_error_sytnax(cmd, env);
 	if (cmd->argv[2] || status == -1)
 		return (print_error_many_arg(), 1);
 	if (cmd->argv[1])
