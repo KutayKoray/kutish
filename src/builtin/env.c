@@ -1,25 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin.h                                          :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/26 15:52:58 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/30 14:23:07 by ebabaogl         ###   ########.fr       */
+/*   Created: 2025/05/30 14:20:31 by ebabaogl          #+#    #+#             */
+/*   Updated: 2025/05/30 14:28:41 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTIN_H
-# define BUILTIN_H
+#include "builtin.h"
 
-# include "minishell.h"
-# include "env.h"
+static void	print_env_reverse(t_env *env)
+{
+	if (!env)
+		return;
+	print_env_reverse(env->next);
+	if (env->value)
+	{
+		ft_putstr_fd(env->key, STDOUT_FILENO);
+		ft_putstr_fd("=", STDOUT_FILENO);
+		ft_putstr_fd(env->value, STDOUT_FILENO);
+		ft_putchar_fd('\n', STDOUT_FILENO);
+	}
+}
 
-int	echo_builtin(char **argv);
-int	export_builtin(char **argv, t_env **env);
-int	unset_builtin(char **argv, t_env **env);
-int	pwd_builtin(void);
-int	env_builtin(t_env *env);
-
-#endif
+int	env_builtin(t_env *env)
+{
+	print_env_reverse(env);
+	return (0);
+}
