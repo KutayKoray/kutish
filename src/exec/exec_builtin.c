@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 18:22:26 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/29 01:46:34 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/30 12:13:06 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,19 @@ static int	exec_builtin(t_cmd *cmd, t_env **env)
 	return (exit_code);
 }
 
-int	handle_builtin(t_cmd *cmd, t_env **env, t_pipe_info *pipe_info)
+void	handle_builtin(t_cmd *cmd, t_env **env)
+{
+	int	status;
+
+	if (!is_builtin(cmd->argv[0]))
+		return ;
+	status = exec_builtin(cmd, env);
+	*exit_status() = status;
+	free_lists(cmd, *env);
+	exit_with_error(status, NULL, 1);
+}
+
+int	handle_single_builtin(t_cmd *cmd, t_env **env, t_pipe_info *pipe_info)
 {
 	int	status;
 

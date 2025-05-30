@@ -6,15 +6,13 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 15:51:28 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/30 11:07:14 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/30 12:11:17 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "utils.h"
 
-// buradan direkt cikis yapma, freeleri unutma
-// get_cmd_path de ayni unutma
 static void	exec_cmd(t_cmd *cmd, t_env *env)
 {
 	char	*cmd_path;
@@ -79,6 +77,7 @@ static pid_t	create_process(t_cmd *cmd, t_env **env, t_pipe_info *pipe_info)
 			free_lists(cmd, *env);
 			exit_with_error(EXECUTION_FAILURE, NULL, 1);
 		}
+		handle_builtin(cmd, env);
 		exec_cmd(cmd, *env);
 	}
 	return (pid);
@@ -91,7 +90,7 @@ void	execute_pipeline(t_cmd *cmd, t_env **env)
 
 	last_pid = -1;
 	pipe_info.fd_in = STDIN_FILENO;
-	if (handle_builtin(cmd, env, &pipe_info))
+	if (handle_single_builtin(cmd, env, &pipe_info))
 		return ;
 	while (cmd)
 	{

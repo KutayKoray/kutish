@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkoray <kkoray@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:32 by kkoray            #+#    #+#             */
-/*   Updated: 2025/05/29 20:09:08 by kkoray           ###   ########.fr       */
+/*   Updated: 2025/05/30 11:26:17 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
-
-int			g_exit_status = 0;
+#include "exec.h"
 
 static char	*expand_variable(t_expand_ctx *ctx, const char *str, size_t *i)
 {
@@ -25,7 +24,7 @@ static char	*expand_variable(t_expand_ctx *ctx, const char *str, size_t *i)
 	if (str[start] == '?')
 	{
 		(*i)++;
-		return (ft_itoa(g_exit_status));
+		return (ft_itoa(*exit_status()));
 	}
 	if (!str[start] || !(ft_isalpha(str[start]) || str[start] == '_'))
 		return (ft_strdup("$"));

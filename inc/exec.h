@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 11:52:57 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/29 01:32:31 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/30 12:12:59 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ int		infile_redirection(t_cmd *cmd, t_pipe_info *pipe_info);
 int		outfile_redirection(t_cmd *cmd, t_pipe_info *pipe_info);
 
 // exec_builtin.c
-int		handle_builtin(t_cmd *cmd, t_env **env, t_pipe_info *pipe_info);
+void	handle_builtin(t_cmd *cmd, t_env **env);
+int		handle_single_builtin(t_cmd *cmd, t_env **env, t_pipe_info *pipe_info);
 
 // utils/error.c
 int		*exit_status(void);
