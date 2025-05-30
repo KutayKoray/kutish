@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 20:04:41 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/30 11:09:24 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/30 13:12:25 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,11 @@ int	main(int argc, char **argv, char **envp)
 		}
 		if (*input)
 			add_history(input);
+		else
+		{
+			free(input);
+			continue;
+		}
 		if (!quote_checker(input))
 		{
 			free(input);
@@ -74,8 +79,7 @@ int	main(int argc, char **argv, char **envp)
 		assign_heredoc_buffers(cmds, env);
 		if (debug)
 			print_cmd_list(cmds);
-		if (cmds->argv)
-			execute_pipeline(cmds, &env);
+		execute_pipeline(cmds, &env);
 		free_cmd_list(cmds);
 		free_token_list(tokens);
 		free(input);
