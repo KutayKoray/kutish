@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin.h                                          :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/26 15:52:58 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/30 14:07:11 by ebabaogl         ###   ########.fr       */
+/*   Created: 2025/05/30 13:58:06 by ebabaogl          #+#    #+#             */
+/*   Updated: 2025/05/30 14:02:00 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTIN_H
-# define BUILTIN_H
+#include "builtin.h"
 
-# include "minishell.h"
-# include "env.h"
+int	pwd_builtin(void)
+{
+	char	*cwd;
 
-int	echo_builtin(char **argv);
-int	export_builtin(char **argv, t_env **env);
-int	unset_builtin(char **argv, t_env **env);
-int	pwd_builtin(void);
-
-#endif
+	cwd = getcwd(NULL, 0);
+	if (!cwd)
+		return (1);
+	ft_putstr_fd(cwd, STDOUT_FILENO);
+	free(cwd);
+	ft_putstr_fd("\n", STDOUT_FILENO);
+	return (0);
+}

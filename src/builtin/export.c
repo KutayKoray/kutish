@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 11:35:06 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/30 13:32:18 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/30 14:04:53 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,21 @@ static void	print_error(char *key)
 
 static void	print_env(t_env *env)
 {
-	t_env	*current;
+	t_env	*tmp;
 
-	current = env;
-	while (current)
+	tmp = env;
+	while (tmp)
 	{
-		if (!ft_strncmp(current->key, "_", 2))
+		if (!ft_strncmp(tmp->key, "_", 2))
 		{
-			current = current->next;
+			tmp = tmp->next;
 			continue ;
 		}
-		else if (current->key && current->value)
-			printf("declare -x %s=\"%s\"\n", current->key, current->value);
-		else if (current->key)
-			printf("declare -x %s\n", current->key);
-		current = current->next;
+		else if (tmp->key && tmp->value)
+			printf("declare -x %s=\"%s\"\n", tmp->key, tmp->value);
+		else if (tmp->key)
+			printf("declare -x %s\n", tmp->key);
+		tmp = tmp->next;
 	}
 }
 
