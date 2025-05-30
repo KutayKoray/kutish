@@ -6,20 +6,14 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 11:35:06 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/30 13:05:46 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/30 13:32:18 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "env.h"
 
-// export 			-> print envs
-// export A			-> A=NULL
-// export A=		-> A=""
-// export A=B		-> A=B
-// export A=B C=D	-> A=B, C=D
-
-static void print_error(char *key)
+static void	print_error(char *key)
 {
 	ft_putstr_fd(SHELL_NAME, STDERR_FILENO);
 	ft_putstr_fd(": export: `", STDERR_FILENO);
@@ -27,7 +21,7 @@ static void print_error(char *key)
 	ft_putstr_fd("`: not a valid identifier\n", STDERR_FILENO);
 }
 
-static void print_env(t_env *env)
+static void	print_env(t_env *env)
 {
 	t_env	*current;
 
@@ -37,7 +31,7 @@ static void print_env(t_env *env)
 		if (!ft_strncmp(current->key, "_", 2))
 		{
 			current = current->next;
-			continue;
+			continue ;
 		}
 		else if (current->key && current->value)
 			printf("declare -x %s=\"%s\"\n", current->key, current->value);

@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 18:22:26 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/30 12:13:06 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/30 13:34:06 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	handle_builtin(t_cmd *cmd, t_env **env)
 int	handle_single_builtin(t_cmd *cmd, t_env **env, t_pipe_info *pipe_info)
 {
 	int	status;
+	int	exit_code;
 
 	status = 0;
 	if (cmd->next || !is_builtin(cmd->argv[0]))
@@ -47,7 +48,8 @@ int	handle_single_builtin(t_cmd *cmd, t_env **env, t_pipe_info *pipe_info)
 	pipe_info->original_stdout = dup(STDOUT_FILENO);
 	status = outfile_redirection(cmd, pipe_info)
 		& infile_redirection(cmd, pipe_info);
-	*exit_status() = exec_builtin(cmd, env);
+	exit_code = exec_builtin(cmd, env);
+	*exit_status() = exit_code;
 	dup2(pipe_info->original_stdin, STDIN_FILENO);
 	dup2(pipe_info->original_stdout, STDOUT_FILENO);
 	close(pipe_info->original_stdin);
