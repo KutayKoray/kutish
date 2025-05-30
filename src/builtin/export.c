@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 11:35:06 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/30 11:26:22 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/30 13:05:46 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,44 +29,21 @@ static void print_error(char *key)
 
 static void print_env(t_env *env)
 {
-	t_env	*head;
-	char	*tmp_key;
-	char	*tmp_value;
-	size_t	n;
+	t_env	*current;
 
-	head = env;
-	while (env && env->next)
+	current = env;
+	while (current)
 	{
-		if (ft_strlen(env->key) < ft_strlen(env->next->key))
-			n = ft_strlen(env->key) + 1;
-		else
-			n = ft_strlen(env->next->key) + 1;
-		if (ft_strncmp(env->key, env->next->key, n) > 0)
+		if (!ft_strncmp(current->key, "_", 2))
 		{
-			tmp_key = env->key;
-			tmp_value = env->value;
-			env->key = env->next->key;
-			env->value = env->next->value;
-			env->next->key = tmp_key;
-			env->next->value = tmp_value;
-			env = head;
+			current = current->next;
 			continue;
 		}
-		env = env->next;
-	}
-	env = head;
-	while (env)
-	{
-		if (!ft_strncmp(env->key, "_", 2))
-		{
-			env = env->next;
-			continue;
-		}
-		else if (env->key && env->value)
-			printf("declare -x %s=\"%s\"\n", env->key, env->value);
-		else if (env->key)
-			printf("declare -x %s\n", env->key);
-		env = env->next;
+		else if (current->key && current->value)
+			printf("declare -x %s=\"%s\"\n", current->key, current->value);
+		else if (current->key)
+			printf("declare -x %s\n", current->key);
+		current = current->next;
 	}
 }
 
