@@ -10,6 +10,7 @@ typedef struct s_expand_ctx
 	char	*result;
 	int		in_single_quote;
 	int		in_double_quote;
+	char	first_quote;
 	t_env	*env;
 }	t_expand_ctx;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: kkoray <kkoray@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:32 by kkoray            #+#    #+#             */
-/*   Updated: 2025/05/30 11:26:17 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/30 15:38:09 by kkoray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@ static char	*expand_variable(t_expand_ctx *ctx, const char *str, size_t *i)
 
 static void	handle_quotes(const char *input, size_t *i, t_expand_ctx *ctx)
 {
-	if (input[*i] == '\'' && !ctx->in_double_quote)
+	if (input[*i] == '\'')
 	{
 		ctx->in_single_quote = !ctx->in_single_quote;
 		ctx->result = ft_strjoin(ctx->result, char_to_str(input[(*i)++]));
 	}
-	else if (input[*i] == '"' && !ctx->in_single_quote)
+	else if (input[*i] == '"')
 	{
 		ctx->in_double_quote = !ctx->in_double_quote;
 		ctx->result = ft_strjoin(ctx->result, char_to_str(input[(*i)++]));
@@ -57,7 +57,7 @@ static void	handle_dollar(const char *input, size_t *i, t_expand_ctx *ctx)
 {
 	char	*expanded;
 
-	if (ctx->in_single_quote)
+	if (ctx->first_quote == '\'')
 		ctx->result = ft_strjoin(ctx->result, char_to_str(input[(*i)++]));
 	else
 	{
@@ -97,8 +97,13 @@ char	*expand_input(const char *input, t_env *env)
 	i = 0;
 	while (input[i])
 	{
-		if (input[i] == '\'' || input[i] == '"')
+		if (input[i] == '\'')
 			handle_quotes(input, &i, &ctx);
+		else if (input[i] == '"')
+		{
+			ctx.first_quote = input[i];
+			handle_quotes(input, &i, &ctx);	
+		}
 		else if (input[i] == '$')
 			handle_dollar(input, &i, &ctx);
 		else if (input[i] == '~')
