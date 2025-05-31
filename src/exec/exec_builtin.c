@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 18:22:26 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/30 17:48:21 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/31 13:47:04 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	handle_builtin(t_cmd *cmd, t_env **env)
 	if (!is_builtin(cmd->argv[0]))
 		return ;
 	status = exec_builtin(cmd, env);
-	free_lists(cmd, *env);
+	free_lists();
 	exit_with_error(status, NULL, 1);
 }
 

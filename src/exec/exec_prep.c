@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 11:59:23 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/29 01:46:27 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/31 13:47:15 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,16 @@ static int	is_accessible(t_cmd *cmd, t_env *env)
 		ft_putstr_fd(": ", 2);
 		ft_putstr_fd(cmd->argv[0], 2);
 		ft_putstr_fd(": Is a directory\n", 2);
-		free_lists(cmd, env);
+		free_lists();
 		exit_with_error(EX_NOEXEC, NULL, 1);
 	}
 	else if (ft_strchr(cmd->argv[0], '/'))
 	{
 		if (access(cmd->argv[0], F_OK) == -1)
-			return (free_lists(cmd, env),
+			return (free_lists(),
 				exit_with_error(EX_NOTFOUND, SHELL_NAME, 1), 0);
 		if (access(cmd->argv[0], X_OK) == -1)
-			return (free_lists(cmd, env),
+			return (free_lists(),
 				exit_with_error(EX_NOEXEC, SHELL_NAME, 1), 0);
 		return (1);
 	}

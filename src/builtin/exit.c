@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 15:21:05 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/30 23:14:03 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/31 13:47:00 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	print_error_sytnax(t_cmd *cmd, t_env *env)
 	ft_putstr_fd(": exit: ", STDERR_FILENO);
 	ft_putstr_fd(cmd->argv[1], STDERR_FILENO);
 	ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
-	free_lists(cmd, env);
+	free_lists();
 	exit_with_error(2, NULL, 1);
 }
 
@@ -104,7 +104,7 @@ int	exit_builtin(t_cmd *cmd, t_env *env)
 	ft_putstr_fd("exit\n", STDOUT_FILENO);
 	if (!cmd->argv[1])
 	{
-		free_lists(cmd, env);
+		free_lists();
 		exit_with_error(*exit_status(), NULL, 1);
 	}
 	status = ft_atol(cmd->argv[1], &exit_code);
@@ -114,7 +114,7 @@ int	exit_builtin(t_cmd *cmd, t_env *env)
 		return (print_error_many_arg(), 1);
 	if (cmd->argv[1])
 	{
-		free_lists(cmd, env);
+		free_lists();
 		exit_with_error(exit_code % 256, NULL, 1);
 	}
 }

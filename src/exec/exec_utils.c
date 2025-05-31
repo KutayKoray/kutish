@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 16:08:32 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/30 17:33:30 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/05/31 13:47:20 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,4 @@ void	wait_for_pipeline(pid_t last_pid)
 		exit_with_error(WTERMSIG(status) + 128, NULL, 0);
 	while (wait(NULL) > 0)
 		;
-}
-
-void	free_lists(t_cmd *cmd, t_env *env)
-{
-	free_env_list(env);
-	free_cmd_list(cmd);
 }
