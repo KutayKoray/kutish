@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkoray <kkoray@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 20:04:41 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/01 15:29:44 by kkoray           ###   ########.fr       */
+/*   Updated: 2025/06/01 15:45:34 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ int	main(int argc, char **argv, char **envp)
 		assign_heredoc_buffers(cmds, env);
 		if (debug)
 			print_cmd_list(cmds);
-		execute_pipeline(cmds, &env);
+		if (cmds && cmds->argv)
+			execute_pipeline(cmds, &env);
 		free_cmd_list(cmds);
 		free(input);
 	}

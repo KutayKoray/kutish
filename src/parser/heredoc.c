@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/01 14:48:10 by ebabaogl          #+#    #+#             */
+/*   Updated: 2025/06/01 15:50:31 by ebabaogl         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parser.h"
 
 void	add_heredoc(char ***heredoc_eof, const char *value)
@@ -63,7 +75,6 @@ char	*get_heredoc(t_cmd *cmd)
 {
 	int		count;
 	char	*last_input;
-	char	*last_new_line;
 
 	if (!cmd || !cmd->heredoc_eof)
 		return (NULL);
@@ -73,13 +84,6 @@ char	*get_heredoc(t_cmd *cmd)
 	if (count > 1)
 		discard_heredoc_inputs(cmd->heredoc_eof, count - 1);
 	last_input = read_heredoc_input(cmd->heredoc_eof[count - 1]);
-	last_new_line = ft_strrchr(last_input, '\n');
-	if (!last_new_line)
-	{
-		free(last_input);
-		return (NULL);
-	}
-	*last_new_line = '\0';
 	return (last_input);
 }
 
@@ -100,7 +104,6 @@ void	assign_heredoc_buffers(t_cmd *cmds, t_env *env)
 				cur->heredoc_buffer = expand_input(raw, env);
 			else
 				cur->heredoc_buffer = raw;
-			// free(raw);
 		}
 		cur = cur->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 20:04:47 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/30 16:26:47 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/01 14:55:44 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <limits.h>
+# include <signal.h>
 # include "libft.h"
 
 # define SHELL_NAME "kutish"
-#define PROMPT "kutish$ "
-
+# define PROMPT "\e[0;34m☁  \e[1;36mkutish\e[0m "
 
 #endif
