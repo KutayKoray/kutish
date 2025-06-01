@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkoray <kkoray@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 11:52:57 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/01 15:18:28 by kkoray           ###   ########.fr       */
+/*   Updated: 2025/06/01 16:16:26 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "minishell.h"
 # include "parser.h"
 # include "env.h"
+# include "signals.h"
 
 # define EXECUTION_SUCCESS 0
 # define EXECUTION_FAILURE 1

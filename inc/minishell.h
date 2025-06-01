@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 20:04:47 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/01 14:55:44 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/01 15:54:04 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,7 @@
 
 # define SHELL_NAME "kutish"
 # define PROMPT "\e[0;34m☁  \e[1;36mkutish\e[0m "
+
+extern int	g_signal;
 
 #endif

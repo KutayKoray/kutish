@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 20:04:41 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/01 15:45:34 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/01 16:26:00 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	main(int argc, char **argv, char **envp)
 		printf("you're currently in debug mode, each step will be displayed.\n");
 	while (1)
 	{
+		set_signal_handler(0);
 		input = readline(PROMPT);
 		if (!input)
 		{

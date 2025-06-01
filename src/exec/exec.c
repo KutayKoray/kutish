@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkoray <kkoray@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 15:51:28 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/01 15:17:47 by kkoray           ###   ########.fr       */
+/*   Updated: 2025/06/01 16:18:22 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ void	execute_pipeline(t_cmd *cmd, t_env **env)
 	pipe_info.fd_in = STDIN_FILENO;
 	if (handle_single_builtin(cmd, env, &pipe_info))
 		return ;
+	set_signal_handler(1);
 	while (cmd)
 	{
 		if (cmd->next && !create_pipe(pipe_info.pipe_fd))

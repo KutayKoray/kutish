@@ -20,7 +20,7 @@ ifeq ($(UNAME_S),Darwin)
 	LDLIBS	+= -lcurses
 endif
 
-VPATH		= src:src/env:src/exec:src/builtin:src/utils:src/helpers:src/parser:src/tokenizer:src/expander
+VPATH		= src:src/env:src/exec:src/builtin:src/utils:src/helpers:src/parser:src/tokenizer:src/expander:src/signals
 SRCS		= main.c \
 			str_utils.c exit_utils.c \
 			env_helpers.c env_utils.c env_init.c \
@@ -29,7 +29,8 @@ SRCS		= main.c \
 			expander_utils.c expander.c \
 			debug_funcs.c quote_checker.c split_expanded_tokens_utils.c merge_tokens.c  split_expanded_tokens.c  split_first_token.c \
 			heredoc.c  parser.c  parser_init.c \
-			tokenizer.c  tokenizer_helpers.c  tokenizer_utils.c
+			tokenizer.c  tokenizer_helpers.c  tokenizer_utils.c \
+			signals.c signal_handlers.c
 OBJS		= $(addprefix $(BUILD_DIR)/,$(SRCS:.c=.o))
 
 all: $(LIBFT) $(NAME)

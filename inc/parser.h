@@ -3,20 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkoray <kkoray@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 14:19:58 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/29 20:06:51 by kkoray           ###   ########.fr       */
+/*   Updated: 2025/06/01 16:14:43 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
-#include "minishell.h"
-#include "tokenizer.h"
-#include "env.h"
-#include "utils.h"
+# include "minishell.h"
+# include "signals.h"
+# include "tokenizer.h"
+# include "env.h"
+# include "utils.h"
 
 typedef struct s_cmd
 {
