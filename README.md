@@ -10,9 +10,9 @@
 
 
 - handle only space or tabs
-
-
-
+- count tabs as spaces or white_spaces
+- handle unclosed pipe
+- heredoc last_new_line
 
 
 "asdasd" emirhan"" "nasılsın"
