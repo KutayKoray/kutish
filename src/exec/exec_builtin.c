@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkoray <kkoray@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 18:22:26 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/01 15:22:40 by kkoray           ###   ########.fr       */
+/*   Updated: 2025/06/01 19:20:01 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static int	exec_builtin(t_cmd *cmd, t_env **env)
 {
 	int	exit_code;
 
+	exit_code = 1;
 	if (!ft_strncmp(cmd->argv[0], "echo", 5))
 		exit_code = echo_builtin(cmd->argv);
 	else if (!ft_strncmp(cmd->argv[0], "export", 7))
