@@ -6,7 +6,7 @@
 /*   By: kkoray <kkoray@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:33:08 by kkoray            #+#    #+#             */
-/*   Updated: 2025/05/30 14:11:54 by kkoray           ###   ########.fr       */
+/*   Updated: 2025/06/01 15:10:28 by kkoray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,25 +34,23 @@ int	is_operator_char(char c)
 	return (c == '>' || c == '<' || c == '|');
 }
 
-int read_quoted(const char *str, int start, char quote)
+int read_word(const char *str, int start)
 {
-	int end;
-	
-	end = ft_strlen(str) - 1;
-	while (end > start && str[end] != quote)
-		end--;
-	if (end <= start)
-		return start + 1;
-	return end + 1; 
-}
+	int i = start;
+	char quote;
 
-int	read_plain(const char *str, int start)
-{
-	int	i;
-
-	i = start;
-	while (str[i] && str[i] != '\'' && str[i] != '"' && str[i] != ' '
-		&& !is_operator_char(str[i]))
-		i++;
-	return (i);
+	while (str[i] && !is_operator_char(str[i]) && str[i] != ' ')
+	{
+		if (str[i] == '\'' || str[i] == '"')
+		{
+			quote = str[i++];
+			while (str[i] && str[i] != quote)
+				i++;
+			if (str[i] == quote)
+				i++;
+		}
+		else
+			i++;
+	}
+	return i;
 }

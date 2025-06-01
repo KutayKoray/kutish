@@ -6,7 +6,7 @@
 /*   By: kkoray <kkoray@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:54 by kkoray            #+#    #+#             */
-/*   Updated: 2025/05/30 14:10:58 by kkoray           ###   ########.fr       */
+/*   Updated: 2025/06/01 15:08:53 by kkoray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,37 @@ char	*remove_inner_matching_quotes(const char *str, char quote)
 	return (result);
 }
 
+char	*remove_mixed_quotes(const char *value)
+{
+	int		i;
+	int		j;
+	char	quote;
+	char	*cleaned;
+	size_t	len;
+
+	i = 0;
+	j = 0;
+	len = ft_strlen(value);
+	cleaned = malloc(len + 1);
+	if (!cleaned)
+		return (NULL);
+	while (value[i])
+	{
+		if (value[i] == '\'' || value[i] == '"')
+		{
+			quote = value[i++];
+			while (value[i] && value[i] != quote)
+				cleaned[j++] = value[i++];
+			if (value[i] == quote)
+				i++;
+		}
+		else
+			cleaned[j++] = value[i++];
+	}
+	cleaned[j] = '\0';
+	return (cleaned);
+}
+
 void	trim_token_quotes(t_token *tokens)
 {
 	t_token	*tmp;
@@ -83,12 +114,12 @@ void	trim_token_quotes(t_token *tokens)
 				}
 				cleaned = remove_inner_matching_quotes(trimmed, quote);
 				free(trimmed);
-				free(tmp->value);
-				tmp->value = cleaned;
 			}
+			else
+				cleaned = remove_mixed_quotes(tmp->value);
+			free(tmp->value);
+			tmp->value = cleaned;
 		}
 		tmp = tmp->next;
 	}
 }
-
-

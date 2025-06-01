@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: kkoray <kkoray@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 18:22:26 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/31 13:47:04 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/01 15:22:40 by kkoray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	exec_builtin(t_cmd *cmd, t_env **env)
 	else if (!ft_strncmp(cmd->argv[0], "cd", 3))
 		exit_code = cd_builtin(cmd->argv, env);
 	else if (!ft_strncmp(cmd->argv[0], "exit", 5))
-		exit_code = exit_builtin(cmd, *env);
+		exit_code = exit_builtin(cmd);
 	return (exit_code);
 }
 
@@ -55,7 +55,7 @@ int	handle_single_builtin(t_cmd *cmd, t_env **env, t_pipe_info *pipe_info)
 		return (status);
 	pipe_info->original_stdin = dup(STDIN_FILENO);
 	pipe_info->original_stdout = dup(STDOUT_FILENO);
-	status = outfile_redirection(cmd, pipe_info)
+	status = outfile_redirection(cmd)
 		& infile_redirection(cmd, pipe_info);
 	exit_code = exec_builtin(cmd, env);
 	exit_with_error(exit_code, NULL, 0);

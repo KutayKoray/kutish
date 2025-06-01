@@ -30,14 +30,13 @@ typedef struct s_token_ctx
 }					t_token_ctx;
 
 t_token	*tokenize(const char *input);
-void	free_token_list(t_token *tokens);
-int		operator_length(const char *s);
-int		skip_space(const char *input, int i, int *prev_was_space);
-int		is_operator_char(char c);
-int		read_quoted(const char *str, int start, char quote);
-int		read_plain(const char *str, int start);
-t_token	*create_token(const char *value, t_token_type type, int joined, int trimmed);
+void			free_token_list(t_token *tokens);
+int				operator_length(const char *s);
+int				skip_space(const char *input, int i, int *prev_was_space);
+int				is_operator_char(char c);
+t_token			*create_token(const char *value, t_token_type type, int joined, int trimmed);
 t_token_type	get_operator_type(const char *s);
-void	add_token(t_token **head, char *value, t_token_type type, int joined);
+void			add_token(t_token **head, char *value, t_token_type type, int joined);
+int				read_word(const char *str, int start);
 
 # endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_prep.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: kkoray <kkoray@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 11:59:23 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/31 13:47:15 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/01 15:15:37 by kkoray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,9 @@ static size_t	env_list_size(t_env *env)
 	return (count);
 }
 
-static int	is_accessible(t_cmd *cmd, t_env *env)
+static int	is_accessible(t_cmd *cmd)
 {
 	struct stat	sb;
-	char		*err_msg;
 
 	if (stat(cmd->argv[0], &sb) == 0 && S_ISDIR(sb.st_mode))
 	{
@@ -62,7 +61,7 @@ char	*get_cmd_path(t_cmd *cmd, t_env *env)
 
 	if (!cmd->argv[0] || !*cmd->argv[0])
 		return (NULL);
-	if (is_accessible(cmd, env))
+	if (is_accessible(cmd))
 		return (ft_strdup(cmd->argv[0]));
 	path = get_env_value(env, "PATH");
 	if (!path || !*path)

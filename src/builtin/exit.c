@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: kkoray <kkoray@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 15:21:05 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/31 13:47:00 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/01 15:22:26 by kkoray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-static void	print_error_sytnax(t_cmd *cmd, t_env *env)
+static void	print_error_sytnax(char *cmd)
 {
 	ft_putstr_fd(SHELL_NAME, STDERR_FILENO);
 	ft_putstr_fd(": exit: ", STDERR_FILENO);
-	ft_putstr_fd(cmd->argv[1], STDERR_FILENO);
+	ft_putstr_fd(cmd, STDERR_FILENO);
 	ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
 	free_lists();
 	exit_with_error(2, NULL, 1);
@@ -96,7 +96,7 @@ static int	ft_atol(const char *str, long *out)
 // exit a a   -> Y
 // exit +-11  -> Y
 // exit long+ -> Y
-int	exit_builtin(t_cmd *cmd, t_env *env)
+int	exit_builtin(t_cmd *cmd)
 {
 	long	exit_code;
 	int		status;
@@ -109,7 +109,7 @@ int	exit_builtin(t_cmd *cmd, t_env *env)
 	}
 	status = ft_atol(cmd->argv[1], &exit_code);
 	if (!ft_isnum(cmd->argv[1]) || status == -1)
-		print_error_sytnax(cmd, env);
+		print_error_sytnax(cmd->argv[1]);
 	if (cmd->argv[2] || status == -1)
 		return (print_error_many_arg(), 1);
 	if (cmd->argv[1])
@@ -117,4 +117,5 @@ int	exit_builtin(t_cmd *cmd, t_env *env)
 		free_lists();
 		exit_with_error(exit_code % 256, NULL, 1);
 	}
+	return (1);
 }

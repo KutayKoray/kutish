@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: kkoray <kkoray@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 11:52:57 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/31 13:45:10 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/01 15:18:28 by kkoray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	**env2envp(t_env *env);
 
 // exec_redir.c
 int		infile_redirection(t_cmd *cmd, t_pipe_info *pipe_info);
-int		outfile_redirection(t_cmd *cmd, t_pipe_info *pipe_info);
+int		outfile_redirection(t_cmd *cmd);
 
 // exec_builtin.c
 void	handle_builtin(t_cmd *cmd, t_env **env);

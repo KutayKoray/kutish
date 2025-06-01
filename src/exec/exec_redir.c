@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: kkoray <kkoray@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 16:52:50 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/29 01:46:06 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/01 15:17:53 by kkoray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-int	outfile_redirection(t_cmd *cmd, t_pipe_info *pipe_info)
+int	outfile_redirection(t_cmd *cmd)
 {
 	size_t	i;
 	int		fd;

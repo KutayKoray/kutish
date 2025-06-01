@@ -6,19 +6,11 @@
 /*   By: kkoray <kkoray@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:33:14 by kkoray            #+#    #+#             */
-/*   Updated: 2025/05/29 19:22:56 by kkoray           ###   ########.fr       */
+/*   Updated: 2025/06/01 15:23:17 by kkoray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokenizer.h"
-
-static void	tokenize_segment(t_token_ctx *ctx, const char *str, int start,
-		int end)
-{
-	if (start < end)
-		add_token(ctx->head, ft_strndup(&str[start], end - start), T_WORD,
-			ctx->joined);
-}
 
 static void	handle_operator(const char *input, int *i, t_token **list)
 {
@@ -30,22 +22,26 @@ static void	handle_operator(const char *input, int *i, t_token **list)
 	*i += len;
 }
 
-static void	handle_word_segment(const char *input, int *i, t_token_ctx *ctx,
-		int *prev_was_space)
+static void	handle_word_segment(const char *input, int *i, t_token_ctx *ctx, int *prev_was_space)
 {
-	int	start;
+	int		start;
+	int		end;
+	char	*segment;
 
-	while (input[*i] && input[*i] != ' ' && !is_operator_char(input[*i]))
-	{
-		start = *i;
-		if (input[*i] == '\'' || input[*i] == '"')
-			*i = read_quoted(input, *i, input[*i]);
-		else
-			*i = read_plain(input, *i);
-		ctx->joined = (*prev_was_space == 0);
-		tokenize_segment(ctx, input, start, *i);
-		*prev_was_space = 0;
-	}
+	start = *i;
+	end = read_word(input, start);
+	if (end <= start)
+		return ;
+
+	segment = ft_strndup(&input[start], end - start);
+	if (!segment)
+		return ;
+
+	ctx->joined = (*prev_was_space == 0);
+	add_token(ctx->head, segment, T_WORD, ctx->joined);
+
+	*i = end;
+	*prev_was_space = 0;
 }
 
 t_token	*tokenize(const char *input)

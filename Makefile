@@ -8,7 +8,7 @@ BUILD_DIR	= build
 LIBFT_DIR	= $(LIB_DIR)/libft
 LIBFT		= $(LIBFT_DIR)/libft.a
 
-CFLAGS		= -I$(INC_DIR) -I$(LIBFT_DIR) # -Wall -Wextra -Werror -I$(INC_DIR) -I$(LIBFT_DIR)
+CFLAGS		= -Wall -Wextra -Werror -I$(INC_DIR) -I$(LIBFT_DIR)
 LDFLAGS		= -L$(LIBFT_DIR)
 LDLIBS		= -lreadline -lft
 RM			= rm -rf

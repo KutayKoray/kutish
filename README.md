@@ -10,3 +10,9 @@
 
 
 - handle only space or tabs
+
+
+
+
+
+"asdasd" emirhan"" "nasılsın"

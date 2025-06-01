@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: kkoray <kkoray@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 15:51:28 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/31 13:47:32 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/01 15:17:47 by kkoray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static int	set_redirections(t_cmd *cmd, t_pipe_info *pipe_info)
 		close(pipe_info->pipe_fd[0]);
 		close(pipe_info->pipe_fd[1]);
 	}
-	if (!outfile_redirection(cmd, pipe_info)
+	if (!outfile_redirection(cmd)
 		|| !infile_redirection(cmd, pipe_info))
 		return (0);
 	return (1);
