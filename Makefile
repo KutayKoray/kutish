@@ -22,7 +22,7 @@ endif
 
 VPATH		= src:src/env:src/exec:src/builtin:src/utils:src/helpers:src/parser:src/tokenizer:src/expander:src/signals
 SRCS		= main.c \
-			str_utils.c exit_utils.c \
+			str_utils.c exit_utils.c input_utils.c \
 			env_helpers.c env_utils.c env_init.c \
 			exec.c exec_utils.c exec_prep.c exec_redir.c exec_builtin.c \
 			echo.c export.c pwd.c unset.c env.c cd.c exit.c \

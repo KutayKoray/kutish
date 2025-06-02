@@ -6,36 +6,11 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:54 by kkoray            #+#    #+#             */
-/*   Updated: 2025/06/02 19:25:33 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/02 19:31:30 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	quote_checker(const char *input)
-{
-	int	i;
-	int	single_quote;
-	int	double_quote;
-
-	i = 0;
-	single_quote = 0;
-	double_quote = 0;
-	while (input[i])
-	{
-		if (input[i] == '\'' && double_quote == 0)
-			single_quote = !single_quote;
-		else if (input[i] == '\"' && single_quote == 0)
-			double_quote = !double_quote;
-		i++;
-	}
-	if (single_quote || double_quote)
-	{
-		ft_putendl_fd("minishell: syntax error: unclosed quote", 2);
-		return (0);
-	}
-	return (1);
-}
 
 char	*remove_inner_matching_quotes(const char *str, char quote)
 {

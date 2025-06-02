@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 20:04:47 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/02 19:27:48 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/02 20:16:32 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,6 @@ char			*char_to_str(char c);
 size_t			get_env_key_len(const char *str, size_t *i);
 
 // helpers
-int		 		quote_checker(const char *input);
 void	 		trim_token_quotes(t_token *tokens);
 void	 		print_cmd_list(t_cmd *cmd);
 void	 		debug_print_cmd(t_token *tokens, char *msg);
@@ -150,7 +149,7 @@ t_token			*create_token(const char *value, t_token_type type, int joined, int tr
 t_token			*create_token_list_from_split(char **parts, t_token *cur);
 
 // parser
-t_cmd			*parse_tokens(t_token *tokens);
+t_cmd			*parse_tokens(t_token *tokens, t_env *env);
 void			assign_heredoc_buffers(t_cmd *cmds, t_env *env);
 void			free_cmd_list(t_cmd *cmds);
 char			*expand_input(const char *input, t_env *env);
@@ -176,9 +175,10 @@ void			add_token(t_token **head, char *value, t_token_type type, int joined);
 int				read_word(const char *str, int start);
 
 // utils
-char	*str_arr_join(char **arr, char *sep);
-void	free_str_arr(char **arr);
-int		ft_strcmp(const char *s1, const char *s2);
-char	*ft_strndup(const char *s, size_t n);
+char			*str_arr_join(char **arr, char *sep);
+void			free_str_arr(char **arr);
+int				ft_strcmp(const char *s1, const char *s2);
+char			*ft_strndup(const char *s, size_t n);
+int				is_valid_input(const char *input);
 
 #endif
