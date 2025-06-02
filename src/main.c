@@ -6,16 +6,11 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 20:04:41 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/01 16:26:00 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/02 19:27:26 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "exec.h"
-#include "tokenizer.h"
-#include "parser.h"
-#include "helpers.h"
-#include "expander.h"
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -31,7 +26,7 @@ int	main(int argc, char **argv, char **envp)
 	initialize_envs(&env);
 	get_env_head(env);
 
-	debug = (argv[1] && !ft_strncmp(argv[1], "-d", 2));
+	debug = (argv[1] && !ft_strncmp(argv[1], "-d", 3));
 	if (debug)
 		printf("you're currently in debug mode, each step will be displayed.\n");
 	while (1)
@@ -65,9 +60,9 @@ int	main(int argc, char **argv, char **envp)
 		trim_token_quotes(tokens);
 		if (debug)
 			debug_print_cmd(tokens, "Trimmed...");
-		split_first_token_head_tail(&tokens);
-		if (debug)
-			debug_print_cmd(tokens, "Echo Split...");
+		// split_first_token_head_tail(&tokens);
+		// if (debug)
+		// 	debug_print_cmd(tokens, "Echo Split...");
 		// split_expanded_tokens(&tokens);
 		// if (debug)
 		// 	debug_print_cmd(tokens, "Splitted...");

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   split_expanded_tokens.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkoray <kkoray@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:33:06 by kkoray            #+#    #+#             */
-/*   Updated: 2025/05/29 19:50:03 by kkoray           ###   ########.fr       */
+/*   Updated: 2025/06/02 19:25:28 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "helpers.h"
+#include "minishell.h"
 
 t_token	*create_token_list_from_split(char **parts, t_token *cur)
 {

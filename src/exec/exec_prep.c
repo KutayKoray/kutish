@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec_prep.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkoray <kkoray@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 11:59:23 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/01 15:15:37 by kkoray           ###   ########.fr       */
+/*   Updated: 2025/06/02 19:25:47 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exec.h"
-#include "utils.h"
+#include "minishell.h"
 
 static size_t	env_list_size(t_env *env)
 {

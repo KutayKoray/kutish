@@ -6,22 +6,12 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 18:50:17 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/30 16:18:01 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/02 19:29:02 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/**
- * @brief Joins an array of strings with a separator into a single string.
- *
- * Allocates and returns a new string consisting of all elements in the given
- * NULL-terminated string array, joined by the specified separator string.
- *
- * @param arr A NULL-terminated array of strings to join.
- * @param sep The separator string to insert between elements.
- * @return char* A newly allocated joined string, or NULL on failure.
- */
 char	*str_arr_join(char **arr, char *sep)
 {
 	char	*res;

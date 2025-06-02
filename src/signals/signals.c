@@ -6,11 +6,11 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 14:48:34 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/01 16:17:49 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/02 19:25:13 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "signals.h"
+#include "minishell.h"
 
 int	g_signal = 0;
 

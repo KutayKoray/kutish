@@ -6,11 +6,11 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:58:06 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/30 17:51:22 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/02 19:26:13 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtin.h"
+#include "minishell.h"
 
 int	pwd_builtin(void)
 {

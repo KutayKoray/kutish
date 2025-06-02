@@ -6,12 +6,11 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 20:21:53 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/28 18:46:03 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/02 19:26:00 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "env.h"
 
 static int	init_shlvl(t_env **env)
 {

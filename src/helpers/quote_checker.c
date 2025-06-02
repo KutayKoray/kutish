@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   quote_checker.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkoray <kkoray@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:54 by kkoray            #+#    #+#             */
-/*   Updated: 2025/06/01 15:08:53 by kkoray           ###   ########.fr       */
+/*   Updated: 2025/06/02 19:25:33 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "helpers.h"
+#include "minishell.h"
 
 int	quote_checker(const char *input)
 {

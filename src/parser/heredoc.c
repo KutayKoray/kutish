@@ -6,11 +6,11 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 14:48:10 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/01 16:17:55 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/02 19:25:16 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "minishell.h"
 
 void	add_heredoc(char ***heredoc_eof, const char *value)
 {

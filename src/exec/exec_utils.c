@@ -6,12 +6,11 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 16:08:32 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/31 13:47:20 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/02 19:25:50 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exec.h"
-#include "utils.h"
+#include "minishell.h"
 
 int	is_builtin(char *cmd)
 {

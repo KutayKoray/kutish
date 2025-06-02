@@ -6,11 +6,11 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 14:37:42 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/30 16:19:17 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/02 19:26:04 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtin.h"
+#include "minishell.h"
 
 static void	print_env_error(char *var)
 {

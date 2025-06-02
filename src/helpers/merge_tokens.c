@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   merge_tokens.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkoray <kkoray@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:43 by kkoray            #+#    #+#             */
-/*   Updated: 2025/05/29 19:46:34 by kkoray           ###   ########.fr       */
+/*   Updated: 2025/06/02 19:25:34 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "helpers.h"
+#include "minishell.h"
 
 void	merge_joined_tokens(t_token **tokens)
 {

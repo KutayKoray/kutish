@@ -6,12 +6,11 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 20:20:02 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/05/29 01:46:52 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/02 19:26:01 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "env.h"
 
 int	is_valid_key(char *key)
 {
