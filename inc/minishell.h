@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 20:04:47 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/02 20:16:32 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/05 22:26:18 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_token
 	t_token_type	type;
 	int				joined;
 	int				trimmed;
+	int				expanded;
 	struct s_token	*next;
 }					t_token;
 
@@ -72,6 +73,7 @@ typedef struct s_env
 typedef struct s_expand_ctx
 {
 	char	*result;
+	int		expanded;
 	int		in_single_quote;
 	int		in_double_quote;
 	char	first_quote;
@@ -144,15 +146,12 @@ size_t			get_env_key_len(const char *str, size_t *i);
 void	 		trim_token_quotes(t_token *tokens);
 void	 		print_cmd_list(t_cmd *cmd);
 void	 		debug_print_cmd(t_token *tokens, char *msg);
-void			split_first_token_head_tail(t_token **tokens);
-t_token			*create_token(const char *value, t_token_type type, int joined, int trimmed);
-t_token			*create_token_list_from_split(char **parts, t_token *cur);
 
 // parser
 t_cmd			*parse_tokens(t_token *tokens, t_env *env);
 void			assign_heredoc_buffers(t_cmd *cmds, t_env *env);
 void			free_cmd_list(t_cmd *cmds);
-char			*expand_input(const char *input, t_env *env);
+char			*expand_input(const char *input, t_token *token, t_env *env);
 void			add_heredoc(char ***heredoc_eof, const char *value);
 t_cmd			*create_cmd(void);
 
@@ -169,10 +168,10 @@ void			free_token_list(t_token *tokens);
 int				operator_length(const char *s);
 int				skip_space(const char *input, int i, int *prev_was_space);
 int				is_operator_char(char c);
-t_token			*create_token(const char *value, t_token_type type, int joined, int trimmed);
 t_token_type	get_operator_type(const char *s);
 void			add_token(t_token **head, char *value, t_token_type type, int joined);
 int				read_word(const char *str, int start);
+void			split_expanded_tokens(t_token **head);
 
 // utils
 char			*str_arr_join(char **arr, char *sep);

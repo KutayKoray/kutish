@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:33:11 by kkoray            #+#    #+#             */
-/*   Updated: 2025/06/02 19:24:58 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/05 20:35:30 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	add_token(t_token **head, char *value, t_token_type type,
 	new->type = type;
 	new->joined = joined;
 	new->trimmed = 0;
+	new->expanded = 0;
 	new->next = NULL;
 	if (!*head)
 		*head = new;

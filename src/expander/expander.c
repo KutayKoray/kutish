@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:32 by kkoray            #+#    #+#             */
-/*   Updated: 2025/06/02 19:25:43 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/05 22:35:45 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,13 @@ static char	*expand_variable(t_expand_ctx *ctx, const char *str, size_t *i)
 	value = get_env_value(ctx->env, var);
 	free(var);
 	if (value)
+	{
+		ctx->expanded = 1;
 		return (ft_strdup(value));
+	}
 	else
 		return (ft_strdup(""));
 }
-
 
 static void	handle_quotes(const char *input, size_t *i, t_expand_ctx *ctx)
 {
@@ -83,13 +85,14 @@ static void	handle_tilde(const char *input, size_t *i, t_expand_ctx *ctx)
 	(*i)++;
 }
 
-char	*expand_input(const char *input, t_env *env)
+char	*expand_input(const char *input, t_token *token, t_env *env)
 {
 	t_expand_ctx	ctx;
 	size_t			i;
 	char			*tmp;
 
 	ctx.result = calloc(1, 1);
+	ctx.expanded = 0;
 	ctx.in_single_quote = 0;
 	ctx.in_double_quote = 0;
 	ctx.env = env;
@@ -104,7 +107,11 @@ char	*expand_input(const char *input, t_env *env)
 			handle_quotes(input, &i, &ctx);	
 		}
 		else if (input[i] == '$')
+		{
 			handle_dollar(input, &i, &ctx);
+			if (token && ctx.expanded) // token check for heredoc expansion, we'll pass NULL for it
+				token->expanded = 1;
+		}
 		else if (input[i] == '~')
 			handle_tilde(input, &i, &ctx);
 		else
@@ -120,24 +127,29 @@ char	*expand_input(const char *input, t_env *env)
 
 void	expand_token_list(t_token *tokens, t_env *env)
 {
-	t_token	*tmp;
+	t_token	*cur;
+	t_token	*prev;
 	char	*expanded;
 
-	tmp = tokens;
-	while (tmp)
+	cur = tokens;
+	prev = NULL;
+	while (cur)
 	{
-		if (tmp->type == T_WORD)
+		if (cur->type == T_WORD)
 		{
-			if (tmp->value[0] == '\'' && tmp->value[ft_strlen(tmp->value) - 1] == '\'')
+			if ((cur->value[0] == '\'' && cur->value[ft_strlen(cur->value) - 1] == '\'') ||
+				(prev && prev->type == T_HEREDOC))
 			{
-				tmp = tmp->next;
+				prev = cur;
+				cur = cur->next;
 				continue ;
 			}
-			expanded = expand_input(tmp->value, env);
-			free(tmp->value);
-			tmp->value = expanded;
+			expanded = expand_input(cur->value, cur, env);
+			free(cur->value);
+			cur->value = expanded;
 		}
-		tmp = tmp->next;
+		prev = cur;
+		cur = cur->next;
 	}
 }
 

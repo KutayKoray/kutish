@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:52 by kkoray            #+#    #+#             */
-/*   Updated: 2025/06/02 20:16:02 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/05 22:51:22 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static void	add_arg(char ***argv, char *value)
 
 static void	handle_word_and_redir(t_token **tokens, t_cmd *cur)
 {
-	if ((*tokens)->type == T_WORD)
+	if ((*tokens)->type == T_WORD && *(*tokens)->value)
 		add_arg(&cur->argv, (*tokens)->value);
 	else if ((*tokens)->type == T_REDIN && (*tokens)->next)
 	{

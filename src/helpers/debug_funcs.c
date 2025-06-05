@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 19:25:36 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/02 19:25:38 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/05 20:36:51 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,21 +84,20 @@ void print_cmd_list(t_cmd *cmd)
 		tmp = tmp->next;
 	}
 }
-
 void    debug_print_cmd(t_token *tokens, char *msg)
 {
 	t_token *tmp;
 
 	tmp = tokens;
 	printf("\n%s\n", msg);
-	printf("╭───────────────────────────────┬───────────┬──────────┬───────────╮\n");
-	printf("│ %-29s │ %-9s │ %-8s │ %-9s │\n", "Token", "Type", "Joined", "Trimmed");
-	printf("├───────────────────────────────┼───────────┼──────────┼───────────┤\n");
+	printf("╭───────────────────────────────┬───────────┬──────────┬───────────┬───────────╮\n");
+	printf("│ %-29s │ %-9s │ %-8s │ %-9s │ %-9s │\n", "Token", "Type", "Joined", "Trimmed", "Expanded");
+	printf("├───────────────────────────────┼───────────┼──────────┼───────────┼───────────┤\n");
 	while (tmp)
 	{
-		printf("│ %-29s │ %-9d │ %-8d │ %-9d │\n",
-			tmp->value, tmp->type, tmp->joined, tmp->trimmed);
+		printf("│ %-29s │ %-9d │ %-8d │ %-9d │ %-9d │\n",
+			tmp->value, tmp->type, tmp->joined, tmp->trimmed, tmp->expanded);
 		tmp = tmp->next;
 	}
-	printf("╰───────────────────────────────┴───────────┴──────────┴───────────╯\n");
+	printf("╰───────────────────────────────┴───────────┴──────────┴───────────┴───────────╯\n");
 }

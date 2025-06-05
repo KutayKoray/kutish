@@ -6,13 +6,28 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:33:06 by kkoray            #+#    #+#             */
-/*   Updated: 2025/06/02 19:25:28 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/05 22:25:56 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token	*create_token_list_from_split(char **parts, t_token *cur)
+static t_token	*create_token(const char *value, t_token_type type, int joined, int trimmed)
+{
+	t_token	*new;
+
+	new = malloc(sizeof(t_token));
+	if (!new)
+		return (NULL);
+	new->value = ft_strdup(value);
+	new->type = type;
+	new->joined = joined;
+	new->trimmed = trimmed;
+	new->next = NULL;
+	return (new);
+}
+
+static t_token	*create_token_list_from_split(char **parts, t_token *cur)
 {
 	t_token	*new_tokens;
 	t_token	*last;
@@ -84,7 +99,7 @@ void	split_expanded_tokens(t_token **head)
 	prev = NULL;
 	while (cur)
 	{
-		if (cur->type == T_WORD && ft_strchr(cur->value, ' '))
+		if (cur->type == T_WORD && ft_strchr(cur->value, ' ') && cur->expanded)
 		{
 			if (prev && prev->type == T_HEREDOC)
 			{

@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 14:48:10 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/02 19:25:16 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/05 20:38:15 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void	assign_heredoc_buffers(t_cmd *cmds, t_env *env)
 			if (!raw)
 				break ;
 			if (cur->heredoc_expand)
-				cur->heredoc_buffer = expand_input(raw, env);
+				cur->heredoc_buffer = expand_input(raw, NULL, env);
 			else
 				cur->heredoc_buffer = raw;
 		}
