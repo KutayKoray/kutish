@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 20:04:47 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/05 22:26:18 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/06 18:49:22 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,11 +142,6 @@ void			expand_token_list(t_token *tokens, t_env *env);
 char			*char_to_str(char c);
 size_t			get_env_key_len(const char *str, size_t *i);
 
-// helpers
-void	 		trim_token_quotes(t_token *tokens);
-void	 		print_cmd_list(t_cmd *cmd);
-void	 		debug_print_cmd(t_token *tokens, char *msg);
-
 // parser
 t_cmd			*parse_tokens(t_token *tokens, t_env *env);
 void			assign_heredoc_buffers(t_cmd *cmds, t_env *env);
@@ -172,6 +167,7 @@ t_token_type	get_operator_type(const char *s);
 void			add_token(t_token **head, char *value, t_token_type type, int joined);
 int				read_word(const char *str, int start);
 void			split_expanded_tokens(t_token **head);
+void	 		trim_token_quotes(t_token *tokens);
 
 // utils
 char			*str_arr_join(char **arr, char *sep);
@@ -179,5 +175,7 @@ void			free_str_arr(char **arr);
 int				ft_strcmp(const char *s1, const char *s2);
 char			*ft_strndup(const char *s, size_t n);
 int				is_valid_input(const char *input);
+void	 		debug_print_cmd(t_token *tokens, char *msg);
+void	 		print_cmd_list(t_cmd *cmd);
 
 #endif

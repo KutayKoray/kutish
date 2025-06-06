@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   debug_funcs.c                                      :+:      :+:    :+:   */
+/*   debug_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/02 19:25:36 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/05 20:36:51 by ebabaogl         ###   ########.fr       */
+/*   Created: 2025/06/06 18:37:12 by ebabaogl          #+#    #+#             */
+/*   Updated: 2025/06/06 18:37:38 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void print_cmd_list(t_cmd *cmd)
 		tmp = tmp->next;
 	}
 }
+
 void    debug_print_cmd(t_token *tokens, char *msg)
 {
 	t_token *tmp;

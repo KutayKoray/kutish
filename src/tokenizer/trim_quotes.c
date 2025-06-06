@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quote_checker.c                                    :+:      :+:    :+:   */
+/*   trim_quotes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/26 12:32:54 by kkoray            #+#    #+#             */
-/*   Updated: 2025/06/02 19:31:30 by ebabaogl         ###   ########.fr       */
+/*   Created: 2025/06/06 18:35:51 by ebabaogl          #+#    #+#             */
+/*   Updated: 2025/06/06 18:48:46 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*remove_inner_matching_quotes(const char *str, char quote)
+static char	*remove_inner_matching_quotes(const char *str, char quote)
 {
 	int		i = 0;
 	int		j = 0;
@@ -31,7 +31,7 @@ char	*remove_inner_matching_quotes(const char *str, char quote)
 	return (result);
 }
 
-char	*remove_mixed_quotes(const char *value)
+static char	*remove_mixed_quotes(const char *value)
 {
 	int		i;
 	int		j;
