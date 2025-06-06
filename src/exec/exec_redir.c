@@ -6,11 +6,12 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 16:52:50 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/02 19:25:49 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/06 18:55:10 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 int	outfile_redirection(t_cmd *cmd)
 {
 	size_t	i;

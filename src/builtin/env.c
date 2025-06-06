@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 14:20:31 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/02 19:26:07 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/06 18:54:51 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	print_env_reverse(t_env *env)
 {
 	if (!env)
-		return;
+		return ;
 	print_env_reverse(env->next);
 	if (env->value)
 	{
