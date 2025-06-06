@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 15:21:05 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/02 19:26:09 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/07 01:11:38 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	print_error_sytnax(char *cmd)
 	ft_putstr_fd(cmd, STDERR_FILENO);
 	ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
 	free_lists();
-	exit_with_error(2, NULL, 1);
+	exit_with_error(SYNTAX_ERROR, NULL, 1);
 }
 
 static void	print_error_many_arg(void)

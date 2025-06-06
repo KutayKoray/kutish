@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 14:37:42 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/02 19:26:04 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/06 20:34:34 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,6 @@ int	cd_builtin(char **argv, t_env **env)
 {
 	char	*path;
 
-	if (argv[2])
-	{
-		ft_putstr_fd(SHELL_NAME, STDERR_FILENO);
-		ft_putstr_fd(": cd: too many arguments\n", STDERR_FILENO);
-		return (1);
-	}
 	if (!argv[1])
 	{
 		path = get_env_value(*env, "HOME");
@@ -54,6 +48,12 @@ int	cd_builtin(char **argv, t_env **env)
 		path = get_env_value(*env, "OLDPWD");
 		if (!path)
 			return (print_env_error("OLDPWD"), 1);
+	}
+	else if (argv[2])
+	{
+		ft_putstr_fd(SHELL_NAME, STDERR_FILENO);
+		ft_putstr_fd(": cd: too many arguments\n", STDERR_FILENO);
+		return (1);
 	}
 	else
 		path = argv[1];

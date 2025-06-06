@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 19:31:23 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/02 19:58:49 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/07 01:11:44 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	quote_checker(const char *input)
 	if (single_quote || double_quote)
 	{
 		ft_putendl_fd("minishell: syntax error: unclosed quote", 2);
-		exit_with_error(2, NULL, 0);
+		exit_with_error(SYNTAX_ERROR, NULL, 0);
 		return (0);
 	}
 	return (1);
@@ -53,7 +53,7 @@ static int	pipe_checker(const char *input)
 		ptr++;
 	}
 	ft_putendl_fd("minishell: syntax error: empty pipe", 2);
-	exit_with_error(2, NULL, 0);
+	exit_with_error(SYNTAX_ERROR, NULL, 0);
 	return (0);
 }
 
