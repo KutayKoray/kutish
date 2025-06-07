@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 15:51:28 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/02 19:25:52 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/07 21:50:31 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static pid_t	create_process(t_cmd *cmd, t_env **env, t_pipe_info *pipe_info)
 		if (!set_redirections(cmd, pipe_info))
 		{
 			free_lists();
-			exit_with_error(EXECUTION_FAILURE, NULL, 1);
+			exit_with_error(EXECUTION_FAILURE, SHELL_NAME, 1);
 		}
 		handle_builtin(cmd, env);
 		exec_cmd(cmd, *env);

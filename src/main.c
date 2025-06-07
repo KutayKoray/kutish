@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 20:04:41 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/05 22:15:09 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/07 21:59:03 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,10 @@ static int	repl(t_token **tokens, t_env **env, t_cmd **cmds, int debug)
 		*cmds = parse_tokens(*tokens, *env);
 		if (debug)
 			debug_print_cmd(*tokens, "parsing tokens");
-		get_cmd_head(*cmds);
 		free_token_list(*tokens);
+		get_cmd_head(*cmds);
+		if (debug)
+			print_cmd_list(*cmds);
 		if (*cmds && (*cmds)->argv)
 			execute_pipeline(*cmds, env);
 		free_cmd_list(*cmds);
