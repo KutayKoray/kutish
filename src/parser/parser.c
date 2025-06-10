@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:52 by kkoray            #+#    #+#             */
-/*   Updated: 2025/06/05 22:51:22 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/10 18:10:17 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,9 @@ void	free_cmd_list(t_cmd *cmds)
 		if (tmp->infile)
 			free(tmp->infile);
 		if (tmp->heredoc_eof)
-			free(tmp->heredoc_eof);
+			free_str_arr(tmp->heredoc_eof);
+		if (tmp->heredoc_buffer)
+			free(tmp->heredoc_buffer);
 		free(tmp);
 	}
 }

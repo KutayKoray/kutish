@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 14:48:10 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/05 20:38:15 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/10 18:22:29 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,12 @@ void	add_heredoc(char ***heredoc_eof, const char *value)
 static char	*read_heredoc_input(const char *eof)
 {
 	char	*line;
+	char	*tmp_buff;
 	char	*buffer;
 	char	*tmp;
 
-	buffer = ft_calloc(1, 1);
-	if (!buffer)
+	tmp_buff = ft_calloc(1, 1);
+	if (!tmp_buff)
 		return NULL;
 	while (1)
 	{
@@ -53,9 +54,11 @@ static char	*read_heredoc_input(const char *eof)
 			break;
 		}
 		tmp = ft_strjoin(line, "\n");
-		buffer = ft_strjoin(buffer, tmp);
+		buffer = ft_strjoin(tmp_buff, tmp);
+		free(tmp_buff);
 		free(tmp);
 		free(line);
+		tmp_buff = buffer;
 	}
 	return (buffer);
 }
@@ -102,7 +105,10 @@ void	assign_heredoc_buffers(t_cmd *cmds, t_env *env)
 			if (!raw)
 				break ;
 			if (cur->heredoc_expand)
+			{
 				cur->heredoc_buffer = expand_input(raw, NULL, env);
+				free(raw);
+			}
 			else
 				cur->heredoc_buffer = raw;
 		}

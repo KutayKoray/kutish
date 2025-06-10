@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:32 by kkoray            #+#    #+#             */
-/*   Updated: 2025/06/05 22:35:45 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/10 18:28:36 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,30 +40,51 @@ static char	*expand_variable(t_expand_ctx *ctx, const char *str, size_t *i)
 		return (ft_strdup(""));
 }
 
-static void	handle_quotes(const char *input, size_t *i, t_expand_ctx *ctx)
+static void handle_quotes(const char *input, size_t *i, t_expand_ctx *ctx)
 {
-	if (input[*i] == '\'')
+	char	*tmp;
+	char	*new_result;
+	char	quote_char;
+
+	quote_char = input[*i];
+	tmp = char_to_str(input[(*i)++]);
+	if (quote_char == '\'')
 	{
 		ctx->in_single_quote = !ctx->in_single_quote;
-		ctx->result = ft_strjoin(ctx->result, char_to_str(input[(*i)++]));
+		new_result = ft_strjoin(ctx->result, tmp);
+		free(ctx->result);
+		ctx->result = new_result;
 	}
-	else if (input[*i] == '"')
+	else if (quote_char == '"')
 	{
 		ctx->in_double_quote = !ctx->in_double_quote;
-		ctx->result = ft_strjoin(ctx->result, char_to_str(input[(*i)++]));
+		new_result = ft_strjoin(ctx->result, tmp);
+		free(ctx->result);
+		ctx->result = new_result;
 	}
+	free(tmp);
 }
 
-static void	handle_dollar(const char *input, size_t *i, t_expand_ctx *ctx)
+static void handle_dollar(const char *input, size_t *i, t_expand_ctx *ctx)
 {
 	char	*expanded;
+	char	*tmp;
+	char	*new_result;
 
 	if (ctx->first_quote == '\'')
-		ctx->result = ft_strjoin(ctx->result, char_to_str(input[(*i)++]));
+	{
+		tmp = char_to_str(input[(*i)++]);
+		new_result = ft_strjoin(ctx->result, tmp);
+		free(ctx->result);
+		ctx->result = new_result;
+		free(tmp);
+	}
 	else
 	{
 		expanded = expand_variable(ctx, input, i);
-		ctx->result = ft_strjoin(ctx->result, expanded);
+		new_result = ft_strjoin(ctx->result, expanded);
+		free(ctx->result);
+		ctx->result = new_result;
 		free(expanded);
 	}
 }
@@ -72,14 +93,23 @@ static void	handle_tilde(const char *input, size_t *i, t_expand_ctx *ctx)
 {
 	char	*home;
 	char	*tmp;
+	char	*char_str;
 
 	home = get_env_value(ctx->env, "HOME");
 	if (input[*i + 1] || (*i && input[*i - 1]))
-		tmp = ft_strjoin(ctx->result, char_to_str(input[*i]));
+	{
+		char_str = char_to_str(input[*i]);
+		tmp = ft_strjoin(ctx->result, char_str);
+		free(char_str);
+	}
 	else if (home && *home)
 		tmp = ft_strjoin(ctx->result, home);
 	else
-		tmp = ft_strjoin(ctx->result, char_to_str('~'));
+	{
+		char_str = char_to_str('~');
+		tmp = ft_strjoin(ctx->result, char_str);
+		free(char_str);
+	}
 	free(ctx->result);
 	ctx->result = tmp;
 	(*i)++;
@@ -90,11 +120,13 @@ char	*expand_input(const char *input, t_token *token, t_env *env)
 	t_expand_ctx	ctx;
 	size_t			i;
 	char			*tmp;
+	char			*char_str;
 
-	ctx.result = calloc(1, 1);
+	ctx.result = ft_calloc(1, 1);
 	ctx.expanded = 0;
 	ctx.in_single_quote = 0;
 	ctx.in_double_quote = 0;
+	ctx.first_quote = 0;
 	ctx.env = env;
 	i = 0;
 	while (input[i])
@@ -116,7 +148,9 @@ char	*expand_input(const char *input, t_token *token, t_env *env)
 			handle_tilde(input, &i, &ctx);
 		else
 		{
-			tmp = ft_strjoin(ctx.result, char_to_str(input[i]));
+			char_str = char_to_str(input[i]);
+			tmp = ft_strjoin(ctx.result, char_str);
+			free(char_str);
 			free(ctx.result);
 			ctx.result = tmp;
 			i++;
