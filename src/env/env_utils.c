@@ -6,11 +6,13 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 20:20:02 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/02 19:26:01 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/12 18:55:14 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "libft.h"
+#include <stdlib.h>
 
 int	is_valid_key(char *key)
 {

@@ -6,11 +6,14 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 16:52:50 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/06 18:55:10 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/12 18:57:45 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "libft.h"
+#include <fcntl.h>
+#include <unistd.h>
 
 int	outfile_redirection(t_cmd *cmd)
 {

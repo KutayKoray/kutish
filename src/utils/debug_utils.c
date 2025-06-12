@@ -6,11 +6,14 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 18:37:12 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/06 18:37:38 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/12 19:22:21 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "libft.h"
+#include <stdlib.h>
+#include <stdio.h>
 
 char	*prettify_buffer(char *buffer)
 {

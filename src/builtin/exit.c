@@ -6,11 +6,14 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 15:21:05 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/07 01:11:38 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/12 18:49:18 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "libft.h"
+#include <limits.h>
+#include <unistd.h>
 
 static void	print_error_sytnax(char *cmd)
 {

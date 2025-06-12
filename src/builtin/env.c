@@ -6,11 +6,13 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 14:20:31 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/06 18:54:51 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/12 18:48:30 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "libft.h"
+#include <unistd.h>
 
 static void	print_env_reverse(t_env *env)
 {

@@ -6,11 +6,12 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:33:11 by kkoray            #+#    #+#             */
-/*   Updated: 2025/06/05 20:35:30 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/12 19:21:48 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <stdlib.h>
 
 t_token_type	get_operator_type(const char *s)
 {
@@ -27,8 +28,7 @@ t_token_type	get_operator_type(const char *s)
 	return (T_WORD);
 }
 
-void	add_token(t_token **head, char *value, t_token_type type,
-		int joined)
+void	add_token(t_token **head, char *value, t_token_type type, int joined)
 {
 	t_token	*new;
 	t_token	*cur;

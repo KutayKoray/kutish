@@ -6,11 +6,13 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:32 by kkoray            #+#    #+#             */
-/*   Updated: 2025/06/10 18:28:36 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/12 19:04:54 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "libft.h"
+#include <stdlib.h>
 
 static char	*expand_variable(t_expand_ctx *ctx, const char *str, size_t *i)
 {

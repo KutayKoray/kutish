@@ -6,11 +6,14 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 14:48:10 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/10 18:22:29 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/12 19:05:50 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "libft.h"
+#include <stdlib.h>
+#include <readline/readline.h>
 
 void	add_heredoc(char ***heredoc_eof, const char *value)
 {

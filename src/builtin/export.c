@@ -6,11 +6,15 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 11:35:06 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/02 19:26:11 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/12 18:52:21 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "libft.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <unistd.h>
 
 static void	print_error(char *key)
 {

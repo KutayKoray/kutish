@@ -6,11 +6,9 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:33:08 by kkoray            #+#    #+#             */
-/*   Updated: 2025/06/02 20:19:35 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/12 19:12:45 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "minishell.h"
 
 int	operator_length(const char *s)
 {

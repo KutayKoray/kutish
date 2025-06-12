@@ -6,11 +6,13 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:33:06 by kkoray            #+#    #+#             */
-/*   Updated: 2025/06/05 22:25:56 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/12 19:12:27 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "libft.h"
+#include <stdlib.h>
 
 static t_token	*create_token(const char *value, t_token_type type, int joined, int trimmed)
 {

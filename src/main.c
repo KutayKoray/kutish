@@ -6,11 +6,15 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 20:04:41 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/07 21:59:03 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/12 19:21:41 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "libft.h"
+#include <readline/readline.h>
+#include <readline/history.h>
+#include <stdlib.h>
 
 static int	repl(t_token **tokens, t_env **env, t_cmd **cmds, int debug)
 {

@@ -6,11 +6,13 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 20:22:44 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/02 19:25:58 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/12 18:53:40 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "libft.h"
+#include <stdlib.h>
 
 t_env	*init_env_list(char **envp)
 {

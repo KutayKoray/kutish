@@ -6,11 +6,13 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 15:47:52 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/02 19:29:12 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/12 19:18:57 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 int	*exit_status(void)
 {

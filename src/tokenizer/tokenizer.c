@@ -6,11 +6,12 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:33:14 by kkoray            #+#    #+#             */
-/*   Updated: 2025/06/05 20:35:15 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/12 19:21:59 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <stdlib.h>
 
 static void	handle_operator(const char *input, int *i, t_token **list)
 {
@@ -32,14 +33,11 @@ static void	handle_word_segment(const char *input, int *i, t_token_ctx *ctx, int
 	end = read_word(input, start);
 	if (end <= start)
 		return ;
-
 	segment = ft_strndup(&input[start], end - start);
 	if (!segment)
 		return ;
-
 	ctx->joined = (*prev_was_space == 0);
 	add_token(ctx->head, segment, T_WORD, ctx->joined);
-
 	*i = end;
 	*prev_was_space = 0;
 }

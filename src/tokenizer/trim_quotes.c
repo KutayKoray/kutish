@@ -6,11 +6,13 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 18:35:51 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/06 18:48:46 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/12 19:17:55 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "libft.h"
+#include <stdlib.h>
 
 static char	*remove_inner_matching_quotes(const char *str, char quote)
 {

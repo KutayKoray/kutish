@@ -6,16 +6,19 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:01:38 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/02 19:25:10 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/12 19:23:40 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "libft.h"
+#include <stdio.h>
+#include <readline/readline.h>
 
 void	prompt_handler(int signum)
 {
 	g_signal = signum;
-	printf("\n");
+	ft_putendl_fd("", 1);
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
@@ -25,7 +28,7 @@ void	prompt_handler(int signum)
 void	sigquit_handler(int signum)
 {
 	g_signal = signum;
-	printf("Quit (core dumped)\n");
+	ft_putendl_fd("Quit (core dumped)", 1);
 	rl_replace_line("", 0);
 	exit_with_error(signum + 128, NULL, 0);
 }
@@ -33,7 +36,7 @@ void	sigquit_handler(int signum)
 void	execute_handler(int signum)
 {
 	g_signal = signum;
-	printf("\n");
+	ft_putendl_fd("", 1);
 	exit_with_error(signum + 128, NULL, 0);
 }
 

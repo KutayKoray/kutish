@@ -6,11 +6,14 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 16:08:32 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/02 19:25:50 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/12 18:58:39 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "libft.h"
+#include <unistd.h>
+#include <sys/wait.h>
 
 int	is_builtin(char *cmd)
 {

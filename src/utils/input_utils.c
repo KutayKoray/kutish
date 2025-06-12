@@ -6,11 +6,12 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 19:31:23 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/07 01:11:44 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/12 19:19:10 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "libft.h"
 
 static int	quote_checker(const char *input)
 {

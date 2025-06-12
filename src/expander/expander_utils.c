@@ -6,11 +6,11 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:29 by kkoray            #+#    #+#             */
-/*   Updated: 2025/06/02 19:25:41 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/12 18:59:39 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
 size_t	get_env_key_len(const char *str, size_t *i)
 {

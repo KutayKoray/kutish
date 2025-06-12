@@ -6,11 +6,12 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:49 by kkoray            #+#    #+#             */
-/*   Updated: 2025/06/10 17:22:10 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/12 19:06:07 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <stdlib.h>
 
 t_cmd	*create_cmd(void)
 {
