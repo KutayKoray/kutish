@@ -1,0 +1,15 @@
+🧪 Test 24: `echo "mix"'ed'" quotes"`
+>>> BASH STDOUT
+mixed quotes
+
+>>> MINISHELL STDOUT
+mix'ed' quotes
+
+>>> DIFF
+--- bash
++++ minishell
+@@ -1 +1 @@
+-mixed quotes
++mix'ed' quotes
+
+
