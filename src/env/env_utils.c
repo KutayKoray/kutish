@@ -30,6 +30,7 @@ int	is_valid_key(char *key)
 int	append_env_node(t_env **env, char *key, char *value)
 {
 	t_env	*new;
+	t_env	*current;
 
 	if (!env || !key)
 		return (0);
@@ -40,15 +41,16 @@ int	append_env_node(t_env **env, char *key, char *value)
 	if (!new->key)
 		return (free(new), 0);
 	if (value)
-	{
 		new->value = ft_strdup(value);
-		if (!new->value)
-			return (free(new->key), free(new), 0);
-	}
 	else
 		new->value = NULL;
-	new->next = *env;
-	*env = new;
+	new->next = NULL;
+	if (!*env)
+		return (*env = new, 1);
+	current = *env;
+	while (current->next)
+		current = current->next;
+	current->next = new;
 	return (1);
 }
 
