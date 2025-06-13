@@ -13,6 +13,7 @@
 #include "minishell.h"
 #include "libft.h"
 #include <stdlib.h>
+#include <stdio.h>
 #include <readline/readline.h>
 
 void	add_heredoc(char ***heredoc_eof, const char *value)
