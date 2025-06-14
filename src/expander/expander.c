@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:32 by kkoray            #+#    #+#             */
-/*   Updated: 2025/06/14 12:15:36 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/14 14:29:18 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,6 @@ void	process_char(const char *input, size_t *i, t_expand_ctx *ctx,
 		if (token && ctx->expanded)
 			token->expanded = 1;
 	}
-	else if (input[*i] == '~')
-		handle_tilde(input, i, ctx);
 	else
 		append_char_to_result(input, i, ctx);
 }

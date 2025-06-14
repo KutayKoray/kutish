@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 11:55:26 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/14 11:59:22 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/14 14:29:14 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,30 +61,4 @@ void	handle_dollar(const char *input, size_t *i, t_expand_ctx *ctx)
 		ctx->result = new_result;
 		free(expanded);
 	}
-}
-
-void	handle_tilde(const char *input, size_t *i, t_expand_ctx *ctx)
-{
-	char	*home;
-	char	*tmp;
-	char	*char_str;
-
-	home = get_env_value(ctx->env, "HOME");
-	if (input[*i + 1] || (*i && input[*i - 1]))
-	{
-		char_str = char_to_str(input[*i]);
-		tmp = ft_strjoin(ctx->result, char_str);
-		free(char_str);
-	}
-	else if (home && *home)
-		tmp = ft_strjoin(ctx->result, home);
-	else
-	{
-		char_str = char_to_str('~');
-		tmp = ft_strjoin(ctx->result, char_str);
-		free(char_str);
-	}
-	free(ctx->result);
-	ctx->result = tmp;
-	(*i)++;
 }
