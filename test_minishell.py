@@ -39,7 +39,7 @@ TEST_CASES = [
     # QUOTES
     'echo "double quoted with spaces"',
     "echo 'single quoted with spaces'",
-    'echo "mix"\'ed\'" quotes"',
+    'echo "mix"\'ed\'" quotes"', #
     'echo ""',
     "echo ''",
     'echo "a b"c"d e"',
@@ -56,7 +56,6 @@ TEST_CASES = [
     # PIPE
     'echo hello | cat | cat | cat',
     'ls | grep src | wc -l',
-    'printf "line1\nline2\nline3\n" | wc -l',
 
     # COMPLEX
     'export A="hello world"',

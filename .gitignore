@@ -58,3 +58,4 @@ dkms.conf
 # Project specific
 build/
 minishell
+Errors.txt
