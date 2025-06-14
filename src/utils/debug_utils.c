@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 18:37:12 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/12 19:22:21 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/14 12:28:15 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,93 +15,85 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-char	*prettify_buffer(char *buffer)
+void	print_cmd_fields(t_cmd *cmd)
 {
-	char	*tmp;
-	int		i;
+	int	i;
 
-	tmp = malloc(sizeof(char) * (ft_strlen(buffer) + 1));
-	if (!tmp)
-		return (NULL);
-	i = 0;
-	while (buffer[i])
+	if (cmd->argv)
 	{
-		if (buffer[i] == '\n')
-			tmp[i] = '\\';
-		else
-			tmp[i] = buffer[i];
-		i++;
+		i = 0;
+		while (cmd->argv[i])
+		{
+			printf("  Arg[%d]: %s\n", i, cmd->argv[i]);
+			i++;
+		}
 	}
-	tmp[i] = '\0';
-	return (tmp);
+	if (cmd->infile)
+		printf("  Infile: %s\n", cmd->infile);
+	if (cmd->outfiles)
+	{
+		i = 0;
+		while (cmd->outfiles[i])
+		{
+			printf("  Outfile[%d]: %s\n", i, cmd->outfiles[i]);
+			i++;
+		}
+	}
 }
 
-void print_cmd_list(t_cmd *cmd)
+void	print_cmd_heredoc(t_cmd *cmd)
+{
+	int	k;
+
+	if (cmd->heredoc_eof)
+	{
+		k = 0;
+		while (cmd->heredoc_eof[k])
+		{
+			printf("  Heredoc[%d]: %s\n", k, cmd->heredoc_eof[k]);
+			k++;
+		}
+	}
+	printf("  Append: %d\n", cmd->append);
+	printf("  Is Heredoc: %d\n", cmd->is_heredoc);
+	if (cmd->is_heredoc)
+		printf("  Heredoc Expand: %d\n", cmd->heredoc_expand);
+	if (cmd->heredoc_buffer)
+		printf("  Heredoc Buffer: %s\n", cmd->heredoc_buffer);
+}
+
+void	print_cmd_list(t_cmd *cmd)
 {
 	t_cmd	*tmp;
-	int		i, j;
+	int		cmd_index;
 
 	tmp = cmd;
-	printf("\nCommand List:\n");
-	printf("╭───────────────────────────────┬────────────────────────────────────────────╮\n");
-	printf("│ %-29s │ %-42s │\n", "Field", "Value");
-	printf("├───────────────────────────────┼────────────────────────────────────────────┤\n");
+	cmd_index = 0;
 	while (tmp)
 	{
-		printf("│ %-29s │ %-42s │\n", "Command", "(argv list below)");
-		if (tmp->argv)
-		{
-			for (i = 0; tmp->argv[i]; i++)
-				printf("│   Arg[%d]                      │ %-42s │\n", i, tmp->argv[i]);
-		}
-		if (tmp->infile)
-			printf("│ Infile                        │ %-42s │\n", tmp->infile);
-		if (tmp->outfiles)
-		{
-			for (j = 0; tmp->outfiles[j]; j++)
-				printf("│ Outfile[%d]                    │ %-42s │\n", j, tmp->outfiles[j]);
-		}
-		if (tmp->heredoc_eof)
-		{
-			int k = 0;
-			while (tmp->heredoc_eof[k])
-			{
-				printf("│ Heredoc[%d]                    │ %-42s │\n", k, tmp->heredoc_eof[k]);
-				k++;
-			}
-		}
-		printf("│ Append                        │ %-42d │\n", tmp->append);
-		printf("│ Is Heredoc                    │ %-42d │\n", tmp->is_heredoc);
-		if (tmp->is_heredoc)
-			printf("│ Heredoc Expand                │ %-42d │\n", tmp->heredoc_expand);
-		if (tmp->heredoc_buffer)
-			printf("│ Heredoc Buffer                │ %-42s │\n", prettify_buffer(tmp->heredoc_buffer));
-		if (tmp->next)
-		{
-			printf("├───────────────────────────────┼────────────────────────────────────────────┤\n");
-			printf("│ %-29s │ %-42s │\n", "Next Command", "(linked)");
-			printf("├───────────────────────────────┼────────────────────────────────────────────┤\n");
-		}
-		else
-			printf("╰───────────────────────────────┴────────────────────────────────────────────╯\n");
+		printf("\nCommand #%d:\n", cmd_index);
+		print_cmd_fields(tmp);
+		print_cmd_heredoc(tmp);
 		tmp = tmp->next;
+		cmd_index++;
 	}
 }
 
-void    debug_print_cmd(t_token *tokens, char *msg)
+void	debug_print_cmd(t_token *tokens, char *msg)
 {
-	t_token *tmp;
+	int		i;
 
-	tmp = tokens;
 	printf("\n%s\n", msg);
-	printf("╭───────────────────────────────┬───────────┬──────────┬───────────┬───────────╮\n");
-	printf("│ %-29s │ %-9s │ %-8s │ %-9s │ %-9s │\n", "Token", "Type", "Joined", "Trimmed", "Expanded");
-	printf("├───────────────────────────────┼───────────┼──────────┼───────────┼───────────┤\n");
-	while (tmp)
+	i = 0;
+	while (tokens)
 	{
-		printf("│ %-29s │ %-9d │ %-8d │ %-9d │ %-9d │\n",
-			tmp->value, tmp->type, tmp->joined, tmp->trimmed, tmp->expanded);
-		tmp = tmp->next;
+		printf("Token #%d:\n", i);
+		printf("  Value   : %s\n", tokens->value);
+		printf("  Type    : %d\n", tokens->type);
+		printf("  Joined  : %d\n", tokens->joined);
+		printf("  Trimmed : %d\n", tokens->trimmed);
+		printf("  Expanded: %d\n", tokens->expanded);
+		tokens = tokens->next;
+		i++;
 	}
-	printf("╰───────────────────────────────┴───────────┴──────────┴───────────┴───────────╯\n");
 }
