@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:33:06 by kkoray            #+#    #+#             */
-/*   Updated: 2025/06/14 12:52:34 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/14 23:41:41 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static t_token	*create_token_list_from_split(char **parts, t_token *cur)
 	while (parts[i])
 	{
 		t = create_token(parts[i], T_WORD, 0, cur->trimmed);
+		t->expanded = cur->expanded;
 		if (!new_tokens)
 			new_tokens = t;
 		else
