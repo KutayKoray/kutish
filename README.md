@@ -24,7 +24,7 @@ minishell is a core project in the 42 curriculum that challenges students to rec
 - Lexical analysis and parsing techniques
 - Process and file descriptor management
 - Signal handling and terminal control
-- Modular, clean, and maintainable C code under strict 42 Norminette
+- Modular, clean, and maintainable C code under strict 42 norms
 
 minishell builds a solid foundation for understanding how shells and operating systems work at a deeper level — preparing students for more complex projects.
 
@@ -35,7 +35,7 @@ minishell builds a solid foundation for understanding how shells and operating s
 
 ## Install & Usage (MacOS/Linux)
 ### Prerequisites
-- minishell requires the GNU Readline library for command line editing and history.
+minishell requires the GNU Readline library for command line editing and history.
 ```bash
 apt install libreadline-dev # for deb based distros
 dnf install readline-devel # for rpm based distros
@@ -62,4 +62,5 @@ or run with debug mode to see more verbose output:
 ```bash
 ./minishell -d
 ```
-Ta-da! You now have a working shell that can execute commands, handle pipes, and manage redirections.
+Ta-da! 🥳 \
+You now have a working shell that can execute commands, handle pipes, and manage redirections.
