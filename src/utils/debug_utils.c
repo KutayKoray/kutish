@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 18:37:12 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/14 12:28:15 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/14 23:34:26 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,10 @@ void	print_cmd_heredoc(t_cmd *cmd)
 			k++;
 		}
 	}
-	printf("  Append: %d\n", cmd->append);
-	printf("  Is Heredoc: %d\n", cmd->is_heredoc);
+	if (cmd->append)
+		printf("  Append: %d\n", cmd->append);
+	if (cmd->is_heredoc)
+		printf("  Is Heredoc: %d\n", cmd->is_heredoc);
 	if (cmd->is_heredoc)
 		printf("  Heredoc Expand: %d\n", cmd->heredoc_expand);
 	if (cmd->heredoc_buffer)
