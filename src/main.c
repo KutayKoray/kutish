@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 20:04:41 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/14 13:12:59 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/14 13:34:24 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ static void	parse_and_execute(t_token *tokens, t_env **env, t_cmd **cmds,
 	*cmds = parse_tokens(tokens, *env);
 	if (debug)
 		debug_print_cmd(tokens, "parsing tokens");
+	free_token_list(tokens);
 	get_cmd_head(*cmds);
 	if (debug)
 		print_cmd_list(*cmds);
@@ -72,7 +73,6 @@ static int	read_and_execute(t_token **tokens, t_env **env, t_cmd **cmds,
 		return (0);
 	process_tokens(input, tokens, *env, debug);
 	parse_and_execute(*tokens, env, cmds, debug);
-	free_token_list(*tokens);
 	free_cmd_list(*cmds);
 	free(input);
 	return (1);
