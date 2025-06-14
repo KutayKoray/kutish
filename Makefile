@@ -27,7 +27,7 @@ SRCS		= main.c \
 			exec.c exec_utils.c exec_prep.c exec_redir.c exec_builtin.c \
 			echo.c export.c pwd.c unset.c env.c cd.c exit.c \
 			expander_utils.c expander.c expander_handlers.c \
-			heredoc.c  parser.c  parser_init.c \
+			heredoc.c  parser.c  parser_utils.c \
 			tokenizer.c  tokenizer_helpers.c tokenizer_utils.c split_expanded_tokens.c trim_quotes.c \
 			signals.c signal_handlers.c
 OBJS		= $(addprefix $(BUILD_DIR)/,$(SRCS:.c=.o))

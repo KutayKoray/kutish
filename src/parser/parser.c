@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:52 by kkoray            #+#    #+#             */
-/*   Updated: 2025/06/12 19:21:54 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/14 12:19:49 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,26 +124,4 @@ t_cmd	*parse_tokens(t_token *tokens, t_env *env)
 	}
 	assign_heredoc_buffers(head, env);
 	return (head);
-}
-
-void	free_cmd_list(t_cmd *cmds)
-{
-	t_cmd	*tmp;
-
-	while (cmds)
-	{
-		tmp = cmds;
-		cmds = cmds->next;
-		if (tmp->argv)
-			free_str_arr(tmp->argv);
-		if (tmp->outfiles)
-			free_str_arr(tmp->outfiles);
-		if (tmp->infile)
-			free(tmp->infile);
-		if (tmp->heredoc_eof)
-			free_str_arr(tmp->heredoc_eof);
-		if (tmp->heredoc_buffer)
-			free(tmp->heredoc_buffer);
-		free(tmp);
-	}
 }
