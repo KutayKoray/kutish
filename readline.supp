@@ -1,0 +1,23 @@
+{
+   readline_still_reachable
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/libreadline.so*
+}
+
+{
+   history_still_reachable  
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:add_history
+}
+
+{
+   termcap_still_reachable
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/libtinfo.so*
+}
