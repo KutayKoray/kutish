@@ -6,9 +6,13 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:33:08 by kkoray            #+#    #+#             */
-/*   Updated: 2025/06/12 19:12:45 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/14 12:54:55 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "minishell.h"
+#include "libft.h"
+#include <stdlib.h>
 
 int	operator_length(const char *s)
 {
@@ -32,12 +36,14 @@ int	is_operator_char(char c)
 	return (c == '>' || c == '<' || c == '|');
 }
 
-int read_word(const char *str, int start)
+int	read_word(const char *str, int start)
 {
-	int i = start;
-	char quote;
+	char	quote;
+	size_t	i;
 
-	while (str[i] && !is_operator_char(str[i]) && str[i] != ' ' && str[i] != '\t')
+	i = start;
+	while (str[i] && !is_operator_char(str[i])
+		&& str[i] != ' ' && str[i] != '\t')
 	{
 		if (str[i] == '\'' || str[i] == '"')
 		{
@@ -50,5 +56,21 @@ int read_word(const char *str, int start)
 		else
 			i++;
 	}
-	return i;
+	return (i);
+}
+
+t_token	*create_token(const char *value, t_token_type type,
+	int joined, int trimmed)
+{
+	t_token	*new;
+
+	new = malloc(sizeof(t_token));
+	if (!new)
+		return (NULL);
+	new->value = ft_strdup(value);
+	new->type = type;
+	new->joined = joined;
+	new->trimmed = trimmed;
+	new->next = NULL;
+	return (new);
 }

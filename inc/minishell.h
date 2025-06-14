@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 20:04:47 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/14 12:00:16 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/14 12:53:17 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,7 @@ void			add_token(t_token **head, char *value, t_token_type type, int joined);
 int				read_word(const char *str, int start);
 void			split_expanded_tokens(t_token **head);
 void	 		trim_token_quotes(t_token *tokens);
+t_token			*create_token(const char *value, t_token_type type, int joined, int trimmed);
 
 // utils
 char			*str_arr_join(char **arr, char *sep);

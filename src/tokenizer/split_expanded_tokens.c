@@ -6,28 +6,13 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:33:06 by kkoray            #+#    #+#             */
-/*   Updated: 2025/06/12 19:12:27 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/14 12:52:34 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft.h"
 #include <stdlib.h>
-
-static t_token	*create_token(const char *value, t_token_type type, int joined, int trimmed)
-{
-	t_token	*new;
-
-	new = malloc(sizeof(t_token));
-	if (!new)
-		return (NULL);
-	new->value = ft_strdup(value);
-	new->type = type;
-	new->joined = joined;
-	new->trimmed = trimmed;
-	new->next = NULL;
-	return (new);
-}
 
 static t_token	*create_token_list_from_split(char **parts, t_token *cur)
 {

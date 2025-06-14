@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:33:14 by kkoray            #+#    #+#             */
-/*   Updated: 2025/06/12 19:21:59 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/14 12:55:09 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ static void	handle_operator(const char *input, int *i, t_token **list)
 	*i += len;
 }
 
-static void	handle_word_segment(const char *input, int *i, t_token_ctx *ctx, int *prev_was_space)
+static void	handle_word_segment(const char *input, int *i, t_token_ctx *ctx,
+	int *prev_was_space)
 {
 	int		start;
 	int		end;
