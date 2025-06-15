@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 14:37:42 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/14 12:07:25 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/15 15:24:53 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,6 @@ int	cd_builtin(char **argv, t_env **env)
 	else
 		path = argv[1];
 	if (chdir(path) == -1)
-		return (perror(path), 1);
+		return (exit_with_error(EXECUTION_FAILURE, SHELL_NAME, 0), 1);
 	return (update_env_vars(env), 0);
 }
