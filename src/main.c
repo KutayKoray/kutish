@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 20:04:41 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/14 13:34:24 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/15 15:06:27 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,6 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <stdlib.h>
-
-static char	*read_and_validate_input(void)
-{
-	char	*input;
-
-	set_signal_handler(0);
-	input = readline(PROMPT);
-	if (!input || !*input || !is_valid_input(input))
-	{
-		free(input);
-		return (NULL);
-	}
-	add_history(input);
-	return (input);
-}
 
 static void	process_tokens(char *input, t_token **tokens, t_env *env,
 	int debug)
@@ -68,9 +53,16 @@ static int	read_and_execute(t_token **tokens, t_env **env, t_cmd **cmds,
 {
 	char	*input;
 
-	input = read_and_validate_input();
+	set_signal_handler(0);
+	input = readline(PROMPT);
 	if (!input)
 		return (0);
+	if (!*input || !is_valid_input(input))
+	{
+		free(input);
+		return (1);
+	}
+	add_history(input);
 	process_tokens(input, tokens, *env, debug);
 	parse_and_execute(*tokens, env, cmds, debug);
 	free_cmd_list(*cmds);
