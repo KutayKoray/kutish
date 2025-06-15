@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 20:04:41 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/15 15:06:27 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/15 15:16:57 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,11 @@ static void	parse_and_execute(t_token *tokens, t_env **env, t_cmd **cmds,
 		print_cmd_list(*cmds);
 	if (*cmds && (*cmds)->argv)
 		execute_pipeline(*cmds, env);
+	else
+	{
+		ft_putendl_fd("kutish: : command not found", 2);
+		exit_with_error(EX_NOTFOUND, NULL, 0);
+	}
 }
 
 static int	read_and_execute(t_token **tokens, t_env **env, t_cmd **cmds,
