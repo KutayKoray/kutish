@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 15:51:28 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/16 17:29:42 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/16 19:52:22 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ static pid_t	create_process(t_cmd *cmd, t_env **env, t_pipe_info *pipe_info)
 		}
 		if (pipe_info->fd_in != STDIN_FILENO)
 			close(pipe_info->fd_in);
-		return (exit_with_error(EX_NOEXEC, NULL, 0), -1);
+		exit_with_error(EX_NOEXEC, NULL, 1);
+		return (-1);
 	}
 	else if (pid == 0)
 		child_process(cmd, env, pipe_info);

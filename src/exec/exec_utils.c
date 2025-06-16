@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 16:08:32 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/12 18:58:39 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/16 20:29:18 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,19 @@
 #include "libft.h"
 #include <unistd.h>
 #include <sys/wait.h>
+
+size_t	env_list_size(t_env *env)
+{
+	size_t	count;
+
+	count = 0;
+	while (env)
+	{
+		count++;
+		env = env->next;
+	}
+	return (count);
+}
 
 int	is_builtin(char *cmd)
 {
@@ -28,7 +41,10 @@ int	is_builtin(char *cmd)
 int	create_pipe(int *fd)
 {
 	if (pipe(fd) == -1)
-		return (exit_with_error(EXECUTION_FAILURE, SHELL_NAME, 0), 0);
+	{
+		exit_with_error(EXECUTION_FAILURE, SHELL_NAME, 1);
+		return (0);
+	}
 	return (1);
 }
 

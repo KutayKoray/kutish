@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 20:22:44 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/12 18:53:40 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/16 20:41:45 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,42 @@
 #include "libft.h"
 #include <stdlib.h>
 
-t_env	*init_env_list(char **envp)
+static int	add_env_var(char *env_str, t_env **env)
 {
-	t_env	*env;
 	char	*eq_pos;
 	char	*key;
 	char	*value;
+
+	eq_pos = ft_strchr(env_str, '=');
+	if (!eq_pos)
+		return (1);
+	key = ft_substr(env_str, 0, eq_pos - env_str);
+	value = ft_strdup(eq_pos + 1);
+	if (!key || !value || !append_env_node(env, key, value))
+	{
+		free(key);
+		free(value);
+		return (0);
+	}
+	free(key);
+	free(value);
+	return (1);
+}
+
+t_env	*init_env_list(char **envp)
+{
+	t_env	*env;
 
 	env = NULL;
 	if (!envp || !*envp)
 		return (NULL);
 	while (*envp)
 	{
-		eq_pos = ft_strchr(*envp, '=');
-		if (!eq_pos)
+		if (!add_env_var(*envp, &env))
 		{
-			envp++;
-			continue ;
+			free_env_list(env);
+			return (NULL);
 		}
-		key = ft_substr(*envp, 0, eq_pos - *envp);
-		value = ft_strdup(eq_pos + 1);
-		if (!key || !value || !append_env_node(&env, key, value))
-			return (free(key), free(value), free_env_list(env), NULL);
-		free(key);
-		free(value);
 		envp++;
 	}
 	return (env);
@@ -89,7 +101,10 @@ int	unset_env(t_env **env, char *key)
 				prev->next = tmp->next;
 			else
 				*env = tmp->next;
-			return (free(tmp->key), free(tmp->value), free(tmp), 1);
+			free(tmp->key);
+			free(tmp->value);
+			free(tmp);
+			return (1);
 		}
 		prev = tmp;
 		tmp = tmp->next;

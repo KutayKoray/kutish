@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 20:20:02 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/12 18:55:14 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/16 20:35:08 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,27 @@ int	is_valid_key(char *key)
 	return (1);
 }
 
+static t_env	*create_env_node(char *key, char *value)
+{
+	t_env	*new;
+
+	new = malloc(sizeof(t_env));
+	if (!new)
+		return (NULL);
+	new->key = ft_strdup(key);
+	if (!new->key)
+	{
+		free(new);
+		return (NULL);
+	}
+	if (value)
+		new->value = ft_strdup(value);
+	else
+		new->value = NULL;
+	new->next = NULL;
+	return (new);
+}
+
 int	append_env_node(t_env **env, char *key, char *value)
 {
 	t_env	*new;
@@ -34,19 +55,14 @@ int	append_env_node(t_env **env, char *key, char *value)
 
 	if (!env || !key)
 		return (0);
-	new = malloc(sizeof(t_env));
+	new = create_env_node(key, value);
 	if (!new)
 		return (0);
-	new->key = ft_strdup(key);
-	if (!new->key)
-		return (free(new), 0);
-	if (value)
-		new->value = ft_strdup(value);
-	else
-		new->value = NULL;
-	new->next = NULL;
 	if (!*env)
-		return (*env = new, 1);
+	{
+		*env = new;
+		return (1);
+	}
 	current = *env;
 	while (current->next)
 		current = current->next;

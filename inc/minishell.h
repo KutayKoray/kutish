@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 20:04:47 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/16 16:46:18 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/16 20:29:30 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ void			exit_with_error(int status, const char *message, int is_exit);
 t_cmd			**get_cmd_head(t_cmd *cmd);
 t_env			**get_env_head(t_env *env);
 void			free_lists(void);
+size_t			env_list_size(t_env *env);
 
 // expander
 char			*expand_variable(t_expand_ctx *ctx, const char *str, size_t *i);
