@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 11:35:06 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/12 18:52:21 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/16 18:03:10 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,30 +71,45 @@ static int	parse_key_value(char *arg, char **key, char **value)
 	return (1);
 }
 
+static int	process_arg(char *arg, t_env **env, int *has_error)
+{
+	char	*key;
+	char	*value;
+
+	if (!parse_key_value(arg, &key, &value))
+		return (0);
+	if (!is_valid_key(key))
+	{
+		print_error(key);
+		*has_error = 1;
+	}
+	else if (!set_env(env, key, value))
+	{
+		free(key);
+		free(value);
+		return (0);
+	}
+	free(key);
+	free(value);
+	return (1);
+}
+
 int	export_builtin(char **argv, t_env **env)
 {
 	size_t	i;
-	char	*key;
-	char	*value;
 	int		has_error;
 
 	if (!argv[1])
-		return (print_env(*env), 0);
+	{
+		print_env(*env);
+		return (0);
+	}
 	i = 1;
 	has_error = 0;
 	while (argv[i])
 	{
-		if (!parse_key_value(argv[i], &key, &value))
+		if (!process_arg(argv[i], env, &has_error))
 			return (1);
-		if (!is_valid_key(key))
-		{
-			print_error(key);
-			has_error = 1;
-		}
-		else if (!set_env(env, key, value))
-			return (free(key), free(value), 1);
-		free(key);
-		free(value);
 		i++;
 	}
 	return (has_error);

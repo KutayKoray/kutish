@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 15:21:05 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/12 18:49:18 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/16 17:49:24 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,10 @@ int	exit_builtin(t_cmd *cmd)
 	if (!ft_isnum(cmd->argv[1]) || status == -1)
 		print_error_sytnax(cmd->argv[1]);
 	if (cmd->argv[2] || status == -1)
-		return (print_error_many_arg(), 1);
+	{
+		print_error_many_arg();
+		return (1);
+	}
 	if (cmd->argv[1])
 	{
 		free_lists();
