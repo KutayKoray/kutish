@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 19:31:23 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/15 15:17:42 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/16 17:30:41 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,25 +39,6 @@ static int	quote_checker(const char *input)
 	return (1);
 }
 
-static int	pipe_checker(const char *input)
-{
-	char	*ptr;
-
-	ptr = ft_strrchr(input, '|');
-	if (!ptr)
-		return (1);
-	ptr++;
-	while (ptr && *ptr)
-	{
-		if (*ptr != '\t' && *ptr != ' ')
-			return (1);
-		ptr++;
-	}
-	ft_putendl_fd("kutish: syntax error: empty pipe", 2);
-	exit_with_error(SYNTAX_ERROR, NULL, 0);
-	return (0);
-}
-
 static int	white_space_checker(const char *input)
 {
 	int	i;
@@ -80,7 +61,27 @@ int	is_valid_input(const char *input)
 		return (0);
 	if (!quote_checker(input))
 		return (0);
-	if (!pipe_checker(input))
+	return (1);
+}
+
+int	pipe_redirect_check(t_token *tokens)
+{
+	int	prev_type;
+
+	prev_type = T_WORD;
+	if (tokens->type == T_PIPE)
+		return (0);
+	while (tokens)
+	{
+		if (tokens->type != T_WORD && prev_type != T_WORD
+			&& prev_type != T_PIPE)
+			return (0);
+		if (tokens->type == T_PIPE && prev_type == T_PIPE)
+			return (0);
+		prev_type = tokens->type;
+		tokens = tokens->next;
+	}
+	if (prev_type != T_WORD)
 		return (0);
 	return (1);
 }

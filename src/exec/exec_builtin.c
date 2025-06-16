@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 18:22:26 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/12 18:55:39 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/16 17:24:16 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	handle_single_builtin(t_cmd *cmd, t_env **env, t_pipe_info *pipe_info)
 	int	exit_code;
 
 	status = 0;
-	if (cmd->next || !is_builtin(cmd->argv[0]))
+	if (cmd->next || !cmd->argv || !is_builtin(cmd->argv[0]))
 		return (status);
 	pipe_info->original_stdin = dup(STDIN_FILENO);
 	pipe_info->original_stdout = dup(STDOUT_FILENO);

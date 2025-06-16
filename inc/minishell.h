@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 20:04:47 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/16 16:15:41 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/16 16:46:18 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,7 @@ void			free_str_arr(char **arr);
 int				ft_strcmp(const char *s1, const char *s2);
 char			*ft_strndup(const char *s, size_t n);
 int				is_valid_input(const char *input);
+int				pipe_redirect_check(t_token *tokens);
 void			debug_print_cmd(t_token *tokens, char *msg);
 void			print_cmd_list(t_cmd *cmd);
 

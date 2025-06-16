@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 20:04:41 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/16 16:31:35 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/16 17:20:03 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,17 @@
 #include <readline/history.h>
 #include <stdlib.h>
 
-static void	process_tokens(char *input, t_token **tokens, t_env *env,
+static int	process_tokens(char *input, t_token **tokens, t_env *env,
 	int debug)
 {
 	*tokens = tokenize(input);
 	free(input);
+	if (*tokens && !pipe_redirect_check(*tokens))
+	{
+		ft_putendl_fd("kutish: syntax error: invalid pipe or redirect", 2);
+		exit_with_error(SYNTAX_ERROR, NULL, 0);
+		return (0);
+	}
 	if (debug)
 		debug_print_cmd(*tokens, "tokenizing");
 	expand_token_list(tokens, env);
@@ -33,6 +39,7 @@ static void	process_tokens(char *input, t_token **tokens, t_env *env,
 	split_expanded_tokens(tokens);
 	if (debug)
 		debug_print_cmd(*tokens, "splitting expanded tokens");
+	return (1);
 }
 
 static void	parse_and_execute(t_token *tokens, t_env **env, t_cmd **cmds,
@@ -45,13 +52,8 @@ static void	parse_and_execute(t_token *tokens, t_env **env, t_cmd **cmds,
 	get_cmd_head(*cmds);
 	if (debug)
 		print_cmd_list(*cmds);
-	if (*cmds && (*cmds)->argv && !g_signal)
+	if (*cmds && !g_signal)
 		execute_pipeline(*cmds, env);
-	else if (*cmds && !(*cmds)->argv)
-	{
-		ft_putendl_fd("kutish: : command not found", 2);
-		exit_with_error(EX_NOTFOUND, NULL, 0);
-	}
 }
 
 static int	read_and_execute(t_token **tokens, t_env **env, t_cmd **cmds,
@@ -63,13 +65,14 @@ static int	read_and_execute(t_token **tokens, t_env **env, t_cmd **cmds,
 	input = readline(PROMPT);
 	if (!input)
 		return (0);
+	add_history(input);
 	if (!*input || !is_valid_input(input))
 	{
 		free(input);
 		return (1);
 	}
-	add_history(input);
-	process_tokens(input, tokens, *env, debug);
+	if (!process_tokens(input, tokens, *env, debug))
+		return (1);
 	if (!*tokens)
 	{
 		exit_with_error(EXECUTION_SUCCESS, NULL, 0);
