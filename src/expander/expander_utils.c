@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:29 by kkoray            #+#    #+#             */
-/*   Updated: 2025/06/16 15:13:28 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/16 19:03:29 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,4 @@ char	*char_to_str(char c)
 	str[0] = c;
 	str[1] = '\0';
 	return (str);
-}
-
-void	remove_token_node(t_token **head, t_token *prev, t_token *cur)
-{
-	if (prev)
-		prev->next = cur->next;
-	else
-		*head = cur->next;
-	free(cur->value);
-	free(cur);
 }
