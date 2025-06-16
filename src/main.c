@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 20:04:41 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/15 15:16:57 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/16 16:31:35 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,10 @@ static void	process_tokens(char *input, t_token **tokens, t_env *env,
 	int debug)
 {
 	*tokens = tokenize(input);
+	free(input);
 	if (debug)
 		debug_print_cmd(*tokens, "tokenizing");
-	expand_token_list(*tokens, env);
+	expand_token_list(tokens, env);
 	if (debug)
 		debug_print_cmd(*tokens, "expanding");
 	trim_token_quotes(*tokens);
@@ -44,9 +45,9 @@ static void	parse_and_execute(t_token *tokens, t_env **env, t_cmd **cmds,
 	get_cmd_head(*cmds);
 	if (debug)
 		print_cmd_list(*cmds);
-	if (*cmds && (*cmds)->argv)
+	if (*cmds && (*cmds)->argv && !g_signal)
 		execute_pipeline(*cmds, env);
-	else
+	else if (*cmds && !(*cmds)->argv)
 	{
 		ft_putendl_fd("kutish: : command not found", 2);
 		exit_with_error(EX_NOTFOUND, NULL, 0);
@@ -69,9 +70,13 @@ static int	read_and_execute(t_token **tokens, t_env **env, t_cmd **cmds,
 	}
 	add_history(input);
 	process_tokens(input, tokens, *env, debug);
+	if (!*tokens)
+	{
+		exit_with_error(EXECUTION_SUCCESS, NULL, 0);
+		return (1);
+	}
 	parse_and_execute(*tokens, env, cmds, debug);
 	free_cmd_list(*cmds);
-	free(input);
 	return (1);
 }
 
