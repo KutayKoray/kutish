@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:32 by kkoray            #+#    #+#             */
-/*   Updated: 2025/06/14 14:29:18 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/16 16:37:17 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,27 +65,27 @@ char	*expand_input(const char *input, t_token *token, t_env *env)
 	return (ctx.result);
 }
 
-void	expand_token_list(t_token *tokens, t_env *env)
+void	expand_token_list(t_token **tokens, t_env *env)
 {
 	t_token	*cur;
 	t_token	*prev;
 	char	*expanded;
 
-	cur = tokens;
+	cur = *tokens;
 	prev = NULL;
 	while (cur)
 	{
-		if (cur->type == T_WORD)
+		if (cur->type == T_WORD || (cur->value[0] == '\''
+				&& cur->value[ft_strlen(cur->value) - 1] == '\'')
+			|| (prev && prev->type == T_HEREDOC))
 		{
-			if ((cur->value[0] == '\''
-					&& cur->value[ft_strlen(cur->value) - 1] == '\'')
-				|| (prev && prev->type == T_HEREDOC))
+			expanded = expand_input(cur->value, cur, env);
+			if (!expanded || !*expanded)
 			{
-				prev = cur;
+				remove_token_node(tokens, prev, cur);
 				cur = cur->next;
 				continue ;
 			}
-			expanded = expand_input(cur->value, cur, env);
 			free(cur->value);
 			cur->value = expanded;
 		}

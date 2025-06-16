@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 20:04:47 by ebabaogl          #+#    #+#             */
-/*   Updated: 2025/06/14 13:15:07 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/16 16:15:41 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,12 +129,12 @@ void			free_lists(void);
 
 // expander
 char			*expand_variable(t_expand_ctx *ctx, const char *str, size_t *i);
-void			handle_tilde(const char *input, size_t *i, t_expand_ctx *ctx);
 void			handle_quotes(const char *input, size_t *i, t_expand_ctx *ctx);
 void			handle_dollar(const char *input, size_t *i, t_expand_ctx *ctx);
-void			expand_token_list(t_token *tokens, t_env *env);
+void			expand_token_list(t_token **tokens, t_env *env);
 char			*char_to_str(char c);
 size_t			get_env_key_len(const char *str, size_t *i);
+void			remove_token_node(t_token **head, t_token *prev, t_token *cur);
 
 // parser
 t_cmd			*parse_tokens(t_token *tokens, t_env *env);
