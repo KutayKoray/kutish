@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:29 by kkoray            #+#    #+#             */
-/*   Updated: 2025/06/16 19:03:29 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/17 21:34:04 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ char	*expand_variable(t_expand_ctx *ctx, const char *str, size_t *i)
 	free(var);
 	if (value)
 	{
-		ctx->expanded = 1;
+		if (!ctx->in_double_quote)
+			ctx->expanded = 1;
 		return (ft_strdup(value));
 	}
 	else

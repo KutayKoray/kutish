@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:32:32 by kkoray            #+#    #+#             */
-/*   Updated: 2025/06/16 19:12:53 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2025/06/17 20:59:03 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,9 @@ void	expand_token_list(t_token **tokens, t_env *env)
 	while (cur)
 	{
 		next = cur->next;
-		if (cur->type == T_WORD || (cur->value[0] == '\''
-				&& cur->value[ft_strlen(cur->value) - 1] == '\'')
-			|| (prev && prev->type == T_HEREDOC))
+		if (cur->type == T_WORD
+			&& !(prev && prev->type == T_HEREDOC)
+			&& (cur->value[0] != '\'' || cur->value[ft_strlen(cur->value) - 1] != '\''))
 		{
 			if (!expand_token(tokens, cur, prev, env))
 			{
