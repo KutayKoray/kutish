@@ -1,7 +1,4 @@
-<div align="center">
-    <img src=".github/assets/minishelle.png" alt="minishell badge">
-    <h1>minishell</h1>
-</div>
+# minishell
 
 ![norminette](https://github.com/KutayKoray/kutish/actions/workflows/norminette.yml/badge.svg)
 
